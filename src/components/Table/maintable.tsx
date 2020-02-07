@@ -7,6 +7,7 @@ import { pagination } from "./StateManager/paginationState";
 import { Columns } from "./columns";
 import { CountState } from "./StateManager/countState";
 import { Selecto } from "./selection";
+import { CSVLink } from "react-csv";
 
 export const MainTable = () => {
   const { tableData, setTableData } = useContext(TableData);
@@ -76,7 +77,9 @@ export const MainTable = () => {
     });
   }
 
-  function HandleExport() {
+  /*
+
+    function HandleExport() {
     setAction({
       ...action,
       isExport: false
@@ -84,20 +87,27 @@ export const MainTable = () => {
 
     console.log("tableData", tableData);
   }
+
   const handelExport = () => {
     const filter: any = {};
     filter[action.subject] = action.input[0];
-    axios.post('http://45.92.95.69:5000/api/drugs/export', filter, {responseType: 'blob',}).then((response: any) => {
-      const downloadUrl = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement('a');
-      link.href = downloadUrl;
-      link.setAttribute('download', 'dugs.xlsx'); //any other extension
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-    });
+    axios
+      .post("http://45.92.95.69:5000/api/drugs/export", filter, {
+        responseType: "blob"
+      })
+      .then((response: any) => {
+        const downloadUrl = window.URL.createObjectURL(
+          new Blob([response.data])
+        );
+        const link = document.createElement("a");
+        link.href = downloadUrl;
+        link.setAttribute("download", "dugs.xlsx"); //any other extension
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+      });
   };
-
+*/
   function HandleImport() {}
   return (
     <>
@@ -126,7 +136,6 @@ export const MainTable = () => {
           onChange={handleTableChange}
         />
       </div>
-
       <div
         style={{
           marginTop: 16,
@@ -144,16 +153,15 @@ export const MainTable = () => {
           Reset Table
         </Button>
 
-        <Button
-          style={{ width: "8.3%", marginRight: 4 }}
-          type="dashed"
-          block
-          onClick={handelExport}
+        <CSVLink
+          data={tableData}
+          filename={"drgExport.xlsx"}
+          style={{ marginRight: 16 }}
         >
-          Export
-        </Button>
+          <Button style={{ width: "100%", marginLeft: 16 }}>Export</Button>
+        </CSVLink>
         <Button
-          style={{ width: "8.3%", marginRight: 4 }}
+          style={{ width: "8.3%", marginLeft: 16 }}
           type="default"
           block
           onClick={HandleImport}
@@ -161,6 +169,7 @@ export const MainTable = () => {
           Import
         </Button>
       </div>
+      ;
       <div>
         <Alert
           message={`Total item in database is ${action.num} `}

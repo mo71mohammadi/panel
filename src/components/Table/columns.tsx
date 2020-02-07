@@ -149,7 +149,7 @@ export function Columns() {
             >
               <div style={{ marginTop: 12, marginBottom: 8 }}>
                 <Alert
-                  message={`Edit Item: ${unicState[0]._id}`}
+                  message={`Edit Item: ${valueState._id}`}
                   type="success"
                 />
               </div>
@@ -195,20 +195,7 @@ export function Columns() {
   }
 
   function HandleDrawer(params: any) {
-    axios({
-      method: "post",
-      url: "http://45.92.95.69:5000/api/drugs/getAll",
-      data: { _id: params._id }
-    })
-      .then((res: { data: any }) => {
-        setUnicState(res.data.data);
-        setOpenDrawer(true);
-        setValueState(res.data.data[0]);
-
-        message.success(`We found id: ${params._id}  in database`);
-      })
-      .catch(() => console.log("Get Data Fail"));
-
+    setValueState(params);
     setOpenDrawer(true);
   }
 

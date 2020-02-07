@@ -16,7 +16,6 @@ import axios from "axios";
 import { message } from "antd";
 import { DrawerState } from "./StateManager/drawerState";
 import { DrawerBody } from "./drawerBody";
-import { UnicState, STATE } from "./StateManager/unicState";
 import { ValueState } from "./StateManager/valueState";
 import { PageManager } from "../../pageManager";
 
@@ -32,7 +31,6 @@ import {
 
 export function Columns() {
   const { tableData, setTableData } = useContext(TableData);
-  const { unicState, setUnicState } = React.useContext(UnicState);
   const { pagi, setPagi } = useContext(pagination);
   const { action, setAction } = React.useContext(SearchState);
   const { valueState, setValueState } = useContext(ValueState);
@@ -129,7 +127,6 @@ export function Columns() {
       render: function(index: number, record: any) {
         function onClose() {
           setOpenDrawer(false);
-          setUnicState(STATE);
         }
 
         return (
@@ -146,6 +143,7 @@ export function Columns() {
               onClose={onClose}
               visible={openDrawer}
               width={"40%"}
+
             >
               <div style={{ marginTop: 12, marginBottom: 8 }}>
                 <Alert
@@ -175,18 +173,6 @@ export function Columns() {
   ];
 
   function HandlePage(params: any) {
-    axios({
-      method: "post",
-      url: "http://45.92.95.69:5000/api/drugs/getAll",
-      data: { _id: params._id }
-    })
-      .then((res: { data: any }) => {
-        setUnicState(res.data.data);
-        setValueState(res.data.data[0]);
-        message.success(`We found id: ${params._id}  in database`);
-      })
-      .catch(() => console.log("Get Data Fail"));
-
     return (
       <>
         <PageManager />

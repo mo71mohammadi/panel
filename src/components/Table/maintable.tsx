@@ -22,6 +22,9 @@ export const MainTable = () => {
       page: pagi.pageCurrent
     };
 
+    const dataExport: any = {};
+    dataExport[action.subject] = action.input;
+
     if (action.isSearch) {
       data[action.subject] = action.input;
     } else {
@@ -31,7 +34,7 @@ export const MainTable = () => {
     axios({
       method: "post",
       url: "http://45.92.95.69:5000/api/drugs/getAll",
-      data: data
+      data: action.isExport ? tableData : data
     })
       .then((res: { data: any }) => {
         setTableData(res.data.data);
@@ -42,7 +45,13 @@ export const MainTable = () => {
         setAction({ ...action, num: res.data.count });
       })
       .catch(() => console.log("Get Data Fail"));
-  }, [pagi.pageCurrent, action.isDelete, action.isSearch]);
+  }, [
+    pagi.pageCurrent,
+    action.isDelete,
+    action.isSearch,
+    action.isExport,
+    action.isReset
+  ]);
 
   function handleTableChange(pagination: any, filters: any, sorter: any) {
     const pager = { ...pagination };
@@ -62,10 +71,21 @@ export const MainTable = () => {
       ...action,
       isSearch: false,
       input: action.input,
+      isReset: !action.isReset,
       subject: ""
     });
   }
 
+  function HandleExport() {
+    setAction({
+      ...action,
+      isExport: false
+    });
+
+    console.log("tableData", tableData);
+  }
+
+  function HandleImport() {}
   return (
     <>
       <div style={{ width: "100%", marginBottom: 16 }}>
@@ -115,7 +135,7 @@ export const MainTable = () => {
           style={{ width: "8.3%", marginRight: 4 }}
           type="dashed"
           block
-          onClick={() => GetAll()}
+          onClick={HandleExport}
         >
           Export
         </Button>
@@ -123,7 +143,7 @@ export const MainTable = () => {
           style={{ width: "8.3%", marginRight: 4 }}
           type="default"
           block
-          onClick={() => GetAll()}
+          onClick={HandleImport}
         >
           Import
         </Button>

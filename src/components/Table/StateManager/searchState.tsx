@@ -23,6 +23,7 @@ const State = {
   isReset: false,
   isDelete: false,
   isEdit: false,
-  num: 0
+  num: 0,
+  isExport: false
 };
 export const [SearchState, SearchProvider] = createCtxUseState(State);

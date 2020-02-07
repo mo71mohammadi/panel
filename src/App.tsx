@@ -60,7 +60,7 @@ const App = () => {
               <TableDRG />
             </div>
           </Content>
-          <Footer style={{ textAlign: "center" }}>Drugoo 2020</Footer>
+          <Footer style={{ textAlign: "center" }}>Drugo 2020</Footer>
         </Layout>
       </Layout>
     </div>

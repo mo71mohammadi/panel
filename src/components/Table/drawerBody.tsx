@@ -2,12 +2,10 @@ import React, { useState, useContext } from "react";
 import { Button, Select, message } from "antd";
 import axios from "axios";
 
-import { UnicState } from "./StateManager/unicState";
 import { ValueState } from "./StateManager/valueState";
 const { Option } = Select;
 
 export function DrawerBody() {
-  const { unicState, setUnicState } = React.useContext(UnicState);
   const { valueState, setValueState } = useContext(ValueState);
   const [select, setSelect] = useState([]);
   const [option, setOption] = React.useState({ type: null, list: [] });
@@ -69,7 +67,7 @@ export function DrawerBody() {
             <Select
               showSearch
               value={`eRx: ${valueState.eRx}`}
-              // placeholder={`eRx: ${unicState[0].eRx}`}
+               placeholder={`eRx: ${valueState.eRx}`}
               style={{ width: "inherits", minWidth: "100%" }}
               defaultActiveFirstOption={true}
               showArrow={true}
@@ -92,7 +90,7 @@ export function DrawerBody() {
             <Select
               showSearch
               value={`genericCode: ${valueState.genericCode}`}
-              placeholder={`genericCode: ${unicState[0].genericCode}`}
+              placeholder={`genericCode: ${valueState.genericCode}`}
               style={{ width: "inherits", minWidth: "100%" }}
               defaultActiveFirstOption={true}
               showArrow={true}
@@ -118,7 +116,7 @@ export function DrawerBody() {
             <Select
               showSearch
               value={`packageCode: ${valueState.packageCode}`}
-              placeholder={`packageCode: ${unicState[0].packageCode}`}
+              placeholder={`packageCode: ${valueState.packageCode}`}
               style={{ width: "inherits", minWidth: "100%" }}
               defaultActiveFirstOption={false}
               showArrow={true}
@@ -138,7 +136,7 @@ export function DrawerBody() {
             <Select
               showSearch
               value={`gtn: ${valueState.gtn}`}
-              placeholder={`gtn: ${unicState[0].gtn}`}
+              placeholder={`gtn: ${valueState.gtn}`}
               style={{ width: "inherits", minWidth: "100%" }}
               defaultActiveFirstOption={false}
               showArrow={true}
@@ -160,7 +158,7 @@ export function DrawerBody() {
             <Select
               showSearch
               value={`irc: ${valueState.irc}`}
-              placeholder={`irc: ${unicState[0].irc}`}
+              placeholder={`irc: ${valueState.irc}`}
               style={{ width: "inherits", minWidth: "100%" }}
               defaultActiveFirstOption={false}
               showArrow={true}
@@ -183,7 +181,7 @@ export function DrawerBody() {
             <Select
               showSearch
               value={`packageType: ${valueState.packageType}`}
-              placeholder={`packageType: ${unicState[0].packageType}`}
+              placeholder={`packageType: ${valueState.packageType}`}
               style={{ width: "inherits", minWidth: "100%" }}
               defaultActiveFirstOption={false}
               showArrow={true}
@@ -205,7 +203,7 @@ export function DrawerBody() {
           <Select
             showSearch
             value={`strength: ${valueState.strength}`}
-            placeholder={`strength: ${unicState[0].strength}`}
+            placeholder={`strength: ${valueState.strength}`}
             style={{ width: "inherits", minWidth: "100%" }}
             defaultActiveFirstOption={false}
             showArrow={true}
@@ -225,7 +223,7 @@ export function DrawerBody() {
           <Select
             showSearch
             value={`enRoute: ${valueState.enRoute}`}
-            placeholder={`enRoute: ${unicState[0].enRoute}`}
+            placeholder={`enRoute: ${valueState.enRoute}`}
             style={{ width: "inherits", minWidth: "100%" }}
             defaultActiveFirstOption={false}
             showArrow={true}
@@ -246,7 +244,7 @@ export function DrawerBody() {
             <Select
               showSearch
               value={`faRoute: ${valueState.faRoute}`}
-              placeholder={`faRoute: ${unicState[0].faRoute}`}
+              placeholder={`faRoute: ${valueState.faRoute}`}
               style={{ width: "inherits", minWidth: "100%" }}
               defaultActiveFirstOption={false}
               showArrow={true}
@@ -266,7 +264,7 @@ export function DrawerBody() {
             <Select
               showSearch
               value={`enForm: ${valueState.enForm}`}
-              placeholder={`enForm: ${unicState[0].enForm}`}
+              placeholder={`enForm: ${valueState.enForm}`}
               style={{ width: "inherits", minWidth: "100%" }}
               defaultActiveFirstOption={false}
               showArrow={true}
@@ -288,7 +286,7 @@ export function DrawerBody() {
             <Select
               showSearch
               value={`faForm: ${valueState.faForm}`}
-              placeholder={`faForm: ${unicState[0].faForm}`}
+              placeholder={`faForm: ${valueState.faForm}`}
               style={{ width: "inherits", minWidth: "100%" }}
               defaultActiveFirstOption={false}
               showArrow={true}
@@ -309,7 +307,7 @@ export function DrawerBody() {
               showSearch
               disabled
               value={`atcCode: ${valueState.atcCode}`}
-              placeholder={`atcCode: ${unicState[0].atcCode}`}
+              placeholder={`atcCode: ${valueState.atcCode}`}
               style={{ width: "inherits", minWidth: "100%" }}
               defaultActiveFirstOption={false}
               showArrow={true}
@@ -334,7 +332,7 @@ export function DrawerBody() {
           <Select
             showSearch
             value={`faBrandName: ${valueState.faBrandName}`}
-            placeholder={`faBrandName: ${unicState[0].faBrandName}`}
+            placeholder={`faBrandName: ${valueState.faBrandName}`}
             style={{ width: "inherits", minWidth: "100%" }}
             defaultActiveFirstOption={false}
             showArrow={true}
@@ -354,7 +352,7 @@ export function DrawerBody() {
           <Select
             showSearch
             value={`enName: ${valueState.enName}`}
-            placeholder={`enName: ${unicState[0].enName}`}
+            placeholder={`enName: ${valueState.enName}`}
             style={{ width: "inherits", minWidth: "100%" }}
             defaultActiveFirstOption={false}
             showArrow={true}
@@ -375,7 +373,7 @@ export function DrawerBody() {
             <Select
               showSearch
               value={`faName: ${valueState.faName}`}
-              placeholder={`faName: ${unicState[0].faName}`}
+              placeholder={`faName: ${valueState.faName}`}
               style={{ width: "inherits", minWidth: "100%" }}
               defaultActiveFirstOption={false}
               showArrow={true}
@@ -395,7 +393,7 @@ export function DrawerBody() {
             <Select
               showSearch
               value={`volume: ${valueState.volume}`}
-              placeholder={`volume: ${unicState[0].volume}`}
+              placeholder={`volume: ${valueState.volume}`}
               style={{ width: "inherits", minWidth: "100%" }}
               defaultActiveFirstOption={false}
               showArrow={true}
@@ -420,7 +418,7 @@ export function DrawerBody() {
           <Select
             showSearch
             value={`licenseOwner: ${valueState.licenseOwner}`}
-            placeholder={`licenseOwner: ${unicState[0].licenseOwner}`}
+            placeholder={`licenseOwner: ${valueState.licenseOwner}`}
             style={{ width: "inherits", minWidth: "100%" }}
             defaultActiveFirstOption={false}
             showArrow={true}
@@ -443,7 +441,7 @@ export function DrawerBody() {
           <Select
             showSearch
             value={`countryBrandOwner: ${valueState.countryBrandOwner}`}
-            placeholder={`countryBrandOwner: ${unicState[0].countryBrandOwner}`}
+            placeholder={`countryBrandOwner: ${valueState.countryBrandOwner}`}
             style={{ width: "inherits", minWidth: "100%" }}
             defaultActiveFirstOption={false}
             showArrow={true}
@@ -467,7 +465,7 @@ export function DrawerBody() {
           <Select
             showSearch
             value={`brandOwner: ${valueState.brandOwner}`}
-            placeholder={`brandOwner: ${unicState[0].brandOwner}`}
+            placeholder={`brandOwner: ${valueState.brandOwner}`}
             style={{ width: "inherits", minWidth: "100%" }}
             defaultActiveFirstOption={false}
             showArrow={true}

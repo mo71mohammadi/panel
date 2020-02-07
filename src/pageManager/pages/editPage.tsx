@@ -1,7 +1,6 @@
 import React, { useState, useContext } from "react";
 import { Button, Select, message } from "antd";
 import axios from "axios";
-import { UnicState } from "../../components/Table/StateManager/unicState";
 import { ValueState } from "../../components/Table/StateManager/valueState";
 import { EditState } from "../../components/Table/StateManager/editState";
 
@@ -9,7 +8,7 @@ import { EditState } from "../../components/Table/StateManager/editState";
 const { Option } = Select;
 
 export function EditPage() {
-  const { unicState, setUnicState } = React.useContext(UnicState);
+  /*const { unicState, setUnicState } = React.useContext(UnicState);
   const { editState, setEditState } = React.useContext(EditState);
   const [data, setdata] = useState([]);
   const { valueState, setValueState } = useContext(ValueState);
@@ -618,4 +617,5 @@ export function EditPage() {
       </div>
     </>
   );
+  */
 }

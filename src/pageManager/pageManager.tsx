@@ -16,7 +16,7 @@ function PageManager() {
 
   return (
     <Switch>
-      <Route path={"/edit"} component={EditPage} />
+      <Route path={"/edit"}  />
     </Switch>
   );
 }

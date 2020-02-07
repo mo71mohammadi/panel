@@ -5,7 +5,6 @@ import { PaginationProvider } from "./StateManager/paginationState";
 import { MainTable } from "./maintable";
 import { CountProvider } from "./StateManager/countState";
 import { DrawerProvider } from "./StateManager/drawerState";
-import { UnicStateProvider } from "./StateManager/unicState";
 import { EditStateProvider } from "./StateManager/editState";
 import { ValueStateProvider } from "./StateManager/valueState";
 
@@ -13,7 +12,6 @@ export default function TableDRG() {
   return (
     <>
       <TableDataProvider>
-        <UnicStateProvider>
           <SearchProvider>
             <PaginationProvider>
               <CountProvider>
@@ -35,7 +33,6 @@ export default function TableDRG() {
               </CountProvider>
             </PaginationProvider>
           </SearchProvider>
-        </UnicStateProvider>
       </TableDataProvider>
     </>
   );

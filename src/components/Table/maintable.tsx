@@ -87,11 +87,11 @@ export const MainTable = () => {
   const handelExport = () => {
     const filter: any = {};
     filter[action.subject] = action.input[0];
-    axios.post('http://45.92.95.69:5000/api/drugs/export', filter, {responseType: 'blob',}).then(response => {
+    axios.post('http://45.92.95.69:5000/api/drugs/export', filter, {responseType: 'blob',}).then((response: any) => {
       const downloadUrl = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement('a');
       link.href = downloadUrl;
-      link.setAttribute('download', 'dugs'); //any other extension
+      link.setAttribute('download', 'dugs.xlsx'); //any other extension
       document.body.appendChild(link);
       link.click();
       link.remove();

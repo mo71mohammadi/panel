@@ -3,14 +3,11 @@ import { Button, Select, message } from "antd";
 import axios from "axios";
 
 import { UnicState } from "./StateManager/unicState";
-import { EditState } from "./StateManager/editState";
 import { ValueState } from "./StateManager/valueState";
 const { Option } = Select;
 
 export function DrawerBody() {
   const { unicState, setUnicState } = React.useContext(UnicState);
-  const { editState, setEditState } = React.useContext(EditState);
-  const [data, setdata] = useState([]);
   const { valueState, setValueState } = useContext(ValueState);
   const [select, setSelect] = useState([]);
   const [option, setOption] = React.useState({ type: null, list: [] });
@@ -39,26 +36,6 @@ export function DrawerBody() {
     setValueState((e: any) => ({ ...valueState, ...change }));
   };
 
-  function handleChangeo(value: any) {
-    setEditState({ data: [], count: 0 });
-    console.log(`selected ${value}`);
-    axios({
-      method: "get",
-      url: `http://45.92.95.69:5000/api/drugs/distinct?item=${value}`,
-      data: { size: 20 }
-    })
-      .then((res: { data: any }) => {
-        setEditState({ data: res.data.data, count: res.data.count });
-        console.log("data", res.data);
-
-        // setCount({ total: res.data.count });
-        message.success(
-          `We found ${res.data.count} item Related with ${value}`
-        );
-      })
-      .catch(() => console.log("Get Data Fail"));
-  }
-
   function handleSearch(params: any) {
     const selectItem = option.list.filter(
       (word: any) =>
@@ -72,6 +49,16 @@ export function DrawerBody() {
 
   function HandleEdit(params: any) {
     console.log("Edit Item : ", valueState._id);
+
+    axios({
+      method: "post",
+      url: "http://45.92.95.69:5000/api/drugs/update",
+      data: valueState
+    })
+      .then((res: { data: any }) => {
+        message.success(`Item ${valueState._id} Successfully`);
+      })
+      .catch(() => console.log("Get Data Fail"));
   }
 
   return (
@@ -320,6 +307,7 @@ export function DrawerBody() {
           <div onClick={() => handleClick("atcCode")} style={{ width: "100%" }}>
             <Select
               showSearch
+              disabled
               value={`atcCode: ${valueState.atcCode}`}
               placeholder={`atcCode: ${unicState[0].atcCode}`}
               style={{ width: "inherits", minWidth: "100%" }}
@@ -328,54 +316,6 @@ export function DrawerBody() {
               filterOption={true}
               onSearch={handleSearch}
               onChange={(e: any) => handleChange(e, "atcCode")}
-              notFoundContent={null}
-            >
-              {select.map((i: any, id: any) => (
-                <Option value={i} key={i}>
-                  {i}
-                </Option>
-              ))}
-            </Select>
-          </div>
-        </div>
-        <div style={{ display: "flex", flexDirection: "row", width: "100%" }}>
-          <div
-            onClick={() => handleClick("upToDateId")}
-            style={{ width: "100%" }}
-          >
-            <Select
-              showSearch
-              value={`upToDateId: ${valueState.upToDateId}`}
-              placeholder={`upToDateId: ${unicState[0].upToDateId}`}
-              style={{ width: "inherits", minWidth: "100%" }}
-              defaultActiveFirstOption={false}
-              showArrow={true}
-              filterOption={true}
-              onSearch={handleSearch}
-              onChange={(e: any) => handleChange(e, "upToDateId")}
-              notFoundContent={null}
-            >
-              {select.map((i: any, id: any) => (
-                <Option value={i} key={i}>
-                  {i}
-                </Option>
-              ))}
-            </Select>
-          </div>
-          <div
-            onClick={() => handleClick("medScapeId")}
-            style={{ width: "100%" }}
-          >
-            <Select
-              showSearch
-              value={`medScapeId: ${valueState.medScapeId}`}
-              placeholder={`medScapeId: ${unicState[0].medScapeId}`}
-              style={{ width: "inherits", minWidth: "100%" }}
-              defaultActiveFirstOption={false}
-              showArrow={true}
-              filterOption={true}
-              onSearch={handleSearch}
-              onChange={(e: any) => handleChange(e, "medScapeId")}
               notFoundContent={null}
             >
               {select.map((i: any, id: any) => (

@@ -14,7 +14,7 @@ function createCtxUseState<A>(defaultValue: A) {
   return [ctx, Provider] as const;
 }
 
-const State = {
+export const State = {
   gtn: [""],
   irc: [""],
   _id: "",
@@ -31,6 +31,7 @@ const State = {
   upToDateId: "",
   medScapeId: "",
   faBrandName: "",
+  enBrandName:"",
   enName: "",
   faName: "",
   volume: "",
@@ -41,6 +42,7 @@ const State = {
   producer: "",
   conversationalName: "",
   priceHistory: [""]
+
 };
 
 export const [ValueState, ValueStateProvider] = createCtxUseState(State);

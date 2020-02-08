@@ -326,6 +326,31 @@ export function DrawerBody() {
         </div>
 
         <div
+          onClick={() => handleClick("enBrandName")}
+          style={{ width: "100%" }}
+        >
+          <Select
+            showSearch
+            value={`enBrandName: ${valueState.enBrandName}`}
+            placeholder={`enBrandName: ${valueState.enBrandName}`}
+            style={{ width: "inherits", minWidth: "100%" }}
+            defaultActiveFirstOption={false}
+            showArrow={true}
+            filterOption={true}
+            onSearch={handleSearch}
+            onChange={(e: any) => handleChange(e, "enBrandName")}
+            notFoundContent={null}
+          >
+            {select.map((i: any, id: any) => (
+              <Option value={i} key={i}>
+                {i}
+              </Option>
+            ))}
+          </Select>
+        </div>
+
+
+        <div
           onClick={() => handleClick("faBrandName")}
           style={{ width: "100%" }}
         >
@@ -348,6 +373,8 @@ export function DrawerBody() {
             ))}
           </Select>
         </div>
+
+
         <div onClick={() => handleClick("enName")} style={{ width: "100%" }}>
           <Select
             showSearch

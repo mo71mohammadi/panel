@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Table, Alert, Button } from "antd";
+import { Table, Alert, Button, Upload, message } from "antd";
 import axios from "axios";
 import { TableData } from "./StateManager/tableDataState";
 import { SearchState } from "./StateManager/searchState";
@@ -77,9 +77,17 @@ export const MainTable = () => {
     });
   }
 
-  /*
+  function HandleExport() {
+    axios({
+      method: "post",
+      url: "http://45.92.95.69:5000/api/drugs/getAll",
+      data: { size: 20 }
+    })
+      .then((res: { data: any }) => {
+        setTableData(res.data.data);
+      })
+      .catch(() => console.log("Get Data Fail"));
 
-    function HandleExport() {
     setAction({
       ...action,
       isExport: false
@@ -107,8 +115,25 @@ export const MainTable = () => {
         link.remove();
       });
   };
-*/
-  function HandleImport() {}
+
+  const props = {
+    name: "file",
+    action: "http://45.92.95.69:5000/api/drugs/export",
+    headers: {
+      "content-type": "multipart/form-data"
+    },
+    onChange(info: any) {
+      if (info.file.status !== "uploading") {
+        console.log(info.file, info.fileList);
+      }
+      if (info.file.status === "done") {
+        message.success(`${info.file.name} file uploaded successfully`);
+      } else if (info.file.status === "error") {
+        message.error(`${info.file.name} file upload failed.`);
+      }
+    }
+  };
+
   return (
     <>
       <div style={{ width: "100%", marginBottom: 16 }}>
@@ -152,22 +177,21 @@ export const MainTable = () => {
         >
           Reset Table
         </Button>
-
         <CSVLink
           data={tableData}
           filename={"drgExport.xlsx"}
           style={{ marginRight: 16 }}
         >
-          <Button style={{ width: "100%", marginLeft: 16 }}>Export</Button>
+          <Button style={{ width: "100%", marginLeft: 16 }}>
+            {"Export Based Search"}
+          </Button>
         </CSVLink>
-        <Button
-          style={{ width: "8.3%", marginLeft: 16 }}
-          type="default"
-          block
-          onClick={HandleImport}
-        >
-          Import
-        </Button>
+        <Upload {...props} style={{ width: "25%", marginLeft: 16 }}>
+          <Button style={{ width: "100%", marginLeft: 0 }} type="default" block>
+            Import
+          </Button>
+        </Upload>
+        ,
       </div>
       ;
       <div>

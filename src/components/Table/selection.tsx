@@ -1,16 +1,18 @@
-import React, { useContext } from "react";
-import { Select } from "antd";
+import React, { useContext, useState } from "react";
+import { Select, Button } from "antd";
 import Search from "antd/lib/input/Search";
 import { SearchState, SearchProvider } from "./StateManager/searchState";
 import { pagination } from "./StateManager/paginationState";
 import axios from "axios";
 import { message } from "antd";
+import { CSVLink } from "react-csv";
 
 const { Option } = Select;
 
 export function Selecto() {
   const { action, setAction } = React.useContext(SearchState);
   const { pagi, setPagi } = useContext(pagination);
+  const [state, setstate] = useState([]);
 
   function handleChange(value: any) {
     console.log(`selected ${value}`);
@@ -24,7 +26,7 @@ export function Selecto() {
     })
       .then((res: { data: any }) => {
         setAction({ ...action, subject: value, isSearch: true });
-
+        setstate(res.data.data);
         console.log("res.data.data", res.data.data);
         message.success(
           `We found ${res.data.count} item Related with ${value}`
@@ -48,13 +50,22 @@ export function Selecto() {
   }
 
   return (
-    <div>
+    <div style={{ display: "flex", flexDirection: "row" }}>
       <SearchProvider>
+        <Search
+          placeholder="input search text"
+          onSearch={HandleSearch}
+          onChange={e => setAction({ ...action, input: e.target.value })}
+          enterButton
+          size="large"
+          style={{ width: "50%" }}
+        />
+
         <Select
           placeholder={action.subject}
-          defaultValue={action.subject}
+          defaultValue="Select Subject"
           value={action.subject}
-          style={{ width: "25%" }}
+          style={{ width: "25%", marginLeft: 8 }}
           onChange={handleChange}
           size="large"
           defaultActiveFirstOption={true}
@@ -89,14 +100,15 @@ export function Selecto() {
           <Option value="priceHistory">priceHistory</Option>
         </Select>
 
-        <Search
-          placeholder="input search text"
-          onSearch={HandleSearch}
-          onChange={e => setAction({ ...action, input: e.target.value })}
-          enterButton
-          size="large"
-          style={{ width: "75%" }}
-        />
+        <CSVLink
+          data={state.toLocaleString()}
+          filename={"drgExport.xlsx"}
+          style={{ width: "25%", marginRight: 0, marginLeft: 8 }}
+        >
+          <Button style={{ width: "100%" }} size="large" type="danger">
+            {"Export Based Subject"}
+          </Button>
+        </CSVLink>
       </SearchProvider>
     </div>
   );

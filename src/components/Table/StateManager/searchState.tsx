@@ -16,10 +16,11 @@ function createCtxUseState<A>(defaultValue: A) {
 }
 
 const State = {
-  input: "",
-  subject: "",
+  // input: "",
+  filters: {},
+  // subject: "",
   initSubject:"Select Item",
-  isSearch: false,
+  // isSearch: false,
   isReset: false,
   isDelete: false,
   isEdit: false,

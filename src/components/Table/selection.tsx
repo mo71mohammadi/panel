@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, {useContext, useEffect, useState} from "react";
 import { Select, Button } from "antd";
 import Search from "antd/lib/input/Search";
 import { SearchState, SearchProvider } from "./StateManager/searchState";
@@ -11,65 +11,33 @@ const { Option } = Select;
 
 export function Selecto() {
   const { action, setAction } = React.useContext(SearchState);
-  const { pagi, setPagi } = useContext(pagination);
   const [state, setstate] = useState([]);
-
-  function handleChange(value: any) {
-    console.log(`selected ${value}`);
-    const data: any = {
-      size: 20
-    };
-    axios({
-      method: "GET",
-      url: `http://45.92.95.69:5000/api/drugs/distinct?item=${value}`,
-      data: data
-    })
-      .then((res: { data: any }) => {
-        setAction({ ...action, subject: value, isSearch: true });
-        setstate(res.data.data);
-        console.log("res.data.data", res.data.data);
-        message.success(
-          `We found ${res.data.count} item Related with ${value}`
-        );
-      })
-      .catch(() => console.log("Get Data Fail"));
-  }
+  const [obj, setObj] = useState({key: '', value: null});
+  const [change, setChange] = useState({key: '', value: null});
 
   function HandleSearch() {
-    setPagi({
-      pageSize: pagi.pageSize,
-      pageCurrent: 0
-    });
-
-    setAction({
-      ...action,
-      input: action.input,
-      subject: action.subject,
-      isSearch: true
-    });
+    if (obj.value !== change.value || obj.key !== change.key) {
+      const filter: any = {page: 1};
+      if (obj.key) filter[obj.key] = obj.value;
+      else delete filter.page;
+      setAction({...action, filters: filter});
+      setChange({key: obj.key, value: obj.value})
+    }
   }
 
   return (
     <div style={{ display: "flex", flexDirection: "row" }}>
       <SearchProvider>
-        <Search
-          placeholder="input search text"
-          onSearch={HandleSearch}
-          onChange={e => setAction({ ...action, input: e.target.value })}
-          enterButton
-          size="large"
-          style={{ width: "50%" }}
-        />
-
         <Select
-          placeholder={action.subject}
+          placeholder={obj.key}
           defaultValue="Select Subject"
-          value={action.subject}
-          style={{ width: "25%", marginLeft: 8 }}
-          onChange={handleChange}
+          value={obj.key}
+          style={{ width: "25%", marginRight: 8 }}
+          onChange={(e:any) => setObj({...obj, key: e})}
           size="large"
           defaultActiveFirstOption={true}
         >
+          <Option value="">All</Option>
           <Option value="eRx">eRx</Option>
           <Option value="genericCode">genericCode</Option>
           <Option value="enBrandName">enBrandName</Option>
@@ -99,16 +67,24 @@ export function Selecto() {
           <Option value="atc">atc</Option>
           <Option value="priceHistory">priceHistory</Option>
         </Select>
+        <Search
+            placeholder="input search text"
+            onSearch={HandleSearch}
+            onChange={(e:any) => setObj({...obj, value: e.target.value})}
+            enterButton
+            size="large"
+            style={{ width: "75%" }}
+        />
 
-        <CSVLink
-          data={state.toLocaleString()}
-          filename={"drgExport.xlsx"}
-          style={{ width: "25%", marginRight: 0, marginLeft: 8 }}
-        >
-          <Button style={{ width: "100%" }} size="large" type="danger">
-            {"Export Based Subject"}
-          </Button>
-        </CSVLink>
+        {/*<CSVLink*/}
+        {/*  data={state.toLocaleString()}*/}
+        {/*  filename={"drgExport.xlsx"}*/}
+        {/*  style={{ width: "25%", marginRight: 0, marginLeft: 8 }}*/}
+        {/*>*/}
+        {/*  <Button style={{ width: "100%" }} size="large" type="danger">*/}
+        {/*    {"Export Based Subject"}*/}
+        {/*  </Button>*/}
+        {/*</CSVLink>*/}
       </SearchProvider>
     </div>
   );

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, {useContext, useState} from "react";
 import {
   Input,
   Button,
@@ -34,7 +34,7 @@ export function Columns() {
   const { pagi, setPagi } = useContext(pagination);
   const { action, setAction } = React.useContext(SearchState);
   const { valueState, setValueState } = useContext(ValueState);
-
+  const [filters, setFilters] = useState({});
   const { openDrawer, setOpenDrawer } = useContext(DrawerState);
 
   const getColumnSearchProps = (dataIndex: string) => ({
@@ -50,16 +50,19 @@ export function Columns() {
             const searchInput = node;
           }}
           placeholder={`Search ${dataIndex}`}
-          value={selectedKeys[0]}
-          onChange={e =>
-            setSelectedKeys(e.target.value ? [e.target.value] : [])
-          }
-          onPressEnter={() => HandleSearch(selectedKeys, confirm, dataIndex)}
+          value={selectedKeys}
+          onChange={e => {
+            setSelectedKeys(e.target.value);
+            const filter: any = {page: 1};
+            filter[dataIndex] = e.target.value;
+            setFilters({...filters, ...filter});
+          }}
+          onPressEnter={HandleSearch}
           style={{ width: 188, marginBottom: 8, display: "block" }}
         />
         <Button
           type="primary"
-          onClick={() => HandleSearch(selectedKeys, confirm, dataIndex)}
+          onClick={HandleSearch}
           icon="search"
           size="small"
           style={{ width: 90, marginRight: 8 }}
@@ -67,7 +70,13 @@ export function Columns() {
           Search
         </Button>
         <Button
-          onClick={() => handleReset(clearFilters)}
+          onClick={() => {
+            clearFilters();
+            const filter: any = filters;
+            delete filter[dataIndex] ;
+            setFilters({...filters, ...filter});
+            HandleReset();
+          }}
           size="small"
           style={{ width: 90 }}
         >
@@ -79,7 +88,6 @@ export function Columns() {
 
     // render: (text: any) => (searchedColumn === dataIndex ? searchText : text)
   });
-
   const columns = [
     {
       title: "eRx",
@@ -94,7 +102,7 @@ export function Columns() {
       render: function tag(params: any) {
         return <Tag color={"geekblue"}>{params}</Tag>;
       },
-      ...getColumnSearchProps("genericCode")
+      ...getColumnSearchProps("packageCode")
     },
     {
       title: "genericCode",
@@ -114,7 +122,6 @@ export function Columns() {
       key: "enName",
       ...getColumnSearchProps("enName")
     },
-
     {
       title: "producer",
       dataIndex: "producer",
@@ -171,7 +178,9 @@ export function Columns() {
       }
     }
   ];
+  const handleChange = () => {
 
+  };
   function HandlePage(params: any) {
     return (
       <>
@@ -179,12 +188,10 @@ export function Columns() {
       </>
     );
   }
-
   function HandleDrawer(params: any) {
     setValueState(params);
     setOpenDrawer(true);
   }
-
   function HandleDelete(params: any) {
     axios({
       method: "post",
@@ -201,43 +208,11 @@ export function Columns() {
       })
       .catch(res => message.error(`Item ${res.data} `));
   }
-
-  function HandleSearch(...props: any) {
-    const param = { ...props };
-
-    setPagi({
-      pageSize: pagi.pageSize,
-      pageCurrent: 0
-    });
-
-    setAction({
-      ...action,
-      input: param[0],
-      subject: param[2],
-      isSearch: true
-    });
+  function HandleSearch() {
+    setAction({...action, filters: filters});
   }
-
-  const handleReset = (clearFilters: any) => {
-    clearFilters();
-
-    setPagi({
-      pageSize: pagi.pageSize,
-      pageCurrent: 1
-    });
-
-    setAction({
-      ...action,
-      input: action.input,
-      subject: action.subject,
-
-      isSearch: false,
-      isReset: true,
-      isDelete: false,
-      isEdit: false,
-      num: 0
-    });
-  };
-
+  function HandleReset() {
+    setAction({...action, filters: {...filters}});
+  }
   return columns;
 }

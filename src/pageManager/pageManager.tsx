@@ -7,7 +7,8 @@ import {
   useHistory,
   useLocation
 } from "react-router-dom";
-import { EditPage } from "./pages/editPage";
+import EditPage from "./pages/editPage";
+import  MainTable  from "./pages/mainTable";
 
 function PageManager() {
   const locate = window.location.pathname;
@@ -16,7 +17,8 @@ function PageManager() {
 
   return (
     <Switch>
-      <Route path={"/edit"}  />
+      <Route exact path="/" component={MainTable} />
+      <Route path="/edit" component={EditPage} />
     </Switch>
   );
 }

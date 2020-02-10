@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react";
+import React, { useContext, useState } from "react";
 import {
   Input,
   Button,
@@ -28,6 +28,8 @@ import {
   Link,
   NavLink
 } from "react-router-dom";
+import EditPage from "../../pageManager/pages/editPage";
+import { PageState } from "../../pageManager/pages/editState";
 
 export function Columns() {
   const { tableData, setTableData } = useContext(TableData);
@@ -36,6 +38,7 @@ export function Columns() {
   const { valueState, setValueState } = useContext(ValueState);
   const [filters, setFilters] = useState({});
   const { openDrawer, setOpenDrawer } = useContext(DrawerState);
+  const { pageState, setPageState } = useContext(PageState);
 
   const getColumnSearchProps = (dataIndex: string) => ({
     filterDropdown: ({
@@ -53,9 +56,9 @@ export function Columns() {
           value={selectedKeys}
           onChange={e => {
             setSelectedKeys(e.target.value);
-            const filter: any = {page: 1};
+            const filter: any = { page: 1 };
             filter[dataIndex] = e.target.value;
-            setFilters({...filters, ...filter});
+            setFilters({ ...filters, ...filter });
           }}
           onPressEnter={HandleSearch}
           style={{ width: 188, marginBottom: 8, display: "block" }}
@@ -73,8 +76,8 @@ export function Columns() {
           onClick={() => {
             clearFilters();
             const filter: any = filters;
-            delete filter[dataIndex] ;
-            setFilters({...filters, ...filter});
+            delete filter[dataIndex];
+            setFilters({ ...filters, ...filter });
             HandleReset();
           }}
           size="small"
@@ -137,31 +140,15 @@ export function Columns() {
         }
 
         return (
-          <Router>
-            <Icon
-              type="edit"
-              theme="twoTone"
-              onClick={() => HandleDrawer(record)}
-            />
-
-            <Drawer
-              placement={"left"}
-              closable={true}
-              onClose={onClose}
-              visible={openDrawer}
-              width={"40%"}
-
+          <>
+            <Button
+              type="default"
+              shape="circle"
+              icon="edit"
+              onClick={() => setPageState(2)}
             >
-              <div style={{ marginTop: 12, marginBottom: 8 }}>
-                <Alert
-                  message={`Edit Item: ${valueState._id}`}
-                  type="success"
-                />
-              </div>
-              <div>
-                <DrawerBody />
-              </div>
-            </Drawer>
+              <Link to="/edit" />
+            </Button>
 
             <Divider type="vertical" />
 
@@ -173,14 +160,12 @@ export function Columns() {
                 <Icon type="delete" theme="twoTone" twoToneColor="#eb2f96" />
               </Popconfirm>
             ) : null}
-          </Router>
+          </>
         );
       }
     }
   ];
-  const handleChange = () => {
-
-  };
+  const handleChange = () => {};
   function HandlePage(params: any) {
     return (
       <>
@@ -209,10 +194,10 @@ export function Columns() {
       .catch(res => message.error(`Item ${res.data} `));
   }
   function HandleSearch() {
-    setAction({...action, filters: filters});
+    setAction({ ...action, filters: filters });
   }
   function HandleReset() {
-    setAction({...action, filters: {...filters}});
+    setAction({ ...action, filters: { ...filters } });
   }
   return columns;
 }

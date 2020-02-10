@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, Fragment, useContext } from "react";
 import "./App.css";
 import { Layout, Menu, Icon, Breadcrumb } from "antd";
 import "antd/dist/antd.css";
-
-import { TableDRG } from "./components/Table";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { PageManager } from "./pageManager";
 
 const { Header, Sider, Content, Footer } = Layout;
 
@@ -15,55 +15,68 @@ const App = () => {
   }
 
   return (
-    <div className="App">
-      <Layout style={{ minHeight: "100vh", direction: "rtl" }}>
-        <Sider
-          collapsible
-          collapsed={state}
-          onCollapse={onCollapse}
-          style={{ direction: "rtl", position: "sticky" }}
-        >
-          <div className="logo" />
-          <Menu theme="dark" defaultSelectedKeys={["1"]} mode="inline">
-            <Menu.Item key="1">
-              <Icon type="pie-chart" className="icon" />
-              <span>منو ۱</span>
-            </Menu.Item>
-            <Menu.Item key="2">
-              <Icon type="desktop" className="icon" />
-              <span>منو ۲</span>
-            </Menu.Item>
+    <Router>
+      <div className="App">
+        <Layout style={{ minHeight: "100vh", direction: "rtl" }}>
+          <Sider
+            collapsible
+            collapsed={state}
+            onCollapse={onCollapse}
+            style={{ direction: "rtl", position: "sticky" }}
+          >
+            <div className="logo" />
 
-            <Menu.Item key="9">
-              <Icon type="file" className="icon" />
-              <span>منو ۳</span>
-            </Menu.Item>
-          </Menu>
-        </Sider>
-        <Layout style={{ direction: "rtl" }}>
-          <Header style={{ width: "100%", background: "#fff" }}>
-            <Menu
-              theme="light"
-              mode="horizontal"
-              defaultSelectedKeys={["2"]}
-              style={{ lineHeight: "64px" }}
-            >
-              <Menu.Item key="1">صفحه اصلی</Menu.Item>
-              <Menu.Item key="2">جستجو</Menu.Item>
-              <Menu.Item key="3">خدمات ویژه</Menu.Item>
+            <Menu theme="dark" defaultSelectedKeys={["10"]} mode="inline">
+              <Menu.Item key="0"></Menu.Item>
+
+              <Menu.Item key="1">
+                <Icon type="pic-left" />
+                <span style={{ margin: 8 }}>All Items</span>
+                <Link to="/" />
+              </Menu.Item>
+
+              <Menu.Item key="2">
+                <Icon type="form" />
+                <span style={{ margin: 8 }}>Edit</span>
+                <Link to="/edit" />
+              </Menu.Item>
+
+              <Menu.Item key="3">
+                <Icon type="barcode" />
+                <span style={{ margin: 8 }}>ATC</span>
+                <Link to="/edit" />
+              </Menu.Item>
+
+              <Menu.Item key="4">
+                <Icon type="vertical-align-middle" />
+                <span style={{ margin: 8 }}>Intraction</span>
+                <Link to="/edit" />
+              </Menu.Item>
+
+              <Menu.Item key="5">
+                <Icon type="strikethrough" />
+                <span style={{ margin: 8 }}>Prices</span>
+                <Link to="/edit" />
+              </Menu.Item>
+
+              <Menu.Item key="6">
+                <Icon type="desktop" />
+                <span style={{ margin: 8 }}>Edit</span>
+                <Link to="/edit" />
+              </Menu.Item>
             </Menu>
-          </Header>
-          <Content style={{ margin: "0 16px", direction: "ltr" }}>
-            <Breadcrumb style={{ margin: "16px 0" }}></Breadcrumb>
-
-            <div>
-              <TableDRG />
+          </Sider>
+          <Layout>
+            <div style={{ margin: 16 }}>
+              <Content style={{ margin: "0 16px", direction: "ltr" }}>
+                <PageManager />
+              </Content>
+              <Footer style={{ textAlign: "center" }}>Drugo 2020</Footer>
             </div>
-          </Content>
-          <Footer style={{ textAlign: "center" }}>Drugo 2020</Footer>
+          </Layout>
         </Layout>
-      </Layout>
-    </div>
+      </div>
+    </Router>
   );
 };
 

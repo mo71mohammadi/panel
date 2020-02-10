@@ -7,8 +7,15 @@ import {
   useHistory,
   useLocation
 } from "react-router-dom";
-import EditPage from "./pages/editPage";
-import  MainTable  from "./pages/mainTable";
+import EditPage from "./pages/prices";
+import MainPage from "./pages/main";
+import {
+  ATCsPage,
+  InteractionPage,
+  PricesPage,
+  LoginPage,
+  SignUpPage
+} from "./pages";
 
 function PageManager() {
   const locate = window.location.pathname;
@@ -17,8 +24,14 @@ function PageManager() {
 
   return (
     <Switch>
-      <Route exact path="/" component={MainTable} />
-      <Route path="/edit" component={EditPage} />
+      <Route exact path="/" component={MainPage} />
+      <Route path="/ATCs" component={ATCsPage} />
+      <Route path="/Interaction" component={InteractionPage} />
+      <Route path="/Prices" component={PricesPage} />
+      <Route path="/Login" component={LoginPage} />
+      <Route path="/SignUp" component={SignUpPage} />
+
+      <Route path="/Edit" component={EditPage} />
     </Switch>
   );
 }

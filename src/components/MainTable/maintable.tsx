@@ -17,11 +17,13 @@ export const MainTable = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-      setLoading(true);
-      axios({
+    setLoading(true);
+    axios({
       method: "post",
       url: "http://45.92.95.69:5000/api/drugs/getAll",
-      data: action.isExport ? tableData : {size: pagi.pageSize, page: pagi.pageCurrent, ...action.filters}
+      data: action.isExport
+        ? tableData
+        : { size: pagi.pageSize, page: pagi.pageCurrent, ...action.filters }
     })
       .then((res: { data: any }) => {
         setTableData(res.data.data);
@@ -31,36 +33,36 @@ export const MainTable = () => {
         setAction({ ...action, num: res.data.count });
       })
       .catch(() => console.log("Get Data Fail"));
-  }, [
-    action.isDelete,
-    action.filters
-  ]);
+  }, [action.isDelete, action.filters]);
 
   const handleTableChange = (pagination: any, filters: any, sorter: any) => {
     setPagi({
       pageSize: pagination.pageSize,
       pageCurrent: pagination.current
     });
-    setAction({...action, filters: {...action.filters, page: pagination.current}})
+    setAction({
+      ...action,
+      filters: { ...action.filters, page: pagination.current }
+    });
   };
   const handelExport = () => {
-      setLoading(true);
-      axios
-        .post("http://45.92.95.69:5000/api/drugs/export", action.filters, {
-          responseType: "blob"
-        })
-        .then((response: any) => {
-          const downloadUrl = window.URL.createObjectURL(
-              new Blob([response.data])
-          );
-          const link = document.createElement("a");
-          link.href = downloadUrl;
-          link.setAttribute("download", "dugs.xlsx"); //any other extension
-          document.body.appendChild(link);
-          link.click();
-          link.remove();
-          setLoading(false);
-        });
+    setLoading(true);
+    axios
+      .post("http://45.92.95.69:5000/api/drugs/export", action.filters, {
+        responseType: "blob"
+      })
+      .then((response: any) => {
+        const downloadUrl = window.URL.createObjectURL(
+          new Blob([response.data])
+        );
+        const link = document.createElement("a");
+        link.href = downloadUrl;
+        link.setAttribute("download", "dugs.xlsx"); //any other extension
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        setLoading(false);
+      });
   };
   const props = {
     name: "file",
@@ -87,7 +89,7 @@ export const MainTable = () => {
       </div>
       <div>
         <Table
-          style={{
+          bodyStyle={{
             textAlign: "center",
             alignContent: "center",
             alignItems: "center"
@@ -103,14 +105,14 @@ export const MainTable = () => {
             defaultCurrent: 1,
             current: pagi.pageCurrent
           }}
-          ///scroll={{ y: 400 }}
+          scroll={{ x: 600 }}
           onChange={handleTableChange}
         />
       </div>
       <div
         style={{
           marginTop: 16,
-          marginBottom: 16,
+          marginBottom: 8,
           display: "flex",
           flexDirection: "row"
         }}

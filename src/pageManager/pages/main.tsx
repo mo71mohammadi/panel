@@ -1,8 +1,8 @@
 import React from 'react'
-import { TableDRG } from '../../components/Table'
+import { TableDRG } from '../../components/MainTable'
 
 
-export default function MainTable(params:any) {
+export default function MainPage() {
     return(
         <div>
             <TableDRG/>

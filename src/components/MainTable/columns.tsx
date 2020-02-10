@@ -28,8 +28,7 @@ import {
   Link,
   NavLink
 } from "react-router-dom";
-import EditPage from "../../pageManager/pages/editPage";
-import { PageState } from "../../pageManager/pages/editState";
+import EditPage from "../../pageManager/pages/prices";
 
 export function Columns() {
   const { tableData, setTableData } = useContext(TableData);
@@ -38,7 +37,6 @@ export function Columns() {
   const { valueState, setValueState } = useContext(ValueState);
   const [filters, setFilters] = useState({});
   const { openDrawer, setOpenDrawer } = useContext(DrawerState);
-  const { pageState, setPageState } = useContext(PageState);
 
   const getColumnSearchProps = (dataIndex: string) => ({
     filterDropdown: ({
@@ -145,10 +143,26 @@ export function Columns() {
               type="default"
               shape="circle"
               icon="edit"
-              onClick={() => setPageState(2)}
+              onClick={() => HandleDrawer(record)}
+            ></Button>
+
+            <Drawer
+              placement={"left"}
+              closable={true}
+              onClose={onClose}
+              visible={openDrawer}
+              width={"40%"}
             >
-              <Link to="/edit" />
-            </Button>
+              <div style={{ marginTop: 12, marginBottom: 8 }}>
+                <Alert
+                  message={`Edit Item: ${valueState._id}`}
+                  type="success"
+                />
+              </div>
+              <div>
+                <DrawerBody />
+              </div>
+            </Drawer>
 
             <Divider type="vertical" />
 

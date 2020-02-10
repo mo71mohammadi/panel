@@ -67,7 +67,7 @@ export function DrawerBody() {
             <Select
               showSearch
               value={`eRx: ${valueState.eRx}`}
-               placeholder={`eRx: ${valueState.eRx}`}
+              placeholder={`eRx: ${valueState.eRx}`}
               style={{ width: "inherits", minWidth: "100%" }}
               defaultActiveFirstOption={true}
               showArrow={true}
@@ -109,10 +109,7 @@ export function DrawerBody() {
         </div>
 
         <div style={{ display: "flex", flexDirection: "row", width: "100%" }}>
-          <div
-            onClick={() => handleClick("packageCode")}
-            style={{ width: "100%" }}
-          >
+          <div style={{ width: "100%" }}>
             <Select
               showSearch
               value={`packageCode: ${valueState.packageCode}`}
@@ -125,11 +122,14 @@ export function DrawerBody() {
               onChange={(e: any) => handleChange(e, "packageCode")}
               notFoundContent={null}
             >
-              {select.map((i: any, id: any) => (
-                <Option value={i} key={i}>
-                  {i}
-                </Option>
-              ))}
+              <Option value="A">A</Option>
+              <Option value="B">B</Option>
+              <Option value="C">C</Option>
+              <Option value="D">D</Option>
+              <Option value="E">E</Option>
+              <Option value="F">F</Option>
+              <Option value="G">G</Option>
+              <Option value="H">H</Option>
             </Select>
           </div>
           <div onClick={() => handleClick("gtn")} style={{ width: "100%" }}>
@@ -349,7 +349,6 @@ export function DrawerBody() {
           </Select>
         </div>
 
-
         <div
           onClick={() => handleClick("faBrandName")}
           style={{ width: "100%" }}
@@ -373,7 +372,6 @@ export function DrawerBody() {
             ))}
           </Select>
         </div>
-
 
         <div onClick={() => handleClick("enName")} style={{ width: "100%" }}>
           <Select

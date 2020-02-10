@@ -14,16 +14,24 @@ export function Columns() {
       dataIndex: "enRoute",
       key: "enRoute",
       render: function tag(params: any) {
-        return <Tag color={"green"}>{params}</Tag>;
+        return <Tag color={"red"}>{params}</Tag>;
       }
       // ...getColumnSearchProps("GTIN")
     },
     {
-      title: "ATCsCode",
-      dataIndex: "atc[0].code",
-      key: "atc[0].code"
+      title: "upToDateId",
+      dataIndex: "upToDateId",
+      key: "upToDateId"
       // ...getColumnSearchProps("PackageCount")
-    }
+    },
+    {
+      title: "medScapeId",
+      dataIndex: "medScapeId",
+      key: "medScapeId"
+      // ...getColumnSearchProps("cPrice")
+    },
+   
+    
   ];
 
   return columns;

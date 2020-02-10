@@ -3,11 +3,8 @@ import { Table, Alert, Button, Upload, message } from "antd";
 import axios from "axios";
 import { Columns } from "./columns";
 
-export default function ATCsTable() {
-
-
-  const [tableData, setTableData] = useState([{enName:"", enRoute:"", atc:[]}]);
-
+export default function InteractionTable() {
+  const [tableData, setTableData] = useState([]);
   const [pagi, setPagi] = useState({
     pageSize: 20,
     pageCurrent: 1
@@ -19,7 +16,7 @@ export default function ATCsTable() {
     setLoading(true);
     axios({
       method: "post",
-      url: "http://45.92.95.69:5000/api/drugs/atc",
+      url: "http://45.92.95.69:5000/api/drugs/interaction",
       data: { size: pagi.pageSize, page: pagi.pageCurrent }
     })
       .then((res: { data: any }) => {

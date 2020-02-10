@@ -52,7 +52,7 @@ const App = () => {
 
               <Menu.Item key="2">
                 <Icon type="barcode" />
-                <span style={{ margin: 8 }}>{"بارکد ها "}</span>
+                <span style={{ margin: 8 }}>{" ATCs "}</span>
                 <Link to="/ATCs" />
               </Menu.Item>
 

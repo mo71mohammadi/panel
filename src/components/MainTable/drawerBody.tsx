@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Button, Select, message } from "antd";
+import { Button, Select, message, Input, Icon } from "antd";
 import axios from "axios";
 
 import { ValueState } from "./StateManager/valueState";
@@ -9,6 +9,7 @@ export function DrawerBody() {
   const { valueState, setValueState } = useContext(ValueState);
   const [select, setSelect] = useState([]);
   const [option, setOption] = React.useState({ type: null, list: [] });
+  const [input, setinput] = useState([]);
 
   function handleClick(value: any) {
     if (!option.type || option.type !== value) {
@@ -59,10 +60,32 @@ export function DrawerBody() {
       .catch(() => console.log("Get Data Fail"));
   }
 
+  function HandleInputAddGTN(type: any) {
+    const newItem: any = valueState.gtn;
+    newItem.push(input);
+    setValueState((e: any) => ({ ...valueState, gtn: newItem }));
+    setinput([]);
+  }
+
+  function HandleInputAddIRC(type: any) {
+    const newItem: any = valueState.irc;
+    newItem.push(input);
+    setValueState((e: any) => ({ ...valueState, irc: newItem }));
+  }
+
   return (
     <>
-      <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
-        <div style={{ display: "flex", flexDirection: "row", width: "100%" }}>
+      <div
+        style={{ display: "flex", flexDirection: "column", width: "inherits" }}
+      >
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            width: "100%",
+            marginBottom: 4
+          }}
+        >
           <div onClick={() => handleClick("eRx")} style={{ width: "100%" }}>
             <Select
               showSearch
@@ -108,7 +131,14 @@ export function DrawerBody() {
           </div>
         </div>
 
-        <div style={{ display: "flex", flexDirection: "row", width: "100%" }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            width: "100%",
+            marginBottom: 4
+          }}
+        >
           <div style={{ width: "100%" }}>
             <Select
               showSearch
@@ -132,48 +162,94 @@ export function DrawerBody() {
               <Option value="H">H</Option>
             </Select>
           </div>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            width: "100%",
+            marginBottom: 4
+          }}
+        >
           <div onClick={() => handleClick("gtn")} style={{ width: "100%" }}>
-            <Select
-              showSearch
-              value={`gtn: ${valueState.gtn}`}
-              placeholder={`gtn: ${valueState.gtn}`}
-              style={{ width: "inherits", minWidth: "100%" }}
-              defaultActiveFirstOption={false}
-              showArrow={true}
-              filterOption={true}
-              onSearch={handleSearch}
-              onChange={(e: any) => handleChange(e, "gtn")}
-              notFoundContent={null}
-            >
-              {select.map((i: any, id: any) => (
-                <Option value={i} key={i}>
-                  {i}
-                </Option>
-              ))}
-            </Select>
+            <Input
+              addonBefore={
+                <Select
+                  showSearch
+                  value={`gtn: ${valueState.gtn[0]}`}
+                  placeholder={`gtn: ${valueState.gtn}`}
+                  style={{ width: "inherits", minWidth: "100%" }}
+                  defaultActiveFirstOption={false}
+                  showArrow={true}
+                  filterOption={true}
+                  onSearch={handleSearch}
+                  // onChange={(e: any) => handleChange(e, "gtn")}
+                  notFoundContent={null}
+                >
+                  {valueState.gtn.map((i: any, id: any) => (
+                    <Option value={i} key={i}>
+                      {i}
+                    </Option>
+                  ))}
+                </Select>
+              }
+              addonAfter={
+                <Icon type="plus" onClick={() => HandleInputAddGTN("gtn")} />
+              }
+              placeholder={`Add GTN +: ${valueState.gtn}`}
+              onChange={(e: any) => setinput(e.target.value)}
+              onPressEnter={() => HandleInputAddGTN("gtn")}
+            />
           </div>
         </div>
-        <div style={{ display: "flex", flexDirection: "row", width: "100%" }}>
+
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            width: "100%",
+            marginBottom: 4
+          }}
+        >
           <div onClick={() => handleClick("irc")} style={{ width: "100%" }}>
-            <Select
-              showSearch
-              value={`irc: ${valueState.irc}`}
-              placeholder={`irc: ${valueState.irc}`}
-              style={{ width: "inherits", minWidth: "100%" }}
-              defaultActiveFirstOption={false}
-              showArrow={true}
-              filterOption={true}
-              onSearch={handleSearch}
-              onChange={(e: any) => handleChange(e, "irc")}
-              notFoundContent={null}
-            >
-              {select.map((i: any, id: any) => (
-                <Option value={i} key={i}>
-                  {i}
-                </Option>
-              ))}
-            </Select>
+            <Input
+              addonBefore={
+                <Select
+                  showSearch
+                  value={`irc: ${valueState.irc[0]}`}
+                  placeholder={`irc: ${valueState.irc}`}
+                  style={{ width: "inherits", minWidth: "100%" }}
+                  defaultActiveFirstOption={false}
+                  showArrow={true}
+                  filterOption={true}
+                  onSearch={handleSearch}
+                  notFoundContent={null}
+                >
+                  {valueState.irc.map((i: any, id: any) => (
+                    <Option value={i} key={i}>
+                      {i}
+                    </Option>
+                  ))}
+                </Select>
+              }
+              addonAfter={
+                <Icon type="plus" onClick={() => HandleInputAddIRC("irc")} />
+              }
+              placeholder={`Add IRC +: ${valueState.irc}`}
+              onChange={(e: any) => setinput(e.target.value)}
+              onPressEnter={() => HandleInputAddIRC("irc")}
+            />
           </div>
+        </div>
+
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            width: "100%",
+            marginBottom: 4
+          }}
+        >
           <div
             onClick={() => handleClick("packageType")}
             style={{ width: "100%" }}
@@ -239,7 +315,14 @@ export function DrawerBody() {
             ))}
           </Select>
         </div>
-        <div style={{ display: "flex", flexDirection: "row", width: "100%" }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            width: "100%",
+            marginBottom: 4
+          }}
+        >
           <div onClick={() => handleClick("faRoute")} style={{ width: "100%" }}>
             <Select
               showSearch
@@ -281,8 +364,18 @@ export function DrawerBody() {
             </Select>
           </div>
         </div>
-        <div style={{ display: "flex", flexDirection: "row", width: "100%" }}>
-          <div onClick={() => handleClick("faForm")} style={{ width: "100%" }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            width: "100%",
+            marginBottom: 4
+          }}
+        >
+          <div
+            onClick={() => handleClick("faForm")}
+            style={{ width: "100%", marginBottom: 4 }}
+          >
             <Select
               showSearch
               value={`faForm: ${valueState.faForm}`}
@@ -302,7 +395,10 @@ export function DrawerBody() {
               ))}
             </Select>
           </div>
-          <div onClick={() => handleClick("atcCode")} style={{ width: "100%" }}>
+          <div
+            onClick={() => handleClick("atcCode")}
+            style={{ width: "100%", marginBottom: 4 }}
+          >
             <Select
               showSearch
               disabled
@@ -327,7 +423,7 @@ export function DrawerBody() {
 
         <div
           onClick={() => handleClick("enBrandName")}
-          style={{ width: "100%" }}
+          style={{ width: "100%", marginBottom: 4 }}
         >
           <Select
             showSearch
@@ -351,7 +447,7 @@ export function DrawerBody() {
 
         <div
           onClick={() => handleClick("faBrandName")}
-          style={{ width: "100%" }}
+          style={{ width: "100%", marginBottom: 4 }}
         >
           <Select
             showSearch
@@ -373,7 +469,10 @@ export function DrawerBody() {
           </Select>
         </div>
 
-        <div onClick={() => handleClick("enName")} style={{ width: "100%" }}>
+        <div
+          onClick={() => handleClick("enName")}
+          style={{ width: "100%", marginBottom: 4 }}
+        >
           <Select
             showSearch
             value={`enName: ${valueState.enName}`}
@@ -393,7 +492,14 @@ export function DrawerBody() {
             ))}
           </Select>
         </div>
-        <div style={{ display: "flex", flexDirection: "row", width: "100%" }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            width: "100%",
+            marginBottom: 4
+          }}
+        >
           <div onClick={() => handleClick("faName")} style={{ width: "100%" }}>
             <Select
               showSearch
@@ -414,7 +520,10 @@ export function DrawerBody() {
               ))}
             </Select>
           </div>
-          <div onClick={() => handleClick("volume")} style={{ width: "100%" }}>
+          <div
+            onClick={() => handleClick("volume")}
+            style={{ width: "100%", marginBottom: 4 }}
+          >
             <Select
               showSearch
               value={`volume: ${valueState.volume}`}
@@ -438,7 +547,7 @@ export function DrawerBody() {
 
         <div
           onClick={() => handleClick("licenseOwner")}
-          style={{ width: "100%" }}
+          style={{ width: "100%", marginBottom: 4 }}
         >
           <Select
             showSearch
@@ -461,7 +570,7 @@ export function DrawerBody() {
         </div>
         <div
           onClick={() => handleClick("countryBrandOwner")}
-          style={{ width: "100%" }}
+          style={{ width: "100%", marginBottom: 4 }}
         >
           <Select
             showSearch
@@ -485,7 +594,7 @@ export function DrawerBody() {
 
         <div
           onClick={() => handleClick("brandOwner")}
-          style={{ width: "100%" }}
+          style={{ width: "100%", marginBottom: 4 }}
         >
           <Select
             showSearch
@@ -508,7 +617,7 @@ export function DrawerBody() {
         </div>
         <div
           onClick={() => handleClick("countryProducer")}
-          style={{ width: "100%" }}
+          style={{ width: "100%", marginBottom: 4 }}
         >
           <Select
             showSearch
@@ -530,7 +639,10 @@ export function DrawerBody() {
           </Select>
         </div>
 
-        <div onClick={() => handleClick("producer")} style={{ width: "100%" }}>
+        <div
+          onClick={() => handleClick("producer")}
+          style={{ width: "100%", marginBottom: 4 }}
+        >
           <Select
             showSearch
             value={`producer: ${valueState.producer}`}
@@ -552,7 +664,7 @@ export function DrawerBody() {
         </div>
         <div
           onClick={() => handleClick("conversationalName")}
-          style={{ width: "100%" }}
+          style={{ width: "100%", marginBottom: 4 }}
         >
           <Select
             showSearch
@@ -574,7 +686,16 @@ export function DrawerBody() {
           </Select>
         </div>
 
-        <Button type="primary" icon="check" onClick={HandleEdit}>
+        <Button
+          type="primary"
+          icon="check"
+          onClick={HandleEdit}
+          style={{
+            width: "100%",
+            position: "sticky",
+            bottom: 0
+          }}
+        >
           Edit Item
         </Button>
       </div>

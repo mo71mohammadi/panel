@@ -19,16 +19,6 @@ import { DrawerBody } from "./drawerBody";
 import { ValueState } from "./StateManager/valueState";
 import { PageManager } from "../../pageManager";
 
-import {
-  BrowserRouter as Router,
-  BrowserRouter,
-  HashRouter,
-  Switch,
-  Route,
-  Link,
-  NavLink
-} from "react-router-dom";
-import EditPage from "../../pageManager/pages/prices";
 
 export function Columns() {
   const { tableData, setTableData } = useContext(TableData);

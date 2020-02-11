@@ -61,16 +61,7 @@ export default function ATCsTable() {
         />
       </div>
       <div style={{ width: "100%", display: "flex" }}>
-        <Button
-          style={{ width: "50%", marginRight: 4 }}
-          type="primary"
-          block
-          icon="sync"
-          size="large"
-          onClick={HandleClick}
-        >
-          {"Update Prices"}
-        </Button>
+      
 
         <Alert
           style={{ width: "50%" }}

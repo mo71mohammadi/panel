@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Tag } from "antd";
+import axios from "axios";
+import Search from "antd/lib/input/Search";
 
 export function Columns() {
+  //console.log("params", params);
+
   const columns = [
     {
       title: "enName",
@@ -21,7 +25,19 @@ export function Columns() {
     {
       title: "upToDateId",
       dataIndex: "upToDateId",
-      key: "upToDateId"
+      key: "upToDateId",
+      editable: true,
+
+      render: function tag(params: any) {
+        return (
+          <Search
+            placeholder={params}
+            onSearch={value => console.log(value)}
+            style={{ width: 200 }}
+          />
+        );
+      }
+
       // ...getColumnSearchProps("PackageCount")
     },
     {
@@ -29,9 +45,7 @@ export function Columns() {
       dataIndex: "medScapeId",
       key: "medScapeId"
       // ...getColumnSearchProps("cPrice")
-    },
-   
-    
+    }
   ];
 
   return columns;

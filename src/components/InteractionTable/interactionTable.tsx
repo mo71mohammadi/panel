@@ -9,8 +9,7 @@ export default function InteractionTable() {
       enName: "",
       enRoute: "",
       upToDateId: "",
-      medScapeId: "",
-      Interaction: { name: "", id: "" }
+      medScapeId: ""
     }
   ]);
   const [state, setState] = useState([{ name: "", id: "" }]);
@@ -23,7 +22,20 @@ export default function InteractionTable() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    axios({
+      method: "GET",
+      url: "http://45.92.95.69:5000/api/upToDate/name",
+      data: {}
+    })
+      .then((resp: any) => {
+        setState(resp.data);
+      })
+      .catch(() => console.log("Get upToDate Data Fail"));
+  }, []);
+
+  useEffect(() => {
     setLoading(true);
+
     axios({
       method: "post",
       url: "http://45.92.95.69:5000/api/drugs/interaction",
@@ -33,16 +45,6 @@ export default function InteractionTable() {
         setTableData(res.data.data);
         setCount({ total: res.data.count });
         setLoading(false);
-
-        axios({
-          method: "GET",
-          url: "http://45.92.95.69:5000/api/upToDate/name",
-          data: {}
-        })
-          .then((resp: any) => {
-            setState(resp.data);
-          })
-          .catch(() => console.log("Get upToDate Data Fail"));
       })
       .catch(() => console.log("Get Data Fail"));
   }, [pagi.pageCurrent]);

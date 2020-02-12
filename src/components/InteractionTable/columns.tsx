@@ -4,11 +4,6 @@ import Search from "antd/lib/input/Search";
 import axios from "axios";
 
 export function Columns(params: any) {
-  //const [state, setstate] = useState({ name: "", id: "" });
-
-  //const data = [{ alef: "aaaa", beh: "bbb" }];
-  console.log("params in Columns", params);
-
   const columns = [
     {
       title: "enName",
@@ -31,19 +26,12 @@ export function Columns(params: any) {
       key: "upToDateId",
       editable: true,
       render: function(index: number, record: any) {
-        const Name: any[] = params.find(
-          (id: any) => id.id === record.upToDateId
-        );
-
-        if (Name === undefined) {
-          console.log("undefined");
-        }
-        console.log("Name", Name);
-        console.log("record", record);
+        let Name: any = [{ name: "", id: "" }];
+        if (index) Name = params.find((id: any) => id.id === index);
 
         return (
           <Search
-            //placeholder={Name.name}
+            placeholder={Name.name}
             onSearch={value => console.log(value)}
             style={{ width: 200 }}
           />

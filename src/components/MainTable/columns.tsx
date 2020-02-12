@@ -19,7 +19,6 @@ import { DrawerBody } from "./drawerBody";
 import { ValueState } from "./StateManager/valueState";
 import { PageManager } from "../../pageManager";
 
-
 export function Columns() {
   const { tableData, setTableData } = useContext(TableData);
   const { pagi, setPagi } = useContext(pagination);

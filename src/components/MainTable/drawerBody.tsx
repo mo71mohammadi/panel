@@ -86,7 +86,7 @@ export function DrawerBody() {
             marginBottom: 4
           }}
         >
-          <div onClick={() => handleClick("eRx")} style={{ width: "100%" }}>
+          <div style={{ width: "100%" }}>
             <Select
               showSearch
               value={`eRx: ${valueState.eRx}`}
@@ -98,6 +98,7 @@ export function DrawerBody() {
               onSearch={handleSearch}
               onChange={(e: any) => handleChange(e, "eRx")}
               notFoundContent={null}
+              onMouseEnter={() => handleClick("eRx")}
             >
               {select.map((i: any, id: any) => (
                 <Option value={i} key={i}>
@@ -106,10 +107,7 @@ export function DrawerBody() {
               ))}
             </Select>
           </div>
-          <div
-            onClick={() => handleClick("genericCode")}
-            style={{ width: "100%" }}
-          >
+          <div style={{ width: "100%" }}>
             <Select
               showSearch
               value={`genericCode: ${valueState.genericCode}`}
@@ -121,6 +119,7 @@ export function DrawerBody() {
               onSearch={handleSearch}
               onChange={(e: any) => handleChange(e, "genericCode")}
               notFoundContent={null}
+              onMouseEnter={() => handleClick("genericCode")}
             >
               {select.map((i: any, id: any) => (
                 <Option value={i} key={i}>
@@ -171,7 +170,7 @@ export function DrawerBody() {
             marginBottom: 4
           }}
         >
-          <div onClick={() => handleClick("gtn")} style={{ width: "100%" }}>
+          <div style={{ width: "100%" }}>
             <Input
               addonBefore={
                 <Select
@@ -185,6 +184,7 @@ export function DrawerBody() {
                   onSearch={handleSearch}
                   // onChange={(e: any) => handleChange(e, "gtn")}
                   notFoundContent={null}
+                  onMouseEnter={() => handleClick("gtn")}
                 >
                   {valueState.gtn.map((i: any, id: any) => (
                     <Option value={i} key={i}>
@@ -211,7 +211,7 @@ export function DrawerBody() {
             marginBottom: 4
           }}
         >
-          <div onClick={() => handleClick("irc")} style={{ width: "100%" }}>
+          <div style={{ width: "100%" }}>
             <Input
               addonBefore={
                 <Select
@@ -224,6 +224,7 @@ export function DrawerBody() {
                   filterOption={true}
                   onSearch={handleSearch}
                   notFoundContent={null}
+                  onMouseEnter={() => handleClick("irc")}
                 >
                   {valueState.irc.map((i: any, id: any) => (
                     <Option value={i} key={i}>
@@ -250,10 +251,7 @@ export function DrawerBody() {
             marginBottom: 4
           }}
         >
-          <div
-            onClick={() => handleClick("packageType")}
-            style={{ width: "100%" }}
-          >
+          <div style={{ width: "100%" }}>
             <Select
               showSearch
               value={`packageType: ${valueState.packageType}`}
@@ -265,6 +263,7 @@ export function DrawerBody() {
               onSearch={handleSearch}
               onChange={(e: any) => handleChange(e, "packageType")}
               notFoundContent={null}
+              onMouseEnter={() => handleClick("packageType")}
             >
               {select.map((i: any, id: any) => (
                 <Option value={i} key={i}>
@@ -275,7 +274,7 @@ export function DrawerBody() {
           </div>
         </div>
 
-        <div onClick={() => handleClick("strength")} style={{ width: "100%" }}>
+        <div style={{ width: "100%" }}>
           <Select
             showSearch
             value={`strength: ${valueState.strength}`}
@@ -287,6 +286,7 @@ export function DrawerBody() {
             onSearch={handleSearch}
             onChange={(e: any) => handleChange(e, "strength")}
             notFoundContent={null}
+            onMouseEnter={() => handleClick("strength")}
           >
             {select.map((i: any, id: any) => (
               <Option value={i} key={i}>
@@ -295,7 +295,7 @@ export function DrawerBody() {
             ))}
           </Select>
         </div>
-        <div onClick={() => handleClick("enRoute")} style={{ width: "100%" }}>
+        <div style={{ width: "100%" }}>
           <Select
             showSearch
             value={`enRoute: ${valueState.enRoute}`}
@@ -307,6 +307,7 @@ export function DrawerBody() {
             onSearch={handleSearch}
             onChange={(e: any) => handleChange(e, "enRoute")}
             notFoundContent={null}
+            onMouseEnter={() => handleClick("enRoute")}
           >
             {select.map((i: any, id: any) => (
               <Option value={i} key={i}>
@@ -323,7 +324,7 @@ export function DrawerBody() {
             marginBottom: 4
           }}
         >
-          <div onClick={() => handleClick("faRoute")} style={{ width: "100%" }}>
+          <div style={{ width: "100%" }}>
             <Select
               showSearch
               value={`faRoute: ${valueState.faRoute}`}
@@ -335,6 +336,7 @@ export function DrawerBody() {
               onSearch={handleSearch}
               onChange={(e: any) => handleChange(e, "faRoute")}
               notFoundContent={null}
+              onMouseEnter={() => handleClick("faRoute")}
             >
               {select.map((i: any, id: any) => (
                 <Option value={i} key={i}>
@@ -343,7 +345,7 @@ export function DrawerBody() {
               ))}
             </Select>
           </div>
-          <div onClick={() => handleClick("enForm")} style={{ width: "100%" }}>
+          <div style={{ width: "100%" }}>
             <Select
               showSearch
               value={`enForm: ${valueState.enForm}`}
@@ -355,6 +357,7 @@ export function DrawerBody() {
               onSearch={handleSearch}
               onChange={(e: any) => handleChange(e, "enForm")}
               notFoundContent={null}
+              onMouseEnter={() => handleClick("enForm")}
             >
               {select.map((i: any, id: any) => (
                 <Option value={i} key={i}>
@@ -372,10 +375,7 @@ export function DrawerBody() {
             marginBottom: 4
           }}
         >
-          <div
-            onClick={() => handleClick("faForm")}
-            style={{ width: "100%", marginBottom: 4 }}
-          >
+          <div style={{ width: "100%", marginBottom: 4 }}>
             <Select
               showSearch
               value={`faForm: ${valueState.faForm}`}
@@ -387,6 +387,7 @@ export function DrawerBody() {
               onSearch={handleSearch}
               onChange={(e: any) => handleChange(e, "faForm")}
               notFoundContent={null}
+              onMouseEnter={() => handleClick("faForm")}
             >
               {select.map((i: any, id: any) => (
                 <Option value={i} key={i}>
@@ -395,10 +396,7 @@ export function DrawerBody() {
               ))}
             </Select>
           </div>
-          <div
-            onClick={() => handleClick("atcCode")}
-            style={{ width: "100%", marginBottom: 4 }}
-          >
+          <div style={{ width: "100%", marginBottom: 4 }}>
             <Select
               showSearch
               disabled
@@ -411,6 +409,7 @@ export function DrawerBody() {
               onSearch={handleSearch}
               onChange={(e: any) => handleChange(e, "atcCode")}
               notFoundContent={null}
+              onMouseEnter={() => handleClick("atcCode")}
             >
               {select.map((i: any, id: any) => (
                 <Option value={i} key={i}>
@@ -421,10 +420,7 @@ export function DrawerBody() {
           </div>
         </div>
 
-        <div
-          onClick={() => handleClick("enBrandName")}
-          style={{ width: "100%", marginBottom: 4 }}
-        >
+        <div style={{ width: "100%", marginBottom: 4 }}>
           <Select
             showSearch
             value={`enBrandName: ${valueState.enBrandName}`}
@@ -436,6 +432,7 @@ export function DrawerBody() {
             onSearch={handleSearch}
             onChange={(e: any) => handleChange(e, "enBrandName")}
             notFoundContent={null}
+            onMouseEnter={() => handleClick("enBrandName")}
           >
             {select.map((i: any, id: any) => (
               <Option value={i} key={i}>
@@ -445,10 +442,7 @@ export function DrawerBody() {
           </Select>
         </div>
 
-        <div
-          onClick={() => handleClick("faBrandName")}
-          style={{ width: "100%", marginBottom: 4 }}
-        >
+        <div style={{ width: "100%", marginBottom: 4 }}>
           <Select
             showSearch
             value={`faBrandName: ${valueState.faBrandName}`}
@@ -460,6 +454,7 @@ export function DrawerBody() {
             onSearch={handleSearch}
             onChange={(e: any) => handleChange(e, "faBrandName")}
             notFoundContent={null}
+            onMouseEnter={() => handleClick("faBrandName")}
           >
             {select.map((i: any, id: any) => (
               <Option value={i} key={i}>
@@ -469,10 +464,7 @@ export function DrawerBody() {
           </Select>
         </div>
 
-        <div
-          onClick={() => handleClick("enName")}
-          style={{ width: "100%", marginBottom: 4 }}
-        >
+        <div style={{ width: "100%", marginBottom: 4 }}>
           <Select
             showSearch
             value={`enName: ${valueState.enName}`}
@@ -484,6 +476,7 @@ export function DrawerBody() {
             onSearch={handleSearch}
             onChange={(e: any) => handleChange(e, "enName")}
             notFoundContent={null}
+            onMouseEnter={() => handleClick("enName")}
           >
             {select.map((i: any, id: any) => (
               <Option value={i} key={i}>
@@ -500,7 +493,7 @@ export function DrawerBody() {
             marginBottom: 4
           }}
         >
-          <div onClick={() => handleClick("faName")} style={{ width: "100%" }}>
+          <div style={{ width: "100%" }}>
             <Select
               showSearch
               value={`faName: ${valueState.faName}`}
@@ -512,6 +505,7 @@ export function DrawerBody() {
               onSearch={handleSearch}
               onChange={(e: any) => handleChange(e, "faName")}
               notFoundContent={null}
+              onMouseEnter={() => handleClick("faName")}
             >
               {select.map((i: any, id: any) => (
                 <Option value={i} key={i}>
@@ -520,10 +514,7 @@ export function DrawerBody() {
               ))}
             </Select>
           </div>
-          <div
-            onClick={() => handleClick("volume")}
-            style={{ width: "100%", marginBottom: 4 }}
-          >
+          <div style={{ width: "100%", marginBottom: 4 }}>
             <Select
               showSearch
               value={`volume: ${valueState.volume}`}
@@ -535,6 +526,7 @@ export function DrawerBody() {
               onSearch={handleSearch}
               onChange={(e: any) => handleChange(e, "volume")}
               notFoundContent={null}
+              onMouseEnter={() => handleClick("volume")}
             >
               {select.map((i: any, id: any) => (
                 <Option value={i} key={i}>
@@ -545,10 +537,7 @@ export function DrawerBody() {
           </div>
         </div>
 
-        <div
-          onClick={() => handleClick("licenseOwner")}
-          style={{ width: "100%", marginBottom: 4 }}
-        >
+        <div style={{ width: "100%", marginBottom: 4 }}>
           <Select
             showSearch
             value={`licenseOwner: ${valueState.licenseOwner}`}
@@ -560,6 +549,7 @@ export function DrawerBody() {
             onSearch={handleSearch}
             onChange={(e: any) => handleChange(e, "licenseOwner")}
             notFoundContent={null}
+            onMouseEnter={() => handleClick("licenseOwner")}
           >
             {select.map((i: any, id: any) => (
               <Option value={i} key={i}>
@@ -568,10 +558,7 @@ export function DrawerBody() {
             ))}
           </Select>
         </div>
-        <div
-          onClick={() => handleClick("countryBrandOwner")}
-          style={{ width: "100%", marginBottom: 4 }}
-        >
+        <div style={{ width: "100%", marginBottom: 4 }}>
           <Select
             showSearch
             value={`countryBrandOwner: ${valueState.countryBrandOwner}`}
@@ -583,6 +570,7 @@ export function DrawerBody() {
             onSearch={handleSearch}
             onChange={(e: any) => handleChange(e, "countryBrandOwner")}
             notFoundContent={null}
+            onMouseEnter={() => handleClick("countryBrandOwner")}
           >
             {select.map((i: any, id: any) => (
               <Option value={i} key={i}>
@@ -592,10 +580,7 @@ export function DrawerBody() {
           </Select>
         </div>
 
-        <div
-          onClick={() => handleClick("brandOwner")}
-          style={{ width: "100%", marginBottom: 4 }}
-        >
+        <div style={{ width: "100%", marginBottom: 4 }}>
           <Select
             showSearch
             value={`brandOwner: ${valueState.brandOwner}`}
@@ -607,6 +592,7 @@ export function DrawerBody() {
             onSearch={handleSearch}
             onChange={(e: any) => handleChange(e, "brandOwner")}
             notFoundContent={null}
+            onMouseEnter={() => handleClick("brandOwner")}
           >
             {select.map((i: any, id: any) => (
               <Option value={i} key={i}>
@@ -615,10 +601,7 @@ export function DrawerBody() {
             ))}
           </Select>
         </div>
-        <div
-          onClick={() => handleClick("countryProducer")}
-          style={{ width: "100%", marginBottom: 4 }}
-        >
+        <div style={{ width: "100%", marginBottom: 4 }}>
           <Select
             showSearch
             value={`countryProducer: ${valueState.countryProducer}`}
@@ -630,6 +613,7 @@ export function DrawerBody() {
             onSearch={handleSearch}
             onChange={(e: any) => handleChange(e, "countryProducer")}
             notFoundContent={null}
+            onMouseEnter={() => handleClick("countryProducer")}
           >
             {select.map((i: any, id: any) => (
               <Option value={i} key={i}>
@@ -639,10 +623,7 @@ export function DrawerBody() {
           </Select>
         </div>
 
-        <div
-          onClick={() => handleClick("producer")}
-          style={{ width: "100%", marginBottom: 4 }}
-        >
+        <div style={{ width: "100%", marginBottom: 4 }}>
           <Select
             showSearch
             value={`producer: ${valueState.producer}`}
@@ -654,6 +635,7 @@ export function DrawerBody() {
             onSearch={handleSearch}
             onChange={(e: any) => handleChange(e, "producer")}
             notFoundContent={null}
+            onMouseEnter={() => handleClick("producer")}
           >
             {select.map((i: any, id: any) => (
               <Option value={i} key={i}>
@@ -662,10 +644,7 @@ export function DrawerBody() {
             ))}
           </Select>
         </div>
-        <div
-          onClick={() => handleClick("conversationalName")}
-          style={{ width: "100%", marginBottom: 4 }}
-        >
+        <div style={{ width: "100%", marginBottom: 4 }}>
           <Select
             showSearch
             value={`conversationalName: ${valueState.conversationalName}`}
@@ -677,6 +656,7 @@ export function DrawerBody() {
             onSearch={handleSearch}
             onChange={(e: any) => handleChange(e, "conversationalName")}
             notFoundContent={null}
+            onMouseEnter={() => handleClick("conversationalName")}
           >
             {select.map((i: any, id: any) => (
               <Option value={i} key={i}>
@@ -693,7 +673,7 @@ export function DrawerBody() {
           style={{
             width: "100%",
             position: "sticky",
-            bottom: 0
+            bottom: 8
           }}
         >
           Edit Item

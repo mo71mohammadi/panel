@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Select, Button } from "antd";
 import Search from "antd/lib/input/Search";
 import { SearchState, SearchProvider } from "./StateManager/searchState";
@@ -12,16 +12,16 @@ const { Option } = Select;
 export function Selecto() {
   const { action, setAction } = React.useContext(SearchState);
   const [state, setstate] = useState([]);
-  const [obj, setObj] = useState({key: '', value: null});
-  const [change, setChange] = useState({key: '', value: null});
+  const [obj, setObj] = useState({ key: "", value: null });
+  const [change, setChange] = useState({ key: "", value: null });
 
   function HandleSearch() {
     if (obj.value !== change.value || obj.key !== change.key) {
-      const filter: any = {page: 1};
+      const filter: any = { page: 1 };
       if (obj.key) filter[obj.key] = obj.value;
       else delete filter.page;
-      setAction({...action, filters: filter});
-      setChange({key: obj.key, value: obj.value})
+      setAction({ ...action, filters: filter });
+      setChange({ key: obj.key, value: obj.value });
     }
   }
 
@@ -32,8 +32,11 @@ export function Selecto() {
           placeholder={obj.key}
           defaultValue="Select Subject"
           value={obj.key}
-          style={{ width: "25%", marginRight: 8 }}
-          onChange={(e:any) => setObj({...obj, key: e})}
+          style={{
+            width: "25%",
+            marginRight: 8
+          }}
+          onChange={(e: any) => setObj({ ...obj, key: e })}
           size="large"
           defaultActiveFirstOption={true}
         >
@@ -68,12 +71,12 @@ export function Selecto() {
           <Option value="priceHistory">priceHistory</Option>
         </Select>
         <Search
-            placeholder="input search text"
-            onSearch={HandleSearch}
-            onChange={(e:any) => setObj({...obj, value: e.target.value})}
-            enterButton
-            size="large"
-            style={{ width: "75%" }}
+          placeholder="input search text"
+          onSearch={HandleSearch}
+          onChange={(e: any) => setObj({ ...obj, value: e.target.value })}
+          enterButton
+          size="large"
+          style={{ width: "75%" }}
         />
 
         {/*<CSVLink*/}

@@ -89,11 +89,7 @@ export const MainTable = () => {
       </div>
       <div>
         <Table
-          bodyStyle={{
-            textAlign: "center",
-            alignContent: "center",
-            alignItems: "center"
-          }}
+          
           loading={loading}
           rowKey={record => record.tableData}
           size="small"

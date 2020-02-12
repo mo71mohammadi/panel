@@ -40,7 +40,9 @@ export default function InteractionTable() {
           data: {}
         })
           .then((resp: { data: any }) => {
-            setstate(resp.data);
+            setstate(
+              resp.data.filter((id: any) => id.id === tableData[id].upToDateId)
+            );
             // console.log("resp.data", resp.data);
           })
           .catch(() => console.log("Get upToDate Data Fail"));
@@ -55,27 +57,16 @@ export default function InteractionTable() {
     });
   };
 
-  function HandleClick(params: any) {
-    console.log("Prices Updated");
-  }
-
-  for (let index = 0; index < 10; index++) {
-    const element = state.find((id: any) => id.id === tableData[index]);
-
-    console.log(" element", element);
-
-    //const DATA = state.find(id => id.id === element.upToDateId);
-    //console.log(" DATA", DATA);
-  }
+  console.log(" state", state);
 
   return (
-    <div style={{ margin: 24 }}>
+    <div style={{ background: "#fafafa" }}>
       <div>
         <Table
           loading={loading}
-          //rowKey={record => record.tableData}
+          rowKey={(record: any) => record.tableData}
           size="small"
-          columns={Columns()}
+          columns={Columns(state)}
           dataSource={tableData}
           pagination={{
             total: count.total,
@@ -88,17 +79,6 @@ export default function InteractionTable() {
         />
       </div>
       <div style={{ width: "100%", display: "flex" }}>
-        <Button
-          style={{ width: "50%", marginRight: 4 }}
-          type="primary"
-          block
-          icon="sync"
-          size="large"
-          onClick={HandleClick}
-        >
-          {"Update Prices"}
-        </Button>
-
         <Alert
           style={{ width: "50%" }}
           message={`Total item in database is ${count.total} `}

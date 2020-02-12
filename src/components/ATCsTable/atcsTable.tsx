@@ -4,9 +4,9 @@ import axios from "axios";
 import { Columns } from "./columns";
 
 export default function ATCsTable() {
-
-
-  const [tableData, setTableData] = useState([{enName:"", enRoute:"", atc:[]}]);
+  const [tableData, setTableData] = useState([
+    { enName: "", enRoute: "", atc: [] }
+  ]);
 
   const [pagi, setPagi] = useState({
     pageSize: 20,
@@ -42,27 +42,23 @@ export default function ATCsTable() {
   }
 
   return (
-    <div style={{ margin: 24 }}>
-      <div>
-        <Table
-          loading={loading}
-          //rowKey={record => record.tableData}
-          size="small"
-          columns={Columns()}
-          dataSource={tableData}
-          pagination={{
-            total: count.total,
-            position: "bottom",
-            defaultCurrent: 1,
-            current: pagi.pageCurrent
-          }}
-          scroll={{ x: 600 }}
-          onChange={handleTableChange}
-        />
-      </div>
+    <div style={{  background:"#fafafa"}}>
+      <Table
+        loading={loading}
+        //rowKey={record => record.tableData}
+        size="small"
+        columns={Columns()}
+        dataSource={tableData}
+        pagination={{
+          total: count.total,
+          position: "bottom",
+          defaultCurrent: 1,
+          current: pagi.pageCurrent
+        }}
+        scroll={{ x: 600 }}
+        onChange={handleTableChange}
+      />
       <div style={{ width: "100%", display: "flex" }}>
-      
-
         <Alert
           style={{ width: "50%" }}
           message={`Total item in database is ${count.total} `}

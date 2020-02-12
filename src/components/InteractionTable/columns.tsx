@@ -3,8 +3,8 @@ import { Tag } from "antd";
 import axios from "axios";
 import Search from "antd/lib/input/Search";
 
-export function Columns() {
-  //console.log("params", params);
+export function Columns(state: any) {
+  console.log("state", state);
 
   const columns = [
     {
@@ -24,8 +24,8 @@ export function Columns() {
     },
     {
       title: "upToDateId",
-      dataIndex: "upToDateId",
-      key: "upToDateId",
+      dataIndex: "state.name",
+      key: "state.name",
       editable: true,
 
       render: function tag(params: any) {

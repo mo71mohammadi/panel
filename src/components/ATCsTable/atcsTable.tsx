@@ -9,7 +9,7 @@ export default function ATCsTable() {
   const [tableData, setTableData] = useState([{enName:"", enRoute:"", atc:[]}]);
 
   const [pagi, setPagi] = useState({
-    pageSize: 20,
+    pageSize: 10,
     pageCurrent: 1
   });
   const [count, setCount] = useState({ total: 0 });

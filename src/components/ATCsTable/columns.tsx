@@ -17,7 +17,7 @@ export function Columns() {
         L3: {enName: "", faName: "", shortName: ""},
         L4: {enName: "", faName: "", shortName: ""},
         L5: {enName: "", faName: "", shortName: ""},
-        ddd: [{admRoute: "", dose: "", unit: ""}]
+        ddd: {admRoute: "", dose: "", unit: ""}
     });
     const [option, setOption] = React.useState({type: null, list: []});
     const [select, setSelect] = useState([]);
@@ -126,7 +126,7 @@ export function Columns() {
                                     onChange={(e: any) => handleChange(e, "L1")}
                                     notFoundContent={null}
                                 >
-                                    {select.map((i: any, id: any) => (
+                                    {option.list.map((i: any, id: any) => (
                                         <Option value={i.shortName} key={id}>
                                             {i.enName}
                                         </Option>
@@ -143,10 +143,10 @@ export function Columns() {
                                     showArrow={true}
                                     filterOption={true}
                                     // onSearch={handleSearch}
-                                    // onChange={(e: any) => handleChange(e, "eRx")}
+                                    onChange={(e: any) => handleChange(e, "L2")}
                                     notFoundContent={null}
                                 >
-                                    {select.map((i: any, id: any) => (
+                                    {option.list.map((i: any, id: any) => (
                                         <Option value={i.shortName} key={id}>
                                             {i.enName}
                                         </Option>
@@ -163,10 +163,10 @@ export function Columns() {
                                     showArrow={true}
                                     filterOption={true}
                                     // onSearch={handleSearch}
-                                    // onChange={(e: any) => handleChange(e, "eRx")}
+                                    onChange={(e: any) => handleChange(e, "L3")}
                                     notFoundContent={null}
                                 >
-                                    {select.map((i: any, id: any) => (
+                                    {option.list.map((i: any, id: any) => (
                                         <Option value={i.shortName} key={id}>
                                             {i.enName}
                                         </Option>
@@ -183,10 +183,10 @@ export function Columns() {
                                     showArrow={true}
                                     filterOption={true}
                                     // onSearch={handleSearch}
-                                    // onChange={(e: any) => handleChange(e, "eRx")}
+                                    onChange={(e: any) => handleChange(e, "L4")}
                                     notFoundContent={null}
                                 >
-                                    {select.map((i: any, id: any) => (
+                                    {option.list.map((i: any, id: any) => (
                                         <Option value={i.shortName} key={id}>
                                             {i.enName}
                                         </Option>
@@ -203,10 +203,10 @@ export function Columns() {
                                     showArrow={true}
                                     filterOption={true}
                                     // onSearch={handleSearch}
-                                    // onChange={(e: any) => handleChange(e, "eRx")}
+                                    onChange={(e: any) => handleChange(e, "L5")}
                                     notFoundContent={null}
                                 >
-                                    {select.map((i: any, id: any) => (
+                                    {option.list.map((i: any, id: any) => (
                                         <Option value={i.shortName} key={id}>
                                             {i.enName}
                                         </Option>
@@ -216,18 +216,18 @@ export function Columns() {
                             <div onClick={() => handleClick("ddd")} style={{width: "100%"}}>
                                 <Select
                                     showSearch
-                                    value={modal.data.ddd}
-                                    placeholder={modal.data.ddd}
+                                    value={value.ddd.admRoute}
+                                    placeholder={value.ddd.admRoute}
                                     style={{width: "inherits", minWidth: "100%"}}
                                     defaultActiveFirstOption={true}
                                     showArrow={true}
                                     filterOption={true}
                                     // onSearch={handleSearch}
-                                    // onChange={(e: any) => handleChange(e, "eRx")}
+                                    onChange={(e: any) => handleChange(e, "ddd")}
                                     notFoundContent={null}
                                 >
-                                    {value.ddd.map((i: any, id: any) => (
-                                        <Option value={i.dose + ' ' + i.unit + ' ' + i.admRoute}>
+                                    {option.list.map((i: any, id: any) => (
+                                        <Option value={i.dose + i.unit + i.admRoute}>
                                             {i.dose + ' ' + i.unit + ' ' + i.admRoute}
                                         </Option>
                                     ))}
@@ -246,35 +246,36 @@ export function Columns() {
             url: `http://localhost:5000/api/atc/get?shortName=${params.code}`,
         }).then((res: { data: any }) => {
             setValue({...value, ...res.data});
-            console.log(value)
-
             // message.success(`Item ${res.data} `);
         }).catch(res => message.error(`Item ${res.data} `));
 
         setModal({...modal, data: {...params}, visible: true});
     }
-
     const handleCancel = () => {
         setModal({...modal, visible: false})
+        setOption({type: null, list: []});
+
         setValue({
             L1: {enName: "", faName: "", shortName: ""},
             L2: {enName: "", faName: "", shortName: ""},
             L3: {enName: "", faName: "", shortName: ""},
             L4: {enName: "", faName: "", shortName: ""},
             L5: {enName: "", faName: "", shortName: ""},
-            ddd: [{admRoute: "", dose: "", unit: ""}]
+            ddd: {admRoute: "", dose: "", unit: ""}
         });
 
     };
     const handleOk = () => {
-        setModal({...modal, visible: false})
+        setModal({...modal, visible: false});
+        setOption({type: null, list: []});
+
         setValue({
             L1: {enName: "", faName: "", shortName: ""},
             L2: {enName: "", faName: "", shortName: ""},
             L3: {enName: "", faName: "", shortName: ""},
             L4: {enName: "", faName: "", shortName: ""},
             L5: {enName: "", faName: "", shortName: ""},
-            ddd: [{admRoute: "", dose: "", unit: ""}]
+            ddd: {admRoute: "", dose: "", unit: ""}
         });
     };
     const handleClick = (item: any) => {
@@ -285,24 +286,72 @@ export function Columns() {
         else if (item === "L4") params = `level=${item}&shortName=${value.L3.shortName}`;
         else if (item === "L5") params = `level=${item}&shortName=${value.L4.shortName}`;
         else if (item === "ddd") params = `level=${item}&shortName=${value.L5.shortName}`;
-
+        console.log(params)
         if (!option.type || option.type !== item) {
-            setSelect([]);
+            // setSelect([]);
+            setOption({...option, list: []});
+
             axios({
                 method: "get",
                 url: `http://localhost:5000/api/atc/get?${params}`
             }).then((res: { data: any }) => {
                 setOption({type: item, list: res.data.data});
-                setSelect(res.data.data.slice(0, 15));
+                // setSelect(res.data.data.slice(0, 15));
             }).catch(() => console.log("Get Data Fail"));
         }
 
     };
     const handleChange = (params: any, type: any) => {
-        console.log(params)
         const change: any = {};
-        change[type] = {enName: "Test", shortName: params};
-        setValue({...value, ...change});
+        const val = {
+            L1: {enName: "", faName: "", shortName: ""},
+            L2: {enName: "", faName: "", shortName: ""},
+            L3: {enName: "", faName: "", shortName: ""},
+            L4: {enName: "", faName: "", shortName: ""},
+            L5: {enName: "", faName: "", shortName: ""},
+            ddd: {admRoute: "", dose: "", unit: ""}
+        };
+
+        if (type === 'ddd') {
+            // @ts-ignore
+            change[type] = option.list.find(i => i.dose + i.unit + i.admRoute == params);
+            delete val.L5;
+            delete val.L4;
+            delete val.L3;
+            delete val.L2;
+            delete val.L1
+
+        } else {
+            // @ts-ignore
+            if (type == "L1") change[type] = option.list.find(i => i.shortName == params);
+            if (type == "L2") {
+                // @ts-ignore
+                change[type] = option.list.find(i => i.shortName == params);
+                delete val.L1
+            }
+            if (type == "L3") {
+                // @ts-ignore
+                change[type] = option.list.find(i => i.shortName == params);
+                delete val.L2;
+                delete val.L1
+            }
+            if (type == "L4") {
+                // @ts-ignore
+                change[type] = option.list.find(i => i.shortName == params);
+                delete val.L3;
+                delete val.L2;
+                delete val.L1
+            }
+            if (type == "L5") {
+                // @ts-ignore
+                change[type] = option.list.find(i => i.shortName == params);
+                delete val.L4;
+                delete val.L3;
+                delete val.L2;
+                delete val.L1
+            }
+        }
+        setValue({...value, ...val, ...change});
     };
 
     return columns;

@@ -1,1 +1,1 @@
-export { default as TablePrices } from "./tablePrices";
+export { default as PricesTable } from "./pricesTable";

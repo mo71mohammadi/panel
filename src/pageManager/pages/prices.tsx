@@ -1,9 +1,9 @@
-import React, { useState, useContext } from "react";
+import React from "react";
+import { PricesTable } from "../../components/PricesTable";
 
-import { TablePrices } from "../../components/PricesTable";
 
 export default function PricesPage() {
   return (
-      <TablePrices />
+      <PricesTable />
   );
 }

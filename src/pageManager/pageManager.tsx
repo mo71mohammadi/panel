@@ -1,12 +1,5 @@
-import React, { Fragment, useState } from "react";
-import {
-  Route,
-  Switch,
-  Link,
-  Redirect,
-  useHistory,
-  useLocation
-} from "react-router-dom";
+import React from "react";
+import { Route, Switch } from "react-router-dom";
 import EditPage from "./pages/prices";
 import MainPage from "./pages/main";
 import {
@@ -18,9 +11,9 @@ import {
 } from "./pages";
 
 function PageManager() {
-  const locate = window.location.pathname;
-  const history = useHistory();
-  const location = useLocation();
+  //const locate = window.location.pathname;
+  //const history = useHistory();
+  // const location = useLocation();
 
   return (
     <Switch>

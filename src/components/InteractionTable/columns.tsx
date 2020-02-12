@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { Tag } from "antd";
-import axios from "axios";
 import Search from "antd/lib/input/Search";
+import axios from "axios";
 
-export function Columns(state: any) {
-  console.log("state", state);
+export function Columns(params: any) {
+  //const [state, setstate] = useState({ name: "", id: "" });
+
+  //const data = [{ alef: "aaaa", beh: "bbb" }];
+  console.log("params in Columns", params);
 
   const columns = [
     {
@@ -24,14 +27,23 @@ export function Columns(state: any) {
     },
     {
       title: "upToDateId",
-      dataIndex: "state.name",
-      key: "state.name",
+      dataIndex: "upToDateId",
+      key: "upToDateId",
       editable: true,
+      render: function(index: number, record: any) {
+        const Name: any[] = params.find(
+          (id: any) => id.id === record.upToDateId
+        );
 
-      render: function tag(params: any) {
+        if (Name === undefined) {
+          console.log("undefined");
+        }
+        console.log("Name", Name);
+        console.log("record", record);
+
         return (
           <Search
-            placeholder={params}
+            //placeholder={Name.name}
             onSearch={value => console.log(value)}
             style={{ width: 200 }}
           />

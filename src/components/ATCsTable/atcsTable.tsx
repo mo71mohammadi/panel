@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useContext } from "react";
-import { Table, Alert, Button, Upload, message } from "antd";
+import React, { useEffect, useState } from "react";
+import { Table, Alert} from "antd";
 import axios from "axios";
 import { Columns } from "./columns";
 
@@ -37,9 +37,6 @@ export default function ATCsTable() {
     });
   };
 
-  function HandleClick(params: any) {
-    console.log("Prices Updated");
-  }
 
   return (
     <div style={{  background:"#fafafa"}}>

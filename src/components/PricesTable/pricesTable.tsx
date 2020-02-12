@@ -1,9 +1,9 @@
-import React, { useEffect, useState, useContext } from "react";
-import { Table, Alert, Button, Upload, message } from "antd";
+import React, { useEffect, useState } from "react";
+import { Table, Alert, Button } from "antd";
 import axios from "axios";
 import { Columns } from "./columns";
 
-export default function TablePrices() {
+export default function PricesTable() {
   const [tableData, setTableData] = useState([]);
   const [pagi, setPagi] = useState({
     pageSize: 20,

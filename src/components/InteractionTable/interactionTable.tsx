@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useContext } from "react";
-import { Table, Alert, Button, Upload, message } from "antd";
+import React, { useEffect, useState } from "react";
+import { Table, Alert } from "antd";
 import axios from "axios";
 import { Columns } from "./columns";
 
@@ -9,10 +9,11 @@ export default function InteractionTable() {
       enName: "",
       enRoute: "",
       upToDateId: "",
-      medScapeId: ""
+      medScapeId: "",
+      Interaction: { name: "", id: "" }
     }
   ]);
-  const [state, setstate] = useState([{ name: "", id: "" }]);
+  const [state, setState] = useState([{ name: "", id: "" }]);
 
   const [pagi, setPagi] = useState({
     pageSize: 10,
@@ -30,7 +31,6 @@ export default function InteractionTable() {
     })
       .then((res: { data: any }) => {
         setTableData(res.data.data);
-        // console.log("res.data.data", res.data.data);
         setCount({ total: res.data.count });
         setLoading(false);
 
@@ -39,11 +39,8 @@ export default function InteractionTable() {
           url: "http://45.92.95.69:5000/api/upToDate/name",
           data: {}
         })
-          .then((resp: { data: any }) => {
-            setstate(
-              resp.data.filter((id: any) => id.id === tableData[id].upToDateId)
-            );
-            // console.log("resp.data", resp.data);
+          .then((resp: any) => {
+            setState(resp.data);
           })
           .catch(() => console.log("Get upToDate Data Fail"));
       })
@@ -56,8 +53,6 @@ export default function InteractionTable() {
       pageCurrent: pagination.current
     });
   };
-
-  console.log(" state", state);
 
   return (
     <div style={{ background: "#fafafa" }}>

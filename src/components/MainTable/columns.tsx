@@ -143,9 +143,9 @@ export function Columns() {
                   type="success"
                 />
               </div>
-              <div>
+              <>
                 <DrawerBody />
-              </div>
+              </>
             </Drawer>
 
             <Divider type="vertical" />

@@ -98,7 +98,7 @@ export function DrawerBody() {
               onSearch={handleSearch}
               onChange={(e: any) => handleChange(e, "eRx")}
               notFoundContent={null}
-              onMouseEnter={() => handleClick("eRx")}
+              onFocus={() => handleClick("eRx")}
             >
               {select.map((i: any, id: any) => (
                 <Option value={i} key={i}>
@@ -119,7 +119,7 @@ export function DrawerBody() {
               onSearch={handleSearch}
               onChange={(e: any) => handleChange(e, "genericCode")}
               notFoundContent={null}
-              onMouseEnter={() => handleClick("genericCode")}
+              onFocus={() => handleClick("genericCode")}
             >
               {select.map((i: any, id: any) => (
                 <Option value={i} key={i}>
@@ -184,7 +184,7 @@ export function DrawerBody() {
                   onSearch={handleSearch}
                   // onChange={(e: any) => handleChange(e, "gtn")}
                   notFoundContent={null}
-                  onMouseEnter={() => handleClick("gtn")}
+                  onFocus={() => handleClick("gtn")}
                 >
                   {valueState.gtn.map((i: any, id: any) => (
                     <Option value={i} key={i}>
@@ -224,7 +224,7 @@ export function DrawerBody() {
                   filterOption={true}
                   onSearch={handleSearch}
                   notFoundContent={null}
-                  onMouseEnter={() => handleClick("irc")}
+                  onFocus={() => handleClick("irc")}
                 >
                   {valueState.irc.map((i: any, id: any) => (
                     <Option value={i} key={i}>
@@ -263,7 +263,7 @@ export function DrawerBody() {
               onSearch={handleSearch}
               onChange={(e: any) => handleChange(e, "packageType")}
               notFoundContent={null}
-              onMouseEnter={() => handleClick("packageType")}
+              onFocus={() => handleClick("packageType")}
             >
               {select.map((i: any, id: any) => (
                 <Option value={i} key={i}>
@@ -286,7 +286,7 @@ export function DrawerBody() {
             onSearch={handleSearch}
             onChange={(e: any) => handleChange(e, "strength")}
             notFoundContent={null}
-            onMouseEnter={() => handleClick("strength")}
+            onFocus={() => handleClick("strength")}
           >
             {select.map((i: any, id: any) => (
               <Option value={i} key={i}>
@@ -307,7 +307,7 @@ export function DrawerBody() {
             onSearch={handleSearch}
             onChange={(e: any) => handleChange(e, "enRoute")}
             notFoundContent={null}
-            onMouseEnter={() => handleClick("enRoute")}
+            onFocus={() => handleClick("enRoute")}
           >
             {select.map((i: any, id: any) => (
               <Option value={i} key={i}>
@@ -336,7 +336,7 @@ export function DrawerBody() {
               onSearch={handleSearch}
               onChange={(e: any) => handleChange(e, "faRoute")}
               notFoundContent={null}
-              onMouseEnter={() => handleClick("faRoute")}
+              onFocus={() => handleClick("faRoute")}
             >
               {select.map((i: any, id: any) => (
                 <Option value={i} key={i}>
@@ -357,7 +357,7 @@ export function DrawerBody() {
               onSearch={handleSearch}
               onChange={(e: any) => handleChange(e, "enForm")}
               notFoundContent={null}
-              onMouseEnter={() => handleClick("enForm")}
+              onFocus={() => handleClick("enForm")}
             >
               {select.map((i: any, id: any) => (
                 <Option value={i} key={i}>
@@ -387,7 +387,7 @@ export function DrawerBody() {
               onSearch={handleSearch}
               onChange={(e: any) => handleChange(e, "faForm")}
               notFoundContent={null}
-              onMouseEnter={() => handleClick("faForm")}
+              onFocus={() => handleClick("faForm")}
             >
               {select.map((i: any, id: any) => (
                 <Option value={i} key={i}>
@@ -409,7 +409,7 @@ export function DrawerBody() {
               onSearch={handleSearch}
               onChange={(e: any) => handleChange(e, "atcCode")}
               notFoundContent={null}
-              onMouseEnter={() => handleClick("atcCode")}
+              onFocus={() => handleClick("atcCode")}
             >
               {select.map((i: any, id: any) => (
                 <Option value={i} key={i}>
@@ -432,7 +432,7 @@ export function DrawerBody() {
             onSearch={handleSearch}
             onChange={(e: any) => handleChange(e, "enBrandName")}
             notFoundContent={null}
-            onMouseEnter={() => handleClick("enBrandName")}
+            onFocus={() => handleClick("enBrandName")}
           >
             {select.map((i: any, id: any) => (
               <Option value={i} key={i}>
@@ -454,7 +454,7 @@ export function DrawerBody() {
             onSearch={handleSearch}
             onChange={(e: any) => handleChange(e, "faBrandName")}
             notFoundContent={null}
-            onMouseEnter={() => handleClick("faBrandName")}
+            onFocus={() => handleClick("faBrandName")}
           >
             {select.map((i: any, id: any) => (
               <Option value={i} key={i}>
@@ -476,7 +476,7 @@ export function DrawerBody() {
             onSearch={handleSearch}
             onChange={(e: any) => handleChange(e, "enName")}
             notFoundContent={null}
-            onMouseEnter={() => handleClick("enName")}
+            onFocus={() => handleClick("enName")}
           >
             {select.map((i: any, id: any) => (
               <Option value={i} key={i}>
@@ -505,7 +505,7 @@ export function DrawerBody() {
               onSearch={handleSearch}
               onChange={(e: any) => handleChange(e, "faName")}
               notFoundContent={null}
-              onMouseEnter={() => handleClick("faName")}
+              onFocus={() => handleClick("faName")}
             >
               {select.map((i: any, id: any) => (
                 <Option value={i} key={i}>
@@ -526,7 +526,7 @@ export function DrawerBody() {
               onSearch={handleSearch}
               onChange={(e: any) => handleChange(e, "volume")}
               notFoundContent={null}
-              onMouseEnter={() => handleClick("volume")}
+              onFocus={() => handleClick("volume")}
             >
               {select.map((i: any, id: any) => (
                 <Option value={i} key={i}>
@@ -549,7 +549,7 @@ export function DrawerBody() {
             onSearch={handleSearch}
             onChange={(e: any) => handleChange(e, "licenseOwner")}
             notFoundContent={null}
-            onMouseEnter={() => handleClick("licenseOwner")}
+            onFocus={() => handleClick("licenseOwner")}
           >
             {select.map((i: any, id: any) => (
               <Option value={i} key={i}>
@@ -570,7 +570,7 @@ export function DrawerBody() {
             onSearch={handleSearch}
             onChange={(e: any) => handleChange(e, "countryBrandOwner")}
             notFoundContent={null}
-            onMouseEnter={() => handleClick("countryBrandOwner")}
+            onFocus={() => handleClick("countryBrandOwner")}
           >
             {select.map((i: any, id: any) => (
               <Option value={i} key={i}>
@@ -592,7 +592,7 @@ export function DrawerBody() {
             onSearch={handleSearch}
             onChange={(e: any) => handleChange(e, "brandOwner")}
             notFoundContent={null}
-            onMouseEnter={() => handleClick("brandOwner")}
+            onFocus={() => handleClick("brandOwner")}
           >
             {select.map((i: any, id: any) => (
               <Option value={i} key={i}>
@@ -613,7 +613,7 @@ export function DrawerBody() {
             onSearch={handleSearch}
             onChange={(e: any) => handleChange(e, "countryProducer")}
             notFoundContent={null}
-            onMouseEnter={() => handleClick("countryProducer")}
+            onFocus={() => handleClick("countryProducer")}
           >
             {select.map((i: any, id: any) => (
               <Option value={i} key={i}>
@@ -635,7 +635,7 @@ export function DrawerBody() {
             onSearch={handleSearch}
             onChange={(e: any) => handleChange(e, "producer")}
             notFoundContent={null}
-            onMouseEnter={() => handleClick("producer")}
+            onFocus={() => handleClick("producer")}
           >
             {select.map((i: any, id: any) => (
               <Option value={i} key={i}>
@@ -656,7 +656,7 @@ export function DrawerBody() {
             onSearch={handleSearch}
             onChange={(e: any) => handleChange(e, "conversationalName")}
             notFoundContent={null}
-            onMouseEnter={() => handleClick("conversationalName")}
+            onFocus={() => handleClick("conversationalName")}
           >
             {select.map((i: any, id: any) => (
               <Option value={i} key={i}>

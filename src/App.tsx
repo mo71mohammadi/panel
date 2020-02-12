@@ -1,16 +1,12 @@
-import React, { useState, Fragment, useContext } from "react";
+import React, { useState } from "react";
 import "./App.css";
-import { Layout, Menu, Icon, Breadcrumb } from "antd";
+import { Layout, Menu, Icon } from "antd";
 import "antd/dist/antd.css";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Link } from "react-router-dom";
 import { PageManager } from "./pageManager";
-import SubMenu from "antd/lib/menu/SubMenu";
 
 const { Header, Sider, Content, Footer } = Layout;
 
-const IconFont = Icon.createFromIconfontCN({
-  scriptUrl: "//at.alicdn.com/t/font_8d5l8fzk5b87iudi.js"
-});
 
 const App = () => {
   const [state, setState] = useState(true);
@@ -34,7 +30,7 @@ const App = () => {
                 position: "relative",
                 right: 0,
                 background: "#29BEB0",
-                borderRadius: 32,
+                borderRadius: 16,
                 //borderBottomLeftRadius: 16,
                 //borderTopLeftRadius: 16
               }}

@@ -1,17 +1,12 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Select, Button } from "antd";
+import React, { useState } from "react";
+import { Select } from "antd";
 import Search from "antd/lib/input/Search";
 import { SearchState, SearchProvider } from "./StateManager/searchState";
-import { pagination } from "./StateManager/paginationState";
-import axios from "axios";
-import { message } from "antd";
-import { CSVLink } from "react-csv";
 
 const { Option } = Select;
 
 export function Selecto() {
   const { action, setAction } = React.useContext(SearchState);
-  const [state, setstate] = useState([]);
   const [obj, setObj] = useState({ key: "", value: null });
   const [change, setChange] = useState({ key: "", value: null });
 

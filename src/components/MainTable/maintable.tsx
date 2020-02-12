@@ -7,7 +7,6 @@ import { pagination } from "./StateManager/paginationState";
 import { Columns } from "./columns";
 import { CountState } from "./StateManager/countState";
 import { Selecto } from "./selection";
-import { CSVLink } from "react-csv";
 
 export const MainTable = () => {
   const { tableData, setTableData } = useContext(TableData);

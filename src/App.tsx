@@ -34,19 +34,20 @@ const App = () => {
                 position: "relative",
                 right: 0,
                 background: "#29BEB0",
-                borderRadius: 32
+                borderRadius: 32,
+                //borderBottomLeftRadius: 16,
+                //borderTopLeftRadius: 16
               }}
             >
               <Icon
-                type="code-sandbox"
+                type="swap"
                 style={{
-                  fontSize: "32px",
+                  fontSize: "26px",
                   color: "#FAFAFA",
                   marginTop: 32,
                   marginBottom: 32
                 }}
                 theme="outlined"
-                spin
                 onClick={onCollapse}
               />
 
@@ -111,8 +112,46 @@ const App = () => {
                 </Menu.Item>
               </Menu>
             </Sider>
-            <Layout style={{ margin: 8, borderRadius: 16, direction: "ltr" }}>
-              <Content>
+
+            <Layout
+              style={{
+                margin: 8,
+                marginTop: 0,
+                paddingRight: 8,
+                paddingLeft: 8,
+                direction: "ltr"
+              }}
+            >
+              <Header
+                style={{
+                  marginBottom: 8,
+                  background: "#29BEB0",
+                  borderBottomLeftRadius: 16,
+                  borderBottomRightRadius: 16,
+                  //width: "90%",
+                  alignSelf: "center"
+                }}
+              >
+                <Icon
+                  type="code-sandbox"
+                  style={{
+                    fontSize: "32px",
+                    color: "#FAFAFA"
+                  }}
+                  theme="outlined"
+                  spin
+                />
+              </Header>
+
+              <Content
+                style={{
+                  background: "#fafafa",
+                  margin: 8,
+                  padding: 24,
+                  borderRadius: 8,
+                  direction: "ltr"
+                }}
+              >
                 <PageManager />
               </Content>
               <Footer style={{ textAlign: "center" }}>Drugo 2020</Footer>

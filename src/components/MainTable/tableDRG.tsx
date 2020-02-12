@@ -4,7 +4,6 @@ import { SearchProvider } from "./StateManager/searchState";
 import { PaginationProvider } from "./StateManager/paginationState";
 import { MainTable } from "./maintable";
 import { CountProvider } from "./StateManager/countState";
-import { DrawerProvider } from "./StateManager/drawerState";
 import { EditStateProvider } from "./StateManager/editState";
 import { ValueStateProvider } from "./StateManager/valueState";
 
@@ -12,27 +11,17 @@ export default function TableDRG() {
   return (
     <>
       <TableDataProvider>
-          <SearchProvider>
-            <PaginationProvider>
-              <CountProvider>
-                <DrawerProvider>
-                  <EditStateProvider>
-                    <ValueStateProvider>
-                      <div
-                        style={{
-                          padding: 24,
-                          background: "#fff",
-                          minHeight: 360
-                        }}
-                      >
-                        <MainTable />
-                      </div>
-                    </ValueStateProvider>
-                  </EditStateProvider>
-                </DrawerProvider>
-              </CountProvider>
-            </PaginationProvider>
-          </SearchProvider>
+        <SearchProvider>
+          <PaginationProvider>
+            <CountProvider>
+              <EditStateProvider>
+                <ValueStateProvider>
+                  <MainTable />
+                </ValueStateProvider>
+              </EditStateProvider>
+            </CountProvider>
+          </PaginationProvider>
+        </SearchProvider>
       </TableDataProvider>
     </>
   );

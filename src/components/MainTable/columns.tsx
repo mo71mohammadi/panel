@@ -11,21 +11,17 @@ import {
 } from "antd";
 import { SearchState } from "./StateManager/searchState";
 import { TableData } from "./StateManager/tableDataState";
-import { pagination } from "./StateManager/paginationState";
 import axios from "axios";
 import { message } from "antd";
-import { DrawerState } from "./StateManager/drawerState";
 import { DrawerBody } from "./drawerBody";
 import { ValueState } from "./StateManager/valueState";
-import { PageManager } from "../../pageManager";
 
 export function Columns() {
   const { tableData, setTableData } = useContext(TableData);
-  const { pagi, setPagi } = useContext(pagination);
   const { action, setAction } = React.useContext(SearchState);
   const { valueState, setValueState } = useContext(ValueState);
   const [filters, setFilters] = useState({});
-  const { openDrawer, setOpenDrawer } = useContext(DrawerState);
+  const [draw, setdraw] = useState(false)
 
   const getColumnSearchProps = (dataIndex: string) => ({
     filterDropdown: ({
@@ -76,7 +72,6 @@ export function Columns() {
     ),
     filterIcon: (filtered: any) => <Icon type="search" />
 
-    // render: (text: any) => (searchedColumn === dataIndex ? searchText : text)
   });
   const columns = [
     {
@@ -123,7 +118,7 @@ export function Columns() {
       key: "action",
       render: function(index: number, record: any) {
         function onClose() {
-          setOpenDrawer(false);
+          setdraw(false)
         }
 
         return (
@@ -139,7 +134,7 @@ export function Columns() {
               placement={"left"}
               closable={true}
               onClose={onClose}
-              visible={openDrawer}
+              visible={draw}
               width={"40%"}
             >
               <div style={{ marginTop: 12, marginBottom: 8 }}>
@@ -168,17 +163,10 @@ export function Columns() {
       }
     }
   ];
-  const handleChange = () => {};
-  function HandlePage(params: any) {
-    return (
-      <>
-        <PageManager />
-      </>
-    );
-  }
+ 
   function HandleDrawer(params: any) {
     setValueState(params);
-    setOpenDrawer(true);
+    setdraw(true)
   }
   function HandleDelete(params: any) {
     axios({

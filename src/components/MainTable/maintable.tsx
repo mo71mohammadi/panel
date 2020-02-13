@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Table, Alert, Button, Upload, message } from "antd";
+import { Table, Alert, Button, Upload, message, Drawer } from "antd";
 import axios from "axios";
 import { TableData } from "./StateManager/tableDataState";
 import { SearchState } from "./StateManager/searchState";
@@ -7,6 +7,8 @@ import { pagination } from "./StateManager/paginationState";
 import { Columns } from "./columns";
 import { CountState } from "./StateManager/countState";
 import { Selecto } from "./selection";
+import { DrawerBody } from "./drawerBody";
+import { ValueState } from "./StateManager/valueState";
 
 export const MainTable = () => {
   const { tableData, setTableData } = useContext(TableData);
@@ -14,6 +16,8 @@ export const MainTable = () => {
   const { pagi, setPagi } = useContext(pagination);
   const { count, setCount } = useContext(CountState);
   const [loading, setLoading] = useState(true);
+  const [draw, setdraw] = useState(false);
+  const { valueState, setValueState } = useContext(ValueState);
 
   useEffect(() => {
     setLoading(true);
@@ -80,15 +84,28 @@ export const MainTable = () => {
       }
     }
   };
-
+  function onClose() {
+    setAction({ ...action, isDraw: false });
+  }
   return (
     <>
+      <Drawer
+        placement={"left"}
+        closable={true}
+        onClose={onClose}
+        visible={action.isDraw}
+        width={"40vw"}
+      >
+        <div style={{ marginTop: 12, marginBottom: 8 }}>
+          <Alert message={`Edit Item: ${valueState._id}`} type="success" />
+        </div>
+        <DrawerBody />
+      </Drawer>
       <div style={{ width: "100%", marginBottom: 16 }}>
         <Selecto />
       </div>
       <div>
         <Table
-          
           loading={loading}
           rowKey={record => record.tableData}
           size="small"

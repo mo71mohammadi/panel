@@ -25,6 +25,7 @@ const State = {
   isDelete: false,
   isEdit: false,
   num: 0,
-  isExport: false
+  isExport: false,
+  isDraw:false
 };
 export const [SearchState, SearchProvider] = createCtxUseState(State);

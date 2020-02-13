@@ -7,7 +7,6 @@ import { PageManager } from "./pageManager";
 
 const { Header, Sider, Content, Footer } = Layout;
 
-
 const App = () => {
   const [state, setState] = useState(true);
 
@@ -30,7 +29,7 @@ const App = () => {
                 position: "relative",
                 right: 0,
                 background: "#29BEB0",
-                borderRadius: 16,
+                borderRadius: 16
                 //borderBottomLeftRadius: 16,
                 //borderTopLeftRadius: 16
               }}

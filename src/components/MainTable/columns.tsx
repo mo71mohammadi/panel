@@ -21,7 +21,6 @@ export function Columns() {
   const { action, setAction } = React.useContext(SearchState);
   const { valueState, setValueState } = useContext(ValueState);
   const [filters, setFilters] = useState({});
-  const [draw, setdraw] = useState(false)
 
   const getColumnSearchProps = (dataIndex: string) => ({
     filterDropdown: ({
@@ -71,7 +70,6 @@ export function Columns() {
       </div>
     ),
     filterIcon: (filtered: any) => <Icon type="search" />
-
   });
   const columns = [
     {
@@ -117,10 +115,6 @@ export function Columns() {
       title: "Action",
       key: "action",
       render: function(index: number, record: any) {
-        function onClose() {
-          setdraw(false)
-        }
-
         return (
           <>
             <Button
@@ -129,24 +123,6 @@ export function Columns() {
               icon="edit"
               onClick={() => HandleDrawer(record)}
             ></Button>
-
-            <Drawer
-              placement={"left"}
-              closable={true}
-              onClose={onClose}
-              visible={draw}
-              width={"40%"}
-            >
-              <div style={{ marginTop: 12, marginBottom: 8 }}>
-                <Alert
-                  message={`Edit Item: ${valueState._id}`}
-                  type="success"
-                />
-              </div>
-              <>
-                <DrawerBody />
-              </>
-            </Drawer>
 
             <Divider type="vertical" />
 
@@ -163,10 +139,11 @@ export function Columns() {
       }
     }
   ];
- 
+
   function HandleDrawer(params: any) {
     setValueState(params);
-    setdraw(true)
+    setAction({...action, isDraw:true});
+    console.log("gozzzzzzzzzzz")
   }
   function HandleDelete(params: any) {
     axios({

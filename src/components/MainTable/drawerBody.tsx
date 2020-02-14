@@ -400,8 +400,8 @@ export function DrawerBody() {
             <Select
               showSearch
               disabled
-              value={`atcCode: ${valueState.atcCode}`}
-              placeholder={`atcCode: ${valueState.atcCode}`}
+              value={`atcCode: ${valueState.atc[0].code}`}
+              placeholder={`atcCode: ${valueState.atc[0].code}`}
               style={{ width: "inherits", minWidth: "100%" }}
               defaultActiveFirstOption={false}
               showArrow={true}

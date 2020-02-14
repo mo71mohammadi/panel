@@ -1,26 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Search from "antd/lib/input/Search";
 import { Tag, Select, Icon, Button } from "antd";
 const { Option } = Select;
 
 export function Columns(params: any) {
   const [state, setState] = useState({ name: "", id: "" });
-  const [value, setValue] = useState([]);
+  const [value, setValue] = useState([{ name: "", id: "" }]);
   const [isTrue, setIsTrue] = useState(false);
+  const [reco, setreco] = useState();
 
   function handleSearch(type: any) {
     console.log("type", type);
 
-    // const finder = params.filter((word:any) => word.name(type));
-    // setValue(finder.slice(0, 10));
-
-    const selectItem = params.find(
+    const selectItem = params.filter(
       (word: any) =>
-        word
+        word.name
           .toString()
           .toLowerCase()
           .search(`^${type.toLowerCase()}`) > -1
     );
+    console.log("selectItem", selectItem);
+
     setValue(selectItem.slice(0, 10));
   }
   console.log("value", value);
@@ -52,15 +52,18 @@ export function Columns(params: any) {
       key: "upToDateId",
       render: function(index: number, record: any) {
         let Name: any = { name: "", id: "" };
-        if (index) Name = params.find((item: any) => item.id === index);
+
+        if (index) {
+          Name = params.find((item: any) => item.id === record.upToDateId);
+        }
 
         return (
           <div style={{ display: "flex", flexDirection: "row" }}>
             <Select
               showSearch
-              //defaultValue={Name.name}
-              //value={state.name}
-              //placeholder={Name.name}
+              defaultValue={Name.name}
+              value={Name.name}
+              placeholder={Name.name}
               style={{
                 width: "75%",
                 maxWidth: "75%",
@@ -73,10 +76,10 @@ export function Columns(params: any) {
               filterOption={true}
               onChange={(e: any, title: any) => HandleChange(e, title)}
               notFoundContent={null}
-              // onFocus={()=> handleSearch}
+              onFocus={() => handleSearch}
             >
               {value.map((i: any) => (
-                <Option value={i.id} key={i} title={i.name}>
+                <Option value={i.name} key={i} title={i.name}>
                   {i.name}
                 </Option>
               ))}

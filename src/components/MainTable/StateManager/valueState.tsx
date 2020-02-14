@@ -27,7 +27,7 @@ export const State = {
   faRoute: "",
   enForm: "",
   faForm: "",
-  atcCode: "",
+  atc: [{code:"", ddd:""}],
   upToDateId: "",
   medScapeId: "",
   faBrandName: "",

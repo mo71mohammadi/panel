@@ -4,14 +4,10 @@ import { Tag, Select, Icon, Button } from "antd";
 const { Option } = Select;
 
 export function Columns(params: any) {
-  const [state, setState] = useState({ name: "", id: "" });
-  const [value, setValue] = useState([{ name: "", id: "" }]);
-  const [isTrue, setIsTrue] = useState(false);
-  const [reco, setreco] = useState();
+  const [value, setValue] = useState();
+  const [option, setOption] = useState([]);
 
   function handleSearch(type: any) {
-    console.log("type", type);
-
     const selectItem = params.filter(
       (word: any) =>
         word.name
@@ -19,17 +15,13 @@ export function Columns(params: any) {
           .toLowerCase()
           .search(`^${type.toLowerCase()}`) > -1
     );
-    console.log("selectItem", selectItem);
-
-    setValue(selectItem.slice(0, 10));
+    setOption(selectItem.slice(0, 10));
   }
-  console.log("value", value);
-
-  function HandleChange(paramo: any, indexo: any) {
-    console.log("title", indexo.props);
-    setIsTrue(true);
-    setState({ name: indexo.props.title, id: indexo.props.value });
-  }
+  const HandleChange = (val: any, e: any) => setValue(e.key);
+  const handleClick = () => {
+    setOption([]);
+    setValue(null)
+  };
   const columns = [
     {
       title: "enName",
@@ -51,52 +43,51 @@ export function Columns(params: any) {
       dataIndex: "upToDateId",
       key: "upToDateId",
       render: function(index: number, record: any) {
-        let Name: any = { name: "", id: "" };
+        let name = {name: '', id: ''};
+        name = params.find((item: any) => item.id === record.upToDateId);
 
-        if (index) {
-          Name = params.find((item: any) => item.id === record.upToDateId);
+        if (name) {
+          return (
+              <div onClick={handleClick} style={{ display: "flex", flexDirection: "row" }}>
+                <Select
+                    showSearch
+                    // defaultValue={name.name}
+                    // value={name.name}
+                    placeholder={name.name}
+                    style={{
+                      width: "75%",
+                      maxWidth: "75%",
+                      minWidth: "75%",
+                      marginRight: 8
+                    }}
+                    defaultActiveFirstOption={true}
+                    showArrow={true}
+                    onSearch={handleSearch}
+                    filterOption={true}
+                    onChange={((val: any, e: any) => HandleChange(val, e))}
+                    notFoundContent={null}
+                    // onFocus={() => handleSearch}
+                >
+                  {option.map((i: any) => (
+                      <Option value={i.name} key={i.id}>
+                        {i.name}
+                      </Option>
+                  ))}
+                </Select>
+                <Button
+                    type="ghost"
+                    icon="check"
+                    size={"default"}
+                    style={{
+                      marginRight: 8,
+                      width: "25%",
+                      color: "#fafafa",
+                      background: "#29BEB0"
+                    }}
+                />
+              </div>
+          );
         }
-
-        return (
-          <div style={{ display: "flex", flexDirection: "row" }}>
-            <Select
-              showSearch
-              defaultValue={Name.name}
-              value={Name.name}
-              placeholder={Name.name}
-              style={{
-                width: "75%",
-                maxWidth: "75%",
-                minWidth: "75%",
-                marginRight: 8
-              }}
-              defaultActiveFirstOption={true}
-              showArrow={true}
-              onSearch={handleSearch}
-              filterOption={true}
-              onChange={(e: any, title: any) => HandleChange(e, title)}
-              notFoundContent={null}
-              onFocus={() => handleSearch}
-            >
-              {value.map((i: any) => (
-                <Option value={i.name} key={i} title={i.name}>
-                  {i.name}
-                </Option>
-              ))}
-            </Select>
-            <Button
-              type="ghost"
-              icon="check"
-              size={"default"}
-              style={{
-                marginRight: 8,
-                width: "25%",
-                color: "#fafafa",
-                background: "#29BEB0"
-              }}
-            />
-          </div>
-        );
       }
       // ...getColumnSearchProps("PackageCount")
     },
@@ -108,9 +99,5 @@ export function Columns(params: any) {
     }
   ];
 
-  // const handleClick = () => {
-  //   setValue({...Name});
-  //
-  // };
   return columns;
 }

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Table, Alert} from "antd";
+import { Table, Alert } from "antd";
 import axios from "axios";
 import { Columns } from "./columns";
 
@@ -37,9 +37,8 @@ export default function ATCsTable() {
     });
   };
 
-
   return (
-    <div style={{  background:"#fafafa"}}>
+    <div style={{ background: "#fafafa" }}>
       <Table
         loading={loading}
         //rowKey={record => record.tableData}

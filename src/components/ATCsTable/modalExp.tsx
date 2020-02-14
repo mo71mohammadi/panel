@@ -26,7 +26,7 @@ export function ModalExport(params: any) {
     });
   };
   const handleDelete = () => {
-    setModal({ ...modal, visible: false });
+    setModal({ ...modal, visible: false, reset: modal.reset+1});
     if (modal.data.code) {
       axios({
         method: "post",
@@ -41,9 +41,10 @@ export function ModalExport(params: any) {
         .then((res: { data: any }) => {})
         .catch(() => console.log("Get Data Fail"));
     }
+    console.log(modal)
   };
   const handleOk = () => {
-    setModal({ ...modal, visible: false });
+    setModal({ ...modal, visible: false, reset: modal.reset+1});
     setOption({ type: null, list: [] });
     let code: any;
     let ddd: any;

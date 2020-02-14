@@ -103,20 +103,24 @@ export function Columns() {
       key: "atc[0].code",
       // ...getColumnSearchProps("PackageCount")
       render: (params: number, record: any) => {
-        const listItems = record.atc.map((item: any) => (
-          <Tag
-            onClick={() =>
-              HandleDrawer({
-                name: record.enName,
-                route: record.enRoute,
-                ...item
-              })
+        const listItems = record.atc.map((item: any) => {
+            if (item.code) {
+                return  (
+                    <Tag
+                        onClick={() =>
+                            HandleDrawer({
+                                name: record.enName,
+                                route: record.enRoute,
+                                ...item
+                            })
+                        }
+                        key={item.code}
+                    >
+                        {item.code}
+                    </Tag>
+                )
             }
-            key={item.code}
-          >
-            {item.code}
-          </Tag>
-        ));
+        });
         return (
           <>
             {listItems}
@@ -154,8 +158,17 @@ export function Columns() {
           // message.success(`Item ${res.data} `);
         })
         .catch(res => message.error(`Item ${res.data} `));
+    }else {
+        setValue({
+            L1: { enName: "", faName: "", shortName: "" },
+            L2: { enName: "", faName: "", shortName: "" },
+            L3: { enName: "", faName: "", shortName: "" },
+            L4: { enName: "", faName: "", shortName: "" },
+            L5: { enName: "", faName: "", shortName: "" },
+            ddd: { admRoute: "", dose: "", unit: "" }
+        });
     }
-    setModal({ ...modal, data: { ...params }, visible: true });
+    setModal({ ...modal, data: params, visible: true });
   };
 
   return columns;

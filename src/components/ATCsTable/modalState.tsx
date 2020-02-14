@@ -19,6 +19,7 @@ const State = {
   data: { name: "", route: "", code: "", ddd: "" },
   ModalText: "Content of the modal",
   visible: false,
-  confirmLoading: false
+  confirmLoading: false,
+  reset: 0
 };
 export const [ModalState, ModalProvider] = createCtxUseState(State);

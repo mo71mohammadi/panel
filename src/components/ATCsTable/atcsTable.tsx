@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, {useContext, useEffect, useState} from "react";
 import { Table, Alert } from "antd";
 import axios from "axios";
 import { Columns } from "./columns";
+import {ModalState} from "./modalState";
 
 export default function ATCsTable() {
   const [tableData, setTableData] = useState([
     { enName: "", enRoute: "", atc: [] }
   ]);
+  const { modal, setModal } = useContext(ModalState);
 
   const [pagi, setPagi] = useState({
     pageSize: 10,
@@ -28,7 +30,7 @@ export default function ATCsTable() {
         setLoading(false);
       })
       .catch(() => console.log("Get Data Fail"));
-  }, [pagi.pageCurrent]);
+  }, [pagi.pageCurrent, modal.reset]);
 
   const handleTableChange = (pagination: any, filters: any, sorter: any) => {
     setPagi({

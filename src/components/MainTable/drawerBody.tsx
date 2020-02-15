@@ -10,6 +10,7 @@ export function DrawerBody() {
   const [select, setSelect] = useState([]);
   const [option, setOption] = React.useState({ type: null, list: [] });
   const [input, setinput] = useState([]);
+  const [def, setDef] = useState();
 
   function handleClick(value: any) {
     if (!option.type || option.type !== value) {
@@ -34,6 +35,12 @@ export function DrawerBody() {
     change[type] = params;
     setValueState((e: any) => ({ ...valueState, ...change }));
   };
+
+  function handleDefault(params: any, event: any, type: any) {
+    setDef(event.props.value);
+    console.log("event", event);
+    console.log("params", params);
+  }
 
   function handleSearch(params: any) {
     const selectItem = option.list.filter(
@@ -83,7 +90,7 @@ export function DrawerBody() {
             display: "flex",
             flexDirection: "row",
             width: "100%",
-            marginBottom: 4
+            marginBottom: 8
           }}
         >
           <div style={{ width: "100%" }}>
@@ -107,7 +114,7 @@ export function DrawerBody() {
               ))}
             </Select>
           </div>
-          <div style={{ width: "100%" }}>
+          <div style={{ width: "100%", background: "#faf0f1" }}>
             <Select
               showSearch
               value={`genericCode: ${valueState.genericCode}`}
@@ -135,7 +142,7 @@ export function DrawerBody() {
             display: "flex",
             flexDirection: "row",
             width: "100%",
-            marginBottom: 4
+            marginBottom: 8
           }}
         >
           <div style={{ width: "100%" }}>
@@ -167,11 +174,16 @@ export function DrawerBody() {
             display: "flex",
             flexDirection: "row",
             width: "100%",
-            marginBottom: 4
+            marginBottom: 8
           }}
         >
           <div style={{ width: "100%" }}>
             <Input
+              //prefixCls={"gtn"}
+              value={def}
+              defaultValue={"def"}
+              inputMode="text"
+              //allowClear={true}
               addonBefore={
                 <Select
                   showSearch
@@ -182,7 +194,9 @@ export function DrawerBody() {
                   showArrow={true}
                   filterOption={true}
                   onSearch={handleSearch}
-                  // onChange={(e: any) => handleChange(e, "gtn")}
+                  onChange={(val: any, event: any) =>
+                    handleDefault(val, event, "gtn")
+                  }
                   notFoundContent={null}
                   onFocus={() => handleClick("gtn")}
                 >
@@ -194,12 +208,24 @@ export function DrawerBody() {
                 </Select>
               }
               addonAfter={
-                <Icon type="plus" onClick={() => HandleInputAddGTN("gtn")} />
+                <Icon type="edit" onClick={() => HandleInputAddGTN("gtn")} />
               }
-              placeholder={`Add GTN +: ${valueState.gtn}`}
+              placeholder={`Edit GTN: ${valueState.gtn}`}
               onChange={(e: any) => setinput(e.target.value)}
               onPressEnter={() => HandleInputAddGTN("gtn")}
             />
+
+            <Input placeholder={"Add new GTN ..."} style={{ marginTop: 8 }} />
+
+            <Button
+              type="primary"
+              block
+              icon="plus"
+              onClick={() => HandleInputAddGTN("gtn")}
+              style={{ marginTop: 8, marginBottom: 8 }}
+            >
+              {"Add GTN"}
+            </Button>
           </div>
         </div>
 
@@ -208,7 +234,7 @@ export function DrawerBody() {
             display: "flex",
             flexDirection: "row",
             width: "100%",
-            marginBottom: 4
+            marginBottom: 8
           }}
         >
           <div style={{ width: "100%" }}>
@@ -399,9 +425,12 @@ export function DrawerBody() {
           <div style={{ width: "100%", marginBottom: 4 }}>
             <Select
               showSearch
-              disabled
-              value={`atcCode: ${valueState.atcCode}`}
-              placeholder={`atcCode: ${valueState.atcCode}`}
+              value={
+                valueState.atc[0] ? `atcCode: ${valueState.atc[0].code}` : "ATC"
+              }
+              placeholder={
+                valueState.atc[0] ? `atcCode: ${valueState.atc[0].code}` : "ATC"
+              }
               style={{ width: "inherits", minWidth: "100%" }}
               defaultActiveFirstOption={false}
               showArrow={true}
@@ -411,9 +440,9 @@ export function DrawerBody() {
               notFoundContent={null}
               onFocus={() => handleClick("atcCode")}
             >
-              {select.map((i: any, id: any) => (
-                <Option value={i} key={i}>
-                  {i}
+              {valueState.atc.map((i: any, id: any) => (
+                <Option value={i.code} key={i}>
+                  {i.code}
                 </Option>
               ))}
             </Select>

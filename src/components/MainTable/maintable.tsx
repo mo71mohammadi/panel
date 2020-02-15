@@ -9,6 +9,7 @@ import { CountState } from "./StateManager/countState";
 import { Selecto } from "./selection";
 import { DrawerBody } from "./drawerBody";
 import { ValueState } from "./StateManager/valueState";
+import { DrawBody } from "./drawBody";
 
 export const MainTable = () => {
   const { tableData, setTableData } = useContext(TableData);
@@ -94,12 +95,17 @@ export const MainTable = () => {
         closable={true}
         onClose={onClose}
         visible={action.isDraw}
-        width={"40vw"}
+        width={"100vw"}
+        style={{
+          textAlign: "center",
+          alignItems: "center",
+          alignContent: "center"
+        }}
       >
-        <div style={{ marginTop: 12, marginBottom: 8 }}>
+        {/* <div style={{ marginTop: 12, marginBottom: 8 }}>
           <Alert message={`Edit Item: ${valueState._id}`} type="success" />
-        </div>
-        <DrawerBody />
+        </div> */}
+        <DrawBody />
       </Drawer>
       <div style={{ width: "100%", marginBottom: 16 }}>
         <Selecto />

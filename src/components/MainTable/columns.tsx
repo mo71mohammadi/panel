@@ -13,7 +13,6 @@ import { SearchState } from "./StateManager/searchState";
 import { TableData } from "./StateManager/tableDataState";
 import axios from "axios";
 import { message } from "antd";
-import { DrawerBody } from "./drawerBody";
 import { ValueState } from "./StateManager/valueState";
 
 export function Columns() {
@@ -112,6 +111,19 @@ export function Columns() {
       ...getColumnSearchProps("producer")
     },
     {
+      title: "ACT",
+      dataIndex: "ACT",
+      key: "ACT",
+      ...getColumnSearchProps("ACT"),
+      render: function(index: number, record: any) {
+        return (
+          <div>
+            <Button>Go</Button>
+          </div>
+        );
+      }
+    },
+    {
       title: "Action",
       key: "action",
       render: function(index: number, record: any) {
@@ -142,8 +154,7 @@ export function Columns() {
 
   function HandleDrawer(params: any) {
     setValueState(params);
-    setAction({...action, isDraw:true});
-    console.log("gozzzzzzzzzzz")
+    setAction({ ...action, isDraw: true });
   }
   function HandleDelete(params: any) {
     axios({

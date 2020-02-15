@@ -110,19 +110,7 @@ export function Columns() {
       key: "producer",
       ...getColumnSearchProps("producer")
     },
-    {
-      title: "ACT",
-      dataIndex: "ACT",
-      key: "ACT",
-      ...getColumnSearchProps("ACT"),
-      render: function(index: number, record: any) {
-        return (
-          <div>
-            <Button>Go</Button>
-          </div>
-        );
-      }
-    },
+  
     {
       title: "Action",
       key: "action",

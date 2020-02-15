@@ -5,13 +5,8 @@ import { Columns } from "./columns";
 
 export default function InteractionTable() {
   const [tableData, setTableData] = useState([]);
-
   const [state, setState] = useState([{ name: "", id: "" }]);
-
-  const [pagi, setPagi] = useState({
-    pageSize: 10,
-    pageCurrent: 1
-  });
+  const [pagi, setPagi] = useState({pageSize: 10, pageCurrent: 1});
   const [count, setCount] = useState({ total: 0 });
   const [loading, setLoading] = useState(true);
 
@@ -26,7 +21,6 @@ export default function InteractionTable() {
       })
       .catch(() => console.log("Get upToDate Data Fail"));
   }, []);
-
   useEffect(() => {
     setLoading(true);
 

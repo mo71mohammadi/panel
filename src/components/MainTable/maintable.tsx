@@ -7,7 +7,6 @@ import { pagination } from "./StateManager/paginationState";
 import { Columns } from "./columns";
 import { CountState } from "./StateManager/countState";
 import { Selecto } from "./selection";
-import { DrawerBody } from "./drawerBody";
 import { ValueState } from "./StateManager/valueState";
 import { DrawBody } from "./drawBody";
 

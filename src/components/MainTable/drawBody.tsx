@@ -1,17 +1,37 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Button, Select, message, Input, Icon, Alert, Form } from "antd";
 import axios from "axios";
 import { Row, Col } from "antd";
 
 import { ValueState } from "./StateManager/valueState";
 const { Option } = Select;
+let id = 0;
 
 export function DrawBody() {
   const { valueState, setValueState } = useContext(ValueState);
   const [select, setSelect] = useState([]);
   const [option, setOption] = React.useState({ type: null, list: [] });
-  const [input, setinput] = useState([]);
-  const [def, setDef] = useState();
+  const [input, setinput] = useState([{}]);
+  const [state, setstate] = useState([""]);
+
+  // function ADD(e: any) {
+  //   e.preventDefault();
+  //   const keys = state;
+  //   const nextKeys = keys.concat(id++);
+  //   setstate(nextKeys);
+  // }
+
+  // useEffect(() => {
+  //   setinput(valueState.gtn);
+  // }, []);
+
+  function Remove(params: any) {
+    if (state.length === 1) {
+      return;
+    }
+
+    setstate(state.filter((key: any) => key !== params));
+  }
 
   function handleClick(value: any) {
     if (!option.type || option.type !== value) {
@@ -37,12 +57,6 @@ export function DrawBody() {
     setValueState((e: any) => ({ ...valueState, ...change }));
   };
 
-  function handleDefault(params: any, event: any, type: any) {
-    setDef(event.props.value);
-    console.log("event", event);
-    console.log("params", params);
-  }
-
   function handleSearch(params: any) {
     const selectItem = option.list.filter(
       (word: any) =>
@@ -54,7 +68,7 @@ export function DrawBody() {
     setSelect(selectItem.slice(0, 10));
   }
 
-  function HandleEdit(params: any) {
+  function HandleUpdate(params: any) {
     console.log("Edit Item : ", valueState._id);
 
     axios({
@@ -68,16 +82,57 @@ export function DrawBody() {
       .catch(() => console.log("Get Data Fail"));
   }
 
-  function HandleInputAddGTN(type: any) {
+  function HandleInputAddGTN(id: any, e: any, type: string) {
     const newItem: any = valueState.gtn;
-    newItem.push(input);
-    setValueState((e: any) => ({ ...valueState, gtn: newItem }));
-    setinput([]);
+
+    if (newItem[id] !== input && input !== undefined) {
+      newItem.push(input);
+      setValueState((e: any) => ({ ...valueState, gtn: newItem }));
+      e.preventDefault();
+    }
+
+    if (type === "Add") {
+      setstate(state);
+    }
   }
 
-  function HandleInputAddIRC(type: any) {
+  function HandleInputAddIRC(id: any, e: any, type: string) {
     const newItem: any = valueState.irc;
-    newItem.push(input);
+
+    if (newItem[id] !== input && input !== undefined) {
+      newItem.push(input);
+      setValueState((e: any) => ({ ...valueState, irc: newItem }));
+      e.preventDefault();
+    }
+
+    if (type === "Add") {
+      setstate(state);
+    }
+  }
+
+  function HandleEditGTN(id: any) {
+    console.log("ID GTN", id);
+    const newItem: any = valueState.gtn;
+
+    newItem[id] = input;
+
+    for (var i = newItem.length; i--; ) {
+      if (newItem[i] === "") newItem.splice(i, 1);
+    }
+
+    setValueState((e: any) => ({ ...valueState, gtn: newItem }));
+  }
+
+  function HandleEditIRC(id: any) {
+    console.log("ID IRC", id);
+    const newItem: any = valueState.irc;
+
+    newItem[id] = input;
+
+    for (var i = newItem.length; i--; ) {
+      if (newItem[i] === "") newItem.splice(i, 1);
+    }
+
     setValueState((e: any) => ({ ...valueState, irc: newItem }));
   }
 
@@ -199,7 +254,7 @@ export function DrawBody() {
           </Col>
         </Row>
 
-        <Row gutter={[16, 16]} style={{ width: "75%", marginTop: 16 }}>
+        {/* <Row gutter={[16, 16]} style={{ width: "75%", marginTop: 16 }}>
           <Col span={24}>
             <Input
               //prefixCls={"gtn"}
@@ -240,80 +295,115 @@ export function DrawBody() {
               onPressEnter={() => HandleInputAddGTN("gtn")}
             />
           </Col>
-        </Row>
+        </Row> */}
 
-        <Row gutter={[16, 16]} style={{ width: "75%", marginTop: 16 }}>
-          <Col span={24}>
-            <Input
-              placeholder={"Add new GTN ..."}
-              //style={{  borderColor: "black" }}
-            />
-          </Col>
-        </Row>
+        {valueState.gtn.map((i: any, id: any) => (
+          <Row gutter={[16, 16]} style={{ width: "75%", marginTop: 16 }}>
+            <Col span={state.length > 1 ? 23 : 24}>
+              <Input
+                allowClear
+                suffix={"Edit This GTN"}
+                key={id}
+                placeholder={`${valueState.gtn[id]}`}
+                defaultValue={`${valueState.gtn[id]}`}
+                onChange={(e: any) => setinput(e.target.value)}
+                addonAfter={
+                  <Icon type="edit" onClick={(e: any) => HandleEditGTN(id)} />
+                }
+              />
+            </Col>
+          </Row>
+        ))}
 
-        <Row gutter={[16, 16]} style={{ width: "75%", marginTop: 16 }}>
+        {state.map((i, index) => (
+          <Row gutter={[16, 16]} style={{ width: "75%", marginTop: 16 }}>
+            <Col span={state.length > 1 ? 23 : 24}>
+              <Input
+                placeholder={"Add New GTN ..."}
+                key={index}
+                style={{ marginBottom: 8 }}
+                onChange={(e: any) => setinput(e.target.value)}
+                addonAfter={
+                  <Icon
+                    type="plus"
+                    onClick={(e: any) => HandleInputAddGTN(index, e, "Add")}
+                  />
+                }
+              />
+            </Col>
+            <Col span={state.length > 1 ? 1 : 0}>
+              {state.length > 1 ? (
+                <Icon
+                  className="dynamic-delete-button"
+                  type="minus-circle-o"
+                  onClick={() => Remove(i)}
+                />
+              ) : null}
+            </Col>
+          </Row>
+        ))}
+        {/* <Row gutter={[16, 16]} style={{ width: "75%", marginTop: 16 }}>
           <Col span={24}>
             <Button
               type="dashed"
               block
               icon="plus"
-              onClick={() => HandleInputAddGTN("gtn")}
+              //onClick={() => HandleInputAddGTN("gtn")}
               style={{ color: "blue", borderColor: "blue" }}
+              onClick={ADD}
             >
               {"Add GTN"}
             </Button>
           </Col>
-        </Row>
+        </Row> */}
 
-        <Row gutter={[16, 16]} style={{ width: "75%", marginTop: 16 }}>
-          <Col span={24}>
-            <Input
-              suffix={"Edit IRC"}
-              addonBefore={
-                <Select
-                  // suffixIcon={"irc"}
-                  showSearch
-                  value={` ${valueState.irc[0]}`}
-                  placeholder={` ${valueState.irc}`}
-                  style={{ width: "inherits", minWidth: "100%" }}
-                  defaultActiveFirstOption={false}
-                  showArrow={true}
-                  filterOption={true}
-                  onSearch={handleSearch}
-                  notFoundContent={null}
-                  onFocus={() => handleClick("irc")}
-                >
-                  {valueState.irc.map((i: any, id: any) => (
-                    <Option value={i} key={i}>
-                      {i}
-                    </Option>
-                  ))}
-                </Select>
-              }
-              addonAfter={
-                <Icon type="edit" onClick={() => HandleInputAddIRC("irc")} />
-              }
-              placeholder={` ${valueState.irc}`}
-              onChange={(e: any) => setinput(e.target.value)}
-              onPressEnter={() => HandleInputAddIRC("irc")}
-            />
-          </Col>
-        </Row>
+        {valueState.irc.map((i: any, id: any) => (
+          <Row gutter={[16, 16]} style={{ width: "75%", marginTop: 16 }}>
+            <Col span={state.length > 1 ? 23 : 24}>
+              <Input
+                allowClear
+                suffix={"Edit This IRC"}
+                key={id}
+                placeholder={`${valueState.irc[id]}`}
+                defaultValue={`${valueState.irc[id]}`}
+                onChange={(e: any) => setinput(e.target.value)}
+                addonAfter={
+                  <Icon type="edit" onClick={(e: any) => HandleEditIRC(id)} />
+                }
+              />
+            </Col>
+          </Row>
+        ))}
 
-        <Row gutter={[16, 16]} style={{ width: "75%", marginTop: 16 }}>
-          <Col span={24}>
-            <Button
-              type="dashed"
-              block
-              icon="plus"
-              onClick={() => HandleInputAddGTN("gtn")}
-              style={{ color: "blue", borderColor: "blue" }}
-            >
-              {"Add IRC"}
-            </Button>
-          </Col>
-        </Row>
+        {state.map((i, index) => (
+          <Row gutter={[16, 16]} style={{ width: "75%", marginTop: 16 }}>
+            <Col span={state.length > 1 ? 23 : 24}>
+              <Input
+                placeholder={"Add New IRC ..."}
+                key={index}
+                style={{ marginBottom: 8 , borderColor:"blue"}}
+                onChange={(e: any) => setinput(e.target.value)}
+                addonAfter={
+                  <Icon
+                    type="plus"
+                    onClick={(e: any) => HandleInputAddIRC(index, e, "Add")}
+                  />
+                }
+              />
+            </Col>
+            <Col span={state.length > 1 ? 1 : 0}>
+              {state.length > 1 ? (
+                <Icon
+                  className="dynamic-delete-button"
+                  type="minus-circle-o"
+                  onClick={() => Remove(i)}
+                />
+              ) : null}
+            </Col>
+          </Row>
+        ))}
 
+     
         <Row gutter={[16, 16]} style={{ width: "75%", marginTop: 16 }}>
           <Col span={8}>
             <Select
@@ -722,7 +812,7 @@ export function DrawBody() {
             <Button
               type="primary"
               icon="check"
-              onClick={HandleEdit}
+              onClick={HandleUpdate}
               style={{ width: "100%" }}
             >
               Edit Item

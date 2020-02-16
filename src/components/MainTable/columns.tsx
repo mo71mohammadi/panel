@@ -110,7 +110,6 @@ export function Columns() {
       key: "producer",
       ...getColumnSearchProps("producer")
     },
-  
     {
       title: "Action",
       key: "action",

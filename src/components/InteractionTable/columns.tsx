@@ -1,32 +1,33 @@
 import React, { useState, useEffect } from "react";
-import Search from "antd/lib/input/Search";
-import { Tag, Select, Icon, Button } from "antd";
-const { Option } = Select;
+import { Tag, Select, Icon, Button, Input } from "antd";
+import { ModalState } from "./modalState";
 
 export function Columns(params: any) {
   const [value, setValue] = useState();
   const [option, setOption] = useState([]);
+  const { modal, setModal } = React.useContext(ModalState);
 
-  function handleSearch(type: any) {
-    const selectItem = params.filter(
-      (word: any) =>
-        word.name
-          .toString()
-          .toLowerCase()
-          .search(`^${type.toLowerCase()}`) > -1
-    );
-    setOption(selectItem.slice(0, 10));
+  function ShowModal(name: any, record: any) {
+    setModal({
+      isRecord: record,
+      idRecord: name,
+      isModal: true,
+      isConfirm: false
+    });
+    console.log("Index isRecord", name, record);
   }
-  const HandleChange = (val: any, e: any) => setValue(e.key);
+
   const handleClick = () => {
     setOption([]);
-    setValue(null)
+    setValue(null);
   };
   const columns = [
     {
       title: "enName",
       dataIndex: "enName",
-      key: "enName"
+      key: "enName",
+      width: "30%"
+
       //...getColumnSearchProps("IRC")
     },
     {
@@ -34,7 +35,7 @@ export function Columns(params: any) {
       dataIndex: "enRoute",
       key: "enRoute",
       render: function tag(param: any) {
-        return <Tag color={"red"}>{param}</Tag>;
+        return <Tag>{param}</Tag>;
       }
       // ...getColumnSearchProps("GTIN")
     },
@@ -42,54 +43,46 @@ export function Columns(params: any) {
       title: "upToDateId",
       dataIndex: "upToDateId",
       key: "upToDateId",
+      width: "30%",
+
       render: function(index: number, record: any) {
-        let name = {name: '', id: ''};
+        let name = { name: "", id: "" };
         name = params.find((item: any) => item.id === record.upToDateId);
 
         if (name) {
           return (
-              <div onClick={handleClick} style={{ display: "flex", flexDirection: "row" }}>
-                <Select
-                    showSearch
-                    // defaultValue={name.name}
-                    // value={name.name}
-                    placeholder={name.name}
-                    style={{
-                      width: "75%",
-                      maxWidth: "75%",
-                      minWidth: "75%",
-                      marginRight: 8
-                    }}
-                    defaultActiveFirstOption={true}
-                    showArrow={true}
-                    onSearch={handleSearch}
-                    filterOption={true}
-                    onChange={((val: any, e: any) => HandleChange(val, e))}
-                    notFoundContent={null}
-                    // onFocus={() => handleSearch}
-                >
-                  {option.map((i: any) => (
-                      <Option value={i.name} key={i.id}>
-                        {i.name}
-                      </Option>
-                  ))}
-                </Select>
-                <Button
-                    type="ghost"
-                    icon="check"
-                    size={"default"}
-                    style={{
-                      marginRight: 8,
-                      width: "25%",
-                      color: "#fafafa",
-                      background: "#29BEB0"
-                    }}
-                />
-              </div>
+            <div
+              onClick={handleClick}
+              style={{ display: "flex", flexDirection: "row" }}
+            >
+              <Tag color="purple">{name.name}</Tag>
+            </div>
           );
         }
       }
       // ...getColumnSearchProps("PackageCount")
+    },
+    {
+      title: "Action",
+      dataIndex: "Action",
+      key: "Action",
+      width: "10%",
+
+      // ...getColumnSearchProps("cPrice")
+      render: function(index: number, record: any) {
+        let name = { name: "", id: "" };
+        name = params.find((item: any) => item.id === record.upToDateId);
+        return (
+          <div>
+            <Button
+              type="primary"
+              icon="edit"
+              size="default"
+              onClick={() => ShowModal(name, record)}
+            />
+          </div>
+        );
+      }
     },
     {
       title: "medScapeId",

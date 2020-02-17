@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { Table, Alert } from "antd";
+import { Table, Alert, Modal } from "antd";
 import axios from "axios";
 import { Columns } from "./columns";
+import { ModalState } from "./modalState";
+import ModalBody from "./modalBody";
 
 export default function InteractionTable() {
   const [tableData, setTableData] = useState([]);
   const [state, setState] = useState([{ name: "", id: "" }]);
-  const [pagi, setPagi] = useState({pageSize: 10, pageCurrent: 1});
+  const [pagi, setPagi] = useState({ pageSize: 10, pageCurrent: 1 });
   const [count, setCount] = useState({ total: 0 });
   const [loading, setLoading] = useState(true);
+  const { modal, setModal } = React.useContext(ModalState);
 
   useEffect(() => {
     axios({
@@ -44,12 +47,36 @@ export default function InteractionTable() {
     });
   };
 
+  function HandleOk(params: any) {
+    setModal({ ...modal, isConfirm: true });
+
+    setTimeout(() => {
+      setModal({ ...modal, isModal: false, isConfirm: false });
+    }, 2000);
+  }
+
+  function HandleCancel(params: any) {
+    setModal({ ...modal, isModal: false, isConfirm: false });
+  }
+
   return (
     <div style={{ background: "#fafafa" }}>
       <div>
+        <Modal
+          title="Update Interaction"
+          visible={modal.isModal}
+          onOk={HandleOk}
+          confirmLoading={modal.isConfirm}
+          onCancel={HandleCancel}
+        >
+          {ModalBody(state)}
+        </Modal>
+
         <Table
           loading={loading}
-          rowKey={(record: any) => record.tableData}
+          rowKey={(record: any) => {
+            return record.tableData;
+          }}
           size="small"
           columns={Columns(state)}
           dataSource={tableData}

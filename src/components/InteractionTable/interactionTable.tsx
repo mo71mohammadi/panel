@@ -7,7 +7,8 @@ import ModalBody from "./modalBody";
 
 export default function InteractionTable() {
   const [tableData, setTableData] = useState([]);
-  const [state, setState] = useState([{ name: "", id: "" }]);
+  const [upToDate, setUpToDate] = useState([{ name: "", id: "" }]);
+  const [medScape, setmedScape] = useState([{ name: "", id: 0 }])
   const [pagi, setPagi] = useState({ pageSize: 10, pageCurrent: 1 });
   const [count, setCount] = useState({ total: 0 });
   const [loading, setLoading] = useState(true);
@@ -20,10 +21,24 @@ export default function InteractionTable() {
       data: {}
     })
       .then((resp: any) => {
-        setState(resp.data);
+        setUpToDate(resp.data);
       })
       .catch(() => console.log("Get upToDate Data Fail"));
   }, []);
+
+  useEffect(() => {
+    axios({
+      method: "GET",
+      url: "http://45.92.95.69:5000/api/medScape/name",
+      data: {}
+    })
+      .then((resp: any) => {
+        setmedScape(resp.data);
+      })
+      .catch(() => console.log("Get upToDate Data Fail"));
+  }, []);
+
+
   useEffect(() => {
     setLoading(true);
 
@@ -69,7 +84,7 @@ export default function InteractionTable() {
           confirmLoading={modal.isConfirm}
           onCancel={HandleCancel}
         >
-          {ModalBody(state)}
+          {ModalBody(upToDate)}
         </Modal>
 
         <Table
@@ -78,7 +93,7 @@ export default function InteractionTable() {
             return record.tableData;
           }}
           size="small"
-          columns={Columns(state)}
+          columns={Columns(upToDate,medScape)}
           dataSource={tableData}
           pagination={{
             total: count.total,

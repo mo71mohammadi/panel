@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Tag, Select, Icon, Button, Input } from "antd";
 import { ModalState } from "./modalState";
 
-export function Columns(params: any) {
+export function Columns(upToDate: any, medScape: any) {
   const [value, setValue] = useState();
   const [option, setOption] = useState([]);
   const { modal, setModal } = React.useContext(ModalState);
@@ -47,12 +47,12 @@ export function Columns(params: any) {
 
       render: function(index: number, record: any) {
         let name = { name: "", id: "" };
-        name = params.find((item: any) => item.id === record.upToDateId);
+        name = upToDate.find((item: any) => item.id === record.upToDateId);
 
         if (name) {
           return (
             <div
-              onClick={handleClick}
+              // onClick={handleClick}
               style={{ display: "flex", flexDirection: "row" }}
             >
               <Tag color="purple">{name.name}</Tag>
@@ -71,7 +71,7 @@ export function Columns(params: any) {
       // ...getColumnSearchProps("cPrice")
       render: function(index: number, record: any) {
         let name = { name: "", id: "" };
-        name = params.find((item: any) => item.id === record.upToDateId);
+        name = upToDate.find((item: any) => item.id === record.upToDateId);
         return (
           <div>
             <Button
@@ -87,7 +87,23 @@ export function Columns(params: any) {
     {
       title: "medScapeId",
       dataIndex: "medScapeId",
-      key: "medScapeId"
+      key: "medScapeId",
+
+      render: function(index: number, record: any) {
+        let name = { name: "", id: "" };
+        name = medScape.find(
+          (item: any) => item.id.toString() === record.medScapeId
+        );
+
+        if (name) {
+          return (
+            <div style={{ display: "flex", flexDirection: "row" }}>
+              <Tag color="purple">{name.name}</Tag>
+            </div>
+          );
+        }
+      }
+
       // ...getColumnSearchProps("cPrice")
     }
   ];

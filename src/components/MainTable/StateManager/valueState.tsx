@@ -22,6 +22,7 @@ export const State = {
   packageCode: "",
   packageType: "",
   genericCode: "",
+  packageCount: "",
   strength: "",
   enRoute: "",
   faRoute: "",
@@ -44,5 +45,38 @@ export const State = {
   priceHistory: [""]
 
 };
+
+
+export const NewState = {
+  gtn: [""],
+  irc: [""],
+  eRx: "",
+  packageCode: "",
+  packageType: "",
+  genericCode: "",
+  packageCount: "",
+  strength: "",
+  enRoute: "",
+  faRoute: "",
+  enForm: "",
+  faForm: "",
+  upToDateId: "",
+  medScapeId: "",
+  faBrandName: "",
+  enBrandName:"",
+  enName: "",
+  faName: "",
+  volume: "",
+  licenseOwner: "",
+  countryBrandOwner: "",
+  brandOwner: "",
+  countryProducer: "",
+  producer: "",
+  conversationalName: "",
+  priceHistory: [""]
+
+};
+
+
 
 export const [ValueState, ValueStateProvider] = createCtxUseState(State);

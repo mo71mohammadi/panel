@@ -5,14 +5,14 @@ export function Columns() {
   const columns = [
     {
       title: "IRC",
-      dataIndex: "IRC",
-      key: "IRC"
+      dataIndex: "irc",
+      key: "irc"
       //...getColumnSearchProps("IRC")
     },
     {
-      title: "GTIN",
-      dataIndex: "GTIN",
-      key: "GTIN",
+      title: "GTN",
+      dataIndex: "gtn",
+      key: "gtn",
       render: function tag(params: any) {
         return <Tag color={"pink"}>{params}</Tag>;
       }

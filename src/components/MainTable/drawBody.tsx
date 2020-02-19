@@ -1,9 +1,10 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Button, Select, message, Input, Icon, Alert, Form } from "antd";
+import { Button, Select, message, Input, Icon, Alert, Form, Tag } from "antd";
 import axios from "axios";
 import { Row, Col } from "antd";
 
-import { ValueState } from "./StateManager/valueState";
+import { ValueState, State, NewState } from "./StateManager/valueState";
+import { SearchState } from "./StateManager/searchState";
 const { Option } = Select;
 let id = 0;
 
@@ -13,17 +14,8 @@ export function DrawBody() {
   const [option, setOption] = React.useState({ type: null, list: [] });
   const [input, setinput] = useState([{}]);
   const [state, setstate] = useState([""]);
+  const { action, setAction } = React.useContext(SearchState);
 
-  // function ADD(e: any) {
-  //   e.preventDefault();
-  //   const keys = state;
-  //   const nextKeys = keys.concat(id++);
-  //   setstate(nextKeys);
-  // }
-
-  // useEffect(() => {
-  //   setinput(valueState.gtn);
-  // }, []);
 
   function Remove(params: any) {
     if (state.length === 1) {
@@ -136,15 +128,40 @@ export function DrawBody() {
     setValueState((e: any) => ({ ...valueState, irc: newItem }));
   }
 
+  function HandleAddNewItem(params: any) {
+    setValueState(State);
+    setAction({ ...action, isAddNew: true });
+  }
+
+  function HandleSendItem(params: any) {
+    const Data: any = NewState;
+
+    // delete Data._id;
+    // delete Data.atc;
+    // const atc: any = [{}];
+    // Data.push(atc);
+
+    console.log("HandleSendItem", Data);
+    axios({
+      method: "POST",
+      url: `http://45.92.95.69:5000/api/drugs/create`,
+      data: Data
+    })
+      .then((res: { data: any }) => {
+        message.success(`Item Created Successfully`);
+      })
+      .catch(() => console.log("Get Data Fail"));
+  }
+
   return (
     <>
       <Col
         style={{
           display: "flex",
           flexDirection: "column",
-          textAlign: "center",
+          textAlign: "left",
           alignItems: "center",
-          alignContent: "center",
+          alignContent: "left",
           width: "inherits"
         }}
       >
@@ -160,237 +177,250 @@ export function DrawBody() {
 
         <Row gutter={[16, 16]} style={{ width: "75%", marginTop: 16 }}>
           <Col span={12}>
-            <Select
-              suffixIcon={"eRx"}
-              showSearch
-              value={`${valueState.eRx}`}
-              placeholder={` ${valueState.eRx}`}
-              style={{ width: "100%" }}
-              defaultActiveFirstOption={true}
-              showArrow={true}
-              filterOption={true}
-              onSearch={handleSearch}
-              onChange={(e: any) => handleChange(e, "eRx")}
-              notFoundContent={null}
-              onFocus={() => handleClick("eRx")}
-            >
-              {select.map((i: any, id: any) => (
-                <Option value={i} key={i}>
-                  {i}
-                </Option>
-              ))}
-            </Select>
-          </Col>
-          <Col span={12}>
-            <Select
-              suffixIcon={"genericCode"}
-              showSearch
-              value={` ${valueState.genericCode}`}
-              placeholder={`${valueState.genericCode}`}
-              style={{ width: "100%" }}
-              defaultActiveFirstOption={true}
-              showArrow={true}
-              filterOption={true}
-              onSearch={handleSearch}
-              onChange={(e: any) => handleChange(e, "genericCode")}
-              notFoundContent={null}
-              onFocus={() => handleClick("genericCode")}
-            >
-              {select.map((i: any, id: any) => (
-                <Option value={i} key={i}>
-                  {i}
-                </Option>
-              ))}
-            </Select>
-          </Col>
-        </Row>
-
-        <Row gutter={[16, 16]} style={{ width: "75%", marginTop: 16 }}>
-          <Col span={12}>
-            <Select
-              suffixIcon={"packageCode"}
-              showSearch
-              value={` ${valueState.packageCode}`}
-              placeholder={` ${valueState.packageCode}`}
-              style={{ width: "inherits", minWidth: "100%" }}
-              defaultActiveFirstOption={false}
-              showArrow={true}
-              filterOption={true}
-              onSearch={handleSearch}
-              onChange={(e: any) => handleChange(e, "packageCode")}
-              notFoundContent={null}
-            >
-              <Option value="A">A</Option>
-              <Option value="B">B</Option>
-              <Option value="C">C</Option>
-              <Option value="D">D</Option>
-              <Option value="E">E</Option>
-              <Option value="F">F</Option>
-              <Option value="G">G</Option>
-              <Option value="H">H</Option>
-            </Select>
-          </Col>
-          <Col span={12}>
-            <Select
-              suffixIcon={"packageType"}
-              showSearch
-              value={` ${valueState.packageType}`}
-              placeholder={` ${valueState.packageType}`}
-              style={{ width: "inherits", minWidth: "100%" }}
-              defaultActiveFirstOption={false}
-              showArrow={true}
-              filterOption={true}
-              onSearch={handleSearch}
-              onChange={(e: any) => handleChange(e, "packageType")}
-              notFoundContent={null}
-              onFocus={() => handleClick("packageType")}
-            >
-              {select.map((i: any, id: any) => (
-                <Option value={i} key={i}>
-                  {i}
-                </Option>
-              ))}
-            </Select>
-          </Col>
-        </Row>
-
-        {/* <Row gutter={[16, 16]} style={{ width: "75%", marginTop: 16 }}>
-          <Col span={24}>
-            <Input
-              //prefixCls={"gtn"}
-              suffix={"Edit GTN"}
-              //value={def}
-              //defaultValue={"def"}
-              inputMode="text"
-              //allowClear={true}
-              addonBefore={
+            <Row style={{ width: "100%" }}>
+              <Col span={8}>
+                <Button type="dashed" size="default">
+                  eRx
+                </Button>
+              </Col>
+              <Col span={16}>
                 <Select
-                  //suffixIcon={"gtn"}
+                  mode="combobox"
+                  suffixIcon="eRx"
                   showSearch
-                  value={` ${valueState.gtn[0]}`}
-                  placeholder={` ${valueState.gtn}`}
-                  style={{ minWidth: "100%" }}
-                  defaultActiveFirstOption={false}
+                  value={valueState.eRx}
+                  placeholder={valueState.eRx}
+                  style={{ width: "100%" }}
+                  defaultActiveFirstOption={true}
                   showArrow={true}
                   filterOption={true}
                   onSearch={handleSearch}
-                  onChange={(val: any, event: any) =>
-                    handleDefault(val, event, "gtn")
-                  }
+                  onChange={(e: any) => handleChange(e, "eRx")}
                   notFoundContent={null}
-                  onFocus={() => handleClick("gtn")}
+                  onFocus={() => handleClick("eRx")}
                 >
-                  {valueState.gtn.map((i: any, id: any) => (
+                  {select.map((i: any, id: any) => (
                     <Option value={i} key={i}>
                       {i}
                     </Option>
                   ))}
                 </Select>
-              }
-              addonAfter={
-                <Icon type="edit" onClick={() => HandleInputAddGTN("gtn")} />
-              }
-              placeholder={`${valueState.gtn}`}
-              onChange={(e: any) => setinput(e.target.value)}
-              onPressEnter={() => HandleInputAddGTN("gtn")}
-            />
+              </Col>
+            </Row>
           </Col>
-        </Row> */}
+          <Col span={12}>
+            <Row style={{ width: "100%" }}>
+              <Col span={8}>
+                <Button type="dashed" size="default">
+                  genericCode
+                </Button>
+              </Col>
+              <Col span={16}>
+                <Select
+                  mode="default"
+                  // suffixIcon={"genericCode"}
+                  showSearch
+                  value={valueState.genericCode}
+                  placeholder={valueState.genericCode}
+                  style={{ width: "100%" }}
+                  defaultActiveFirstOption={true}
+                  showArrow={true}
+                  filterOption={true}
+                  onSearch={handleSearch}
+                  onChange={(e: any) => handleChange(e, "genericCode")}
+                  notFoundContent={null}
+                  onFocus={() => handleClick("genericCode")}
+                >
+                  {select.map((i: any, id: any) => (
+                    <Option value={i} key={i}>
+                      {i}
+                    </Option>
+                  ))}
+                </Select>
+              </Col>
+            </Row>
+          </Col>
+        </Row>
+
+        <Row gutter={[16, 16]} style={{ width: "75%", marginTop: 16 }}>
+          <Col span={12}>
+            <Row style={{ width: "100%" }}>
+              <Col span={8}>
+                <Button type="dashed" size="default">
+                  packageCode
+                </Button>
+              </Col>
+              <Col span={16}>
+                <Select
+                  // mode="combobox"
+                  //suffixIcon={"packageCode"}
+                  showSearch
+                  value={valueState.packageCode}
+                  placeholder={valueState.packageCode}
+                  style={{ width: "inherits", minWidth: "100%" }}
+                  defaultActiveFirstOption={false}
+                  showArrow={true}
+                  filterOption={true}
+                  onSearch={handleSearch}
+                  onChange={(e: any) => handleChange(e, "packageCode")}
+                  notFoundContent={null}
+                >
+                  <Option value="A">A</Option>
+                  <Option value="B">B</Option>
+                  <Option value="C">C</Option>
+                  <Option value="D">D</Option>
+                  <Option value="E">E</Option>
+                  <Option value="F">F</Option>
+                  <Option value="G">G</Option>
+                  <Option value="H">H</Option>
+                </Select>
+              </Col>
+            </Row>
+          </Col>
+          <Col span={12}>
+            <Row style={{ width: "100%" }}>
+              <Col span={8}>
+                <Button type="dashed" size="default">
+                  packageType
+                </Button>
+              </Col>
+              <Col span={16}>
+                <Select
+                  mode="combobox"
+                  suffixIcon={"packageType"}
+                  showSearch
+                  value={valueState.packageType}
+                  placeholder={valueState.packageType}
+                  style={{ width: "inherits", minWidth: "100%" }}
+                  defaultActiveFirstOption={false}
+                  showArrow={true}
+                  filterOption={true}
+                  onSearch={handleSearch}
+                  onChange={(e: any) => handleChange(e, "packageType")}
+                  notFoundContent={null}
+                  onFocus={() => handleClick("packageType")}
+                >
+                  {select.map((i: any, id: any) => (
+                    <Option value={i} key={i}>
+                      {i}
+                    </Option>
+                  ))}
+                </Select>
+              </Col>
+            </Row>
+          </Col>
+        </Row>
 
         {valueState.gtn.map((i: any, id: any) => (
           <Row gutter={[16, 16]} style={{ width: "75%", marginTop: 16 }}>
-            <Col span={state.length > 1 ? 23 : 24}>
-              <Input
-                allowClear
-                suffix={"Edit This GTN"}
-                key={id}
-                placeholder={`${valueState.gtn[id]}`}
-                defaultValue={`${valueState.gtn[id]}`}
-                onChange={(e: any) => setinput(e.target.value)}
-                addonAfter={
-                  <Icon type="edit" onClick={(e: any) => HandleEditGTN(id)} />
-                }
-              />
-            </Col>
+            <Row style={{ width: "100%" }}>
+              <Col span={8}>
+                <Button type="dashed" size="default">
+                  Edit This GTN
+                </Button>
+              </Col>
+              <Col span={16}>
+                <Input
+                  allowClear
+                  // suffix={"Edit This GTN"}
+                  key={id}
+                  placeholder={valueState.gtn[id]}
+                  defaultValue={valueState.gtn[id]}
+                  onChange={(e: any) => setinput(e.target.value)}
+                  addonAfter={
+                    <Icon type="edit" onClick={(e: any) => HandleEditGTN(id)} />
+                  }
+                />
+              </Col>
+            </Row>
           </Row>
         ))}
 
         {state.map((i, index) => (
           <Row gutter={[16, 16]} style={{ width: "75%", marginTop: 16 }}>
-            <Col span={state.length > 1 ? 23 : 24}>
-              <Input
-                placeholder={"Add New GTN ..."}
-                key={index}
-                style={{ marginBottom: 8 }}
-                onChange={(e: any) => setinput(e.target.value)}
-                addonAfter={
-                  <Icon
-                    type="plus"
-                    onClick={(e: any) => HandleInputAddGTN(index, e, "Add")}
-                  />
-                }
-              />
-            </Col>
-            <Col span={state.length > 1 ? 1 : 0}>
-              {state.length > 1 ? (
+            <Row style={{ width: "100%" }}>
+              <Col span={8}>
+                <Button type="dashed" size="default">
+                  Add New GTN
+                </Button>
+              </Col>
+              <Col span={16}>
+                <Input
+                  // placeholder={"Add New GTN ..."}
+                  key={index}
+                  style={{ marginBottom: 8 }}
+                  onChange={(e: any) => setinput(e.target.value)}
+                  addonAfter={
+                    <Icon
+                      type="plus"
+                      onClick={(e: any) => HandleInputAddGTN(index, e, "Add")}
+                    />
+                  }
+                />
+              </Col>
+            </Row>
+
+            {/* <Col span={state.length > 1 ? 1 : 0}>
+              {state.length > 0 ? (
                 <Icon
                   className="dynamic-delete-button"
                   type="minus-circle-o"
                   onClick={() => Remove(i)}
                 />
               ) : null}
-            </Col>
+            </Col> */}
           </Row>
         ))}
-        {/* <Row gutter={[16, 16]} style={{ width: "75%", marginTop: 16 }}>
-          <Col span={24}>
-            <Button
-              type="dashed"
-              block
-              icon="plus"
-              //onClick={() => HandleInputAddGTN("gtn")}
-              style={{ color: "blue", borderColor: "blue" }}
-              onClick={ADD}
-            >
-              {"Add GTN"}
-            </Button>
-          </Col>
-        </Row> */}
 
         {valueState.irc.map((i: any, id: any) => (
           <Row gutter={[16, 16]} style={{ width: "75%", marginTop: 16 }}>
-            <Col span={state.length > 1 ? 23 : 24}>
-              <Input
-                allowClear
-                suffix={"Edit This IRC"}
-                key={id}
-                placeholder={`${valueState.irc[id]}`}
-                defaultValue={`${valueState.irc[id]}`}
-                onChange={(e: any) => setinput(e.target.value)}
-                addonAfter={
-                  <Icon type="edit" onClick={(e: any) => HandleEditIRC(id)} />
-                }
-              />
-            </Col>
+            <Row style={{ width: "100%" }}>
+              <Col span={8}>
+                <Button type="dashed" size="default">
+                  Edit This IRC
+                </Button>
+              </Col>
+              <Col span={16}>
+                <Input
+                  allowClear
+                  //suffix={"Edit This IRC"}
+                  key={id}
+                  placeholder={valueState.irc[id]}
+                  defaultValue={valueState.irc[id]}
+                  onChange={(e: any) => setinput(e.target.value)}
+                  addonAfter={
+                    <Icon type="edit" onClick={(e: any) => HandleEditIRC(id)} />
+                  }
+                />
+              </Col>
+            </Row>
           </Row>
         ))}
 
         {state.map((i, index) => (
           <Row gutter={[16, 16]} style={{ width: "75%", marginTop: 16 }}>
-            <Col span={state.length > 1 ? 23 : 24}>
-              <Input
-                placeholder={"Add New IRC ..."}
-                key={index}
-                style={{ marginBottom: 8 , borderColor:"blue"}}
-                onChange={(e: any) => setinput(e.target.value)}
-                addonAfter={
-                  <Icon
-                    type="plus"
-                    onClick={(e: any) => HandleInputAddIRC(index, e, "Add")}
-                  />
-                }
-              />
-            </Col>
+            <Row style={{ width: "100%" }}>
+              <Col span={8}>
+                <Button type="dashed" size="default">
+                  Add New IRC
+                </Button>
+              </Col>
+              <Col span={16}>
+                <Input
+                  placeholder={"Add New IRC ..."}
+                  key={index}
+                  style={{ marginBottom: 8, borderColor: "blue" }}
+                  onChange={(e: any) => setinput(e.target.value)}
+                  addonAfter={
+                    <Icon
+                      type="plus"
+                      onClick={(e: any) => HandleInputAddIRC(index, e, "Add")}
+                    />
+                  }
+                />
+              </Col>
+            </Row>
+
             <Col span={state.length > 1 ? 1 : 0}>
               {state.length > 1 ? (
                 <Icon
@@ -403,423 +433,650 @@ export function DrawBody() {
           </Row>
         ))}
 
-     
         <Row gutter={[16, 16]} style={{ width: "75%", marginTop: 16 }}>
-          <Col span={8}>
-            <Select
-              suffixIcon={"strength"}
-              showSearch
-              value={` ${valueState.strength}`}
-              placeholder={` ${valueState.strength}`}
-              style={{ width: "inherits", minWidth: "100%" }}
-              defaultActiveFirstOption={false}
-              showArrow={true}
-              filterOption={true}
-              onSearch={handleSearch}
-              onChange={(e: any) => handleChange(e, "strength")}
-              notFoundContent={null}
-              onFocus={() => handleClick("strength")}
-            >
-              {select.map((i: any, id: any) => (
-                <Option value={i} key={i}>
-                  {i}
-                </Option>
-              ))}
-            </Select>
+          <Col span={12}>
+            <Row style={{ width: "100%" }}>
+              <Col span={8}>
+                <Button type="dashed" size="default">
+                  atcCode
+                </Button>
+              </Col>
+              <Col span={16}>
+                <Select
+                  disabled
+                  //mode="combobox"
+                  //suffixIcon={"atcCode"}
+                  showSearch
+                  value={valueState.atc[0] ? valueState.atc[0].code : "ATC"}
+                  placeholder={
+                    valueState.atc[0] ? valueState.atc[0].code : "ATC"
+                  }
+                  style={{ width: "inherits", minWidth: "100%" }}
+                  defaultActiveFirstOption={false}
+                  showArrow={true}
+                  filterOption={true}
+                  onSearch={handleSearch}
+                  onChange={(e: any) => handleChange(e, "atcCode")}
+                  notFoundContent={null}
+                  onFocus={() => handleClick("atcCode")}
+                >
+                  {valueState.atc.map((i: any, id: any) => (
+                    <Option value={i.code} key={i}>
+                      {i.code}
+                    </Option>
+                  ))}
+                </Select>
+              </Col>
+            </Row>
           </Col>
-          <Col span={8}>
-            <Select
-              suffixIcon={"atcCode"}
-              showSearch
-              value={valueState.atc[0] ? `${valueState.atc[0].code}` : "ATC"}
-              placeholder={
-                valueState.atc[0] ? ` ${valueState.atc[0].code}` : "ATC"
-              }
-              style={{ width: "inherits", minWidth: "100%" }}
-              defaultActiveFirstOption={false}
-              showArrow={true}
-              filterOption={true}
-              onSearch={handleSearch}
-              onChange={(e: any) => handleChange(e, "atcCode")}
-              notFoundContent={null}
-              onFocus={() => handleClick("atcCode")}
-            >
-              {valueState.atc.map((i: any, id: any) => (
-                <Option value={i.code} key={i}>
-                  {i.code}
-                </Option>
-              ))}
-            </Select>
-          </Col>
-
-          <Col span={8}>
-            <Select
-              suffixIcon={"volume"}
-              showSearch
-              value={` ${valueState.volume}`}
-              placeholder={` ${valueState.volume}`}
-              style={{ width: "inherits", minWidth: "100%" }}
-              defaultActiveFirstOption={false}
-              showArrow={true}
-              filterOption={true}
-              onSearch={handleSearch}
-              onChange={(e: any) => handleChange(e, "volume")}
-              notFoundContent={null}
-              onFocus={() => handleClick("volume")}
-            >
-              {select.map((i: any, id: any) => (
-                <Option value={i} key={i}>
-                  {i}
-                </Option>
-              ))}
-            </Select>
+          <Col span={12}>
+            <Row style={{ width: "100%" }}>
+              <Col span={8}>
+                <Button type="dashed" size="default">
+                  packageCount
+                </Button>
+              </Col>
+              <Col span={16}>
+                <Select
+                  //mode="combobox"
+                  // suffixIcon={"packageCount"}
+                  showSearch
+                  value={valueState.packageCount}
+                  placeholder={valueState.packageCount}
+                  style={{ width: "inherits", minWidth: "100%" }}
+                  defaultActiveFirstOption={false}
+                  showArrow={true}
+                  filterOption={true}
+                  onSearch={handleSearch}
+                  onChange={(e: any) => handleChange(e, "packageCount")}
+                  notFoundContent={null}
+                  onFocus={() => handleClick("packageCount")}
+                >
+                  {select.map((i: any, id: any) => (
+                    <Option value={i} key={i}>
+                      {i}
+                    </Option>
+                  ))}
+                </Select>
+              </Col>
+            </Row>
           </Col>
         </Row>
 
         <Row gutter={[16, 16]} style={{ width: "75%", marginTop: 16 }}>
           <Col span={12}>
-            <Select
-              suffixIcon={"enRoute"}
-              showSearch
-              value={` ${valueState.enRoute}`}
-              placeholder={` ${valueState.enRoute}`}
-              style={{ width: "inherits", minWidth: "100%" }}
-              defaultActiveFirstOption={false}
-              showArrow={true}
-              filterOption={true}
-              onSearch={handleSearch}
-              onChange={(e: any) => handleChange(e, "enRoute")}
-              notFoundContent={null}
-              onFocus={() => handleClick("enRoute")}
-            >
-              {select.map((i: any, id: any) => (
-                <Option value={i} key={i}>
-                  {i}
-                </Option>
-              ))}
-            </Select>
+            <Row style={{ width: "100%" }}>
+              <Col span={8}>
+                <Button type="dashed" size="default">
+                  enRoute
+                </Button>
+              </Col>
+              <Col span={16}>
+                <Select
+                  mode="combobox"
+                  suffixIcon={"enRoute"}
+                  showSearch
+                  value={valueState.enRoute}
+                  placeholder={valueState.enRoute}
+                  style={{ width: "inherits", minWidth: "100%" }}
+                  defaultActiveFirstOption={false}
+                  showArrow={true}
+                  filterOption={true}
+                  onSearch={handleSearch}
+                  onChange={(e: any) => handleChange(e, "enRoute")}
+                  //notFoundContent={null}
+                  onFocus={() => handleClick("enRoute")}
+                >
+                  {select.map((i: any, id: any) => (
+                    <Option value={i} key={i}>
+                      {i}
+                    </Option>
+                  ))}
+                </Select>
+              </Col>
+            </Row>
           </Col>
           <Col span={12}>
-            <Select
-              suffixIcon={"faRoute"}
-              showSearch
-              value={` ${valueState.faRoute}`}
-              placeholder={` ${valueState.faRoute}`}
-              style={{ width: "inherits", minWidth: "100%" }}
-              defaultActiveFirstOption={false}
-              showArrow={true}
-              filterOption={true}
-              onSearch={handleSearch}
-              onChange={(e: any) => handleChange(e, "faRoute")}
-              notFoundContent={null}
-              onFocus={() => handleClick("faRoute")}
-            >
-              {select.map((i: any, id: any) => (
-                <Option value={i} key={i}>
-                  {i}
-                </Option>
-              ))}
-            </Select>
+            <Row style={{ width: "100%" }}>
+              <Col span={8}>
+                <Button type="dashed" size="default">
+                  faRoute
+                </Button>
+              </Col>
+              <Col span={16}>
+                <Select
+                  mode="combobox"
+                  suffixIcon={"faRoute"}
+                  showSearch
+                  value={valueState.faRoute}
+                  placeholder={valueState.faRoute}
+                  style={{ width: "inherits", minWidth: "100%" }}
+                  defaultActiveFirstOption={false}
+                  showArrow={true}
+                  filterOption={true}
+                  onSearch={handleSearch}
+                  onChange={(e: any) => handleChange(e, "faRoute")}
+                  notFoundContent={null}
+                  onFocus={() => handleClick("faRoute")}
+                >
+                  {select.map((i: any, id: any) => (
+                    <Option value={i} key={i}>
+                      {i}
+                    </Option>
+                  ))}
+                </Select>
+              </Col>
+            </Row>
           </Col>
         </Row>
 
         <Row gutter={[16, 16]} style={{ width: "75%", marginTop: 16 }}>
           <Col span={12}>
-            <Select
-              suffixIcon={"enForm"}
-              showSearch
-              value={` ${valueState.enForm}`}
-              placeholder={` ${valueState.enForm}`}
-              style={{ width: "inherits", minWidth: "100%" }}
-              defaultActiveFirstOption={false}
-              showArrow={true}
-              filterOption={true}
-              onSearch={handleSearch}
-              onChange={(e: any) => handleChange(e, "enForm")}
-              notFoundContent={null}
-              onFocus={() => handleClick("enForm")}
-            >
-              {select.map((i: any, id: any) => (
-                <Option value={i} key={i}>
-                  {i}
-                </Option>
-              ))}
-            </Select>
+            <Row style={{ width: "100%" }}>
+              <Col span={8}>
+                <Button type="dashed" size="default">
+                  enForm
+                </Button>
+              </Col>
+              <Col span={16}>
+                <Select
+                  mode="combobox"
+                  suffixIcon={"enForm"}
+                  showSearch
+                  value={valueState.enForm}
+                  placeholder={valueState.enForm}
+                  style={{ width: "inherits", minWidth: "100%" }}
+                  defaultActiveFirstOption={false}
+                  showArrow={true}
+                  filterOption={true}
+                  onSearch={handleSearch}
+                  onChange={(e: any) => handleChange(e, "enForm")}
+                  notFoundContent={null}
+                  onFocus={() => handleClick("enForm")}
+                >
+                  {select.map((i: any, id: any) => (
+                    <Option value={i} key={i}>
+                      {i}
+                    </Option>
+                  ))}
+                </Select>
+              </Col>
+            </Row>
           </Col>
           <Col span={12}>
-            <Select
-              suffixIcon={"faForm"}
-              showSearch
-              value={` ${valueState.faForm}`}
-              placeholder={` ${valueState.faForm}`}
-              style={{ width: "inherits", minWidth: "100%" }}
-              defaultActiveFirstOption={false}
-              showArrow={true}
-              filterOption={true}
-              onSearch={handleSearch}
-              onChange={(e: any) => handleChange(e, "faForm")}
-              notFoundContent={null}
-              onFocus={() => handleClick("faForm")}
-            >
-              {select.map((i: any, id: any) => (
-                <Option value={i} key={i}>
-                  {i}
-                </Option>
-              ))}
-            </Select>
+            <Row style={{ width: "100%" }}>
+              <Col span={8}>
+                <Button type="dashed" size="default">
+                  faForm
+                </Button>
+              </Col>
+              <Col span={16}>
+                <Select
+                  mode="combobox"
+                  suffixIcon={"faForm"}
+                  showSearch
+                  value={valueState.faForm}
+                  placeholder={valueState.faForm}
+                  style={{ width: "inherits", minWidth: "100%" }}
+                  defaultActiveFirstOption={false}
+                  showArrow={true}
+                  filterOption={true}
+                  onSearch={handleSearch}
+                  onChange={(e: any) => handleChange(e, "faForm")}
+                  notFoundContent={null}
+                  onFocus={() => handleClick("faForm")}
+                >
+                  {select.map((i: any, id: any) => (
+                    <Option value={i} key={i}>
+                      {i}
+                    </Option>
+                  ))}
+                </Select>
+              </Col>
+            </Row>
           </Col>
         </Row>
 
         <Row gutter={[16, 16]} style={{ width: "75%", marginTop: 16 }}>
           <Col span={12}>
-            <Select
-              suffixIcon={"enBrandName"}
-              showSearch
-              value={` ${valueState.enBrandName}`}
-              placeholder={` ${valueState.enBrandName}`}
-              style={{ width: "inherits", minWidth: "100%" }}
-              defaultActiveFirstOption={false}
-              showArrow={true}
-              filterOption={true}
-              onSearch={handleSearch}
-              onChange={(e: any) => handleChange(e, "enBrandName")}
-              notFoundContent={null}
-              onFocus={() => handleClick("enBrandName")}
-            >
-              {select.map((i: any, id: any) => (
-                <Option value={i} key={i}>
-                  {i}
-                </Option>
-              ))}
-            </Select>
+            <Row style={{ width: "100%" }}>
+              <Col span={8}>
+                <Button type="dashed" size="default">
+                  enBrandName
+                </Button>
+              </Col>
+              <Col span={16}>
+                <Select
+                  mode="combobox"
+                  suffixIcon={"enBrandName"}
+                  showSearch
+                  value={valueState.enBrandName}
+                  placeholder={valueState.enBrandName}
+                  style={{ width: "inherits", minWidth: "100%" }}
+                  defaultActiveFirstOption={false}
+                  showArrow={true}
+                  filterOption={true}
+                  onSearch={handleSearch}
+                  onChange={(e: any) => handleChange(e, "enBrandName")}
+                  notFoundContent={null}
+                  onFocus={() => handleClick("enBrandName")}
+                >
+                  {select.map((i: any, id: any) => (
+                    <Option value={i} key={i}>
+                      {i}
+                    </Option>
+                  ))}
+                </Select>
+              </Col>
+            </Row>
           </Col>
 
           <Col span={12}>
-            <Select
-              suffixIcon={"faBrandName"}
-              showSearch
-              value={` ${valueState.faBrandName}`}
-              placeholder={` ${valueState.faBrandName}`}
-              style={{ width: "inherits", minWidth: "100%" }}
-              defaultActiveFirstOption={false}
-              showArrow={true}
-              filterOption={true}
-              onSearch={handleSearch}
-              onChange={(e: any) => handleChange(e, "faBrandName")}
-              notFoundContent={null}
-              onFocus={() => handleClick("faBrandName")}
-            >
-              {select.map((i: any, id: any) => (
-                <Option value={i} key={i}>
-                  {i}
-                </Option>
-              ))}
-            </Select>
+            <Row style={{ width: "100%" }}>
+              <Col span={8}>
+                <Button type="dashed" size="default">
+                  faBrandName
+                </Button>
+              </Col>
+              <Col span={16}>
+                <Select
+                  mode="combobox"
+                  suffixIcon={"faBrandName"}
+                  showSearch
+                  value={valueState.faBrandName}
+                  placeholder={valueState.faBrandName}
+                  style={{ width: "inherits", minWidth: "100%" }}
+                  defaultActiveFirstOption={false}
+                  showArrow={true}
+                  filterOption={true}
+                  onSearch={handleSearch}
+                  onChange={(e: any) => handleChange(e, "faBrandName")}
+                  notFoundContent={null}
+                  onFocus={() => handleClick("faBrandName")}
+                >
+                  {select.map((i: any, id: any) => (
+                    <Option value={i} key={i}>
+                      {i}
+                    </Option>
+                  ))}
+                </Select>
+              </Col>
+            </Row>
           </Col>
         </Row>
         <Row gutter={[16, 16]} style={{ width: "75%", marginTop: 16 }}>
           <Col span={12}>
-            <Select
-              suffixIcon={"enName"}
-              showSearch
-              value={` ${valueState.enName}`}
-              placeholder={` ${valueState.enName}`}
-              style={{ width: "inherits", minWidth: "100%" }}
-              defaultActiveFirstOption={false}
-              showArrow={true}
-              filterOption={true}
-              onSearch={handleSearch}
-              onChange={(e: any) => handleChange(e, "enName")}
-              notFoundContent={null}
-              onFocus={() => handleClick("enName")}
-            >
-              {select.map((i: any, id: any) => (
-                <Option value={i} key={i}>
-                  {i}
-                </Option>
-              ))}
-            </Select>
+            <Row style={{ width: "100%" }}>
+              <Col span={8}>
+                <Button type="dashed" size="default">
+                  enName
+                </Button>
+              </Col>
+              <Col span={16}>
+                <Select
+                  mode="combobox"
+                  suffixIcon={"enName"}
+                  showSearch
+                  value={valueState.enName}
+                  placeholder={valueState.enName}
+                  style={{ width: "inherits", minWidth: "100%" }}
+                  defaultActiveFirstOption={false}
+                  showArrow={true}
+                  filterOption={true}
+                  onSearch={handleSearch}
+                  onChange={(e: any) => handleChange(e, "enName")}
+                  notFoundContent={null}
+                  onFocus={() => handleClick("enName")}
+                >
+                  {select.map((i: any, id: any) => (
+                    <Option value={i} key={i}>
+                      {i}
+                    </Option>
+                  ))}
+                </Select>
+              </Col>
+            </Row>
           </Col>
           <Col span={12}>
-            <Select
-              suffixIcon={"faName"}
-              showSearch
-              value={` ${valueState.faName}`}
-              placeholder={` ${valueState.faName}`}
-              style={{ width: "inherits", minWidth: "100%" }}
-              defaultActiveFirstOption={false}
-              showArrow={true}
-              filterOption={true}
-              onSearch={handleSearch}
-              onChange={(e: any) => handleChange(e, "faName")}
-              notFoundContent={null}
-              onFocus={() => handleClick("faName")}
-            >
-              {select.map((i: any, id: any) => (
-                <Option value={i} key={i}>
-                  {i}
-                </Option>
-              ))}
-            </Select>
-          </Col>
-        </Row>
-
-        <Row gutter={[16, 16]} style={{ width: "75%", marginTop: 16 }}>
-          <Col span={12}>
-            <Select
-              suffixIcon={"licenseOwner"}
-              showSearch
-              value={` ${valueState.licenseOwner}`}
-              placeholder={` ${valueState.licenseOwner}`}
-              style={{ width: "inherits", minWidth: "100%" }}
-              defaultActiveFirstOption={false}
-              showArrow={true}
-              filterOption={true}
-              onSearch={handleSearch}
-              onChange={(e: any) => handleChange(e, "licenseOwner")}
-              notFoundContent={null}
-              onFocus={() => handleClick("licenseOwner")}
-            >
-              {select.map((i: any, id: any) => (
-                <Option value={i} key={i}>
-                  {i}
-                </Option>
-              ))}
-            </Select>
-          </Col>
-          <Col span={12}>
-            <Select
-              suffixIcon={"countryBrandOwner"}
-              showSearch
-              value={` ${valueState.countryBrandOwner}`}
-              placeholder={` ${valueState.countryBrandOwner}`}
-              style={{ width: "inherits", minWidth: "100%" }}
-              defaultActiveFirstOption={false}
-              showArrow={true}
-              filterOption={true}
-              onSearch={handleSearch}
-              onChange={(e: any) => handleChange(e, "countryBrandOwner")}
-              notFoundContent={null}
-              onFocus={() => handleClick("countryBrandOwner")}
-            >
-              {select.map((i: any, id: any) => (
-                <Option value={i} key={i}>
-                  {i}
-                </Option>
-              ))}
-            </Select>
+            <Row style={{ width: "100%" }}>
+              <Col span={8}>
+                <Button type="dashed" size="default">
+                  faName
+                </Button>
+              </Col>
+              <Col span={16}>
+                <Select
+                  mode="combobox"
+                  suffixIcon={"faName"}
+                  showSearch
+                  value={valueState.faName}
+                  placeholder={valueState.faName}
+                  style={{ width: "inherits", minWidth: "100%" }}
+                  defaultActiveFirstOption={false}
+                  showArrow={true}
+                  filterOption={true}
+                  onSearch={handleSearch}
+                  onChange={(e: any) => handleChange(e, "faName")}
+                  notFoundContent={null}
+                  onFocus={() => handleClick("faName")}
+                >
+                  {select.map((i: any, id: any) => (
+                    <Option value={i} key={i}>
+                      {i}
+                    </Option>
+                  ))}
+                </Select>
+              </Col>
+            </Row>
           </Col>
         </Row>
 
         <Row gutter={[16, 16]} style={{ width: "75%", marginTop: 16 }}>
           <Col span={12}>
-            <Select
-              suffixIcon={"brandOwner"}
-              showSearch
-              value={` ${valueState.brandOwner}`}
-              placeholder={` ${valueState.brandOwner}`}
-              style={{ width: "inherits", minWidth: "100%" }}
-              defaultActiveFirstOption={false}
-              showArrow={true}
-              filterOption={true}
-              onSearch={handleSearch}
-              onChange={(e: any) => handleChange(e, "brandOwner")}
-              notFoundContent={null}
-              onFocus={() => handleClick("brandOwner")}
-            >
-              {select.map((i: any, id: any) => (
-                <Option value={i} key={i}>
-                  {i}
-                </Option>
-              ))}
-            </Select>
+            <Row style={{ width: "100%" }}>
+              <Col span={8}>
+                <Button type="dashed" size="default">
+                  licenseOwner
+                </Button>
+              </Col>
+              <Col span={16}>
+                <Select
+                  mode="combobox"
+                  suffixIcon={"licenseOwner"}
+                  showSearch
+                  value={valueState.licenseOwner}
+                  placeholder={valueState.licenseOwner}
+                  style={{ width: "inherits", minWidth: "100%" }}
+                  defaultActiveFirstOption={false}
+                  showArrow={true}
+                  filterOption={true}
+                  onSearch={handleSearch}
+                  onChange={(e: any) => handleChange(e, "licenseOwner")}
+                  notFoundContent={null}
+                  onFocus={() => handleClick("licenseOwner")}
+                >
+                  {select.map((i: any, id: any) => (
+                    <Option value={i} key={i}>
+                      {i}
+                    </Option>
+                  ))}
+                </Select>
+              </Col>
+            </Row>
           </Col>
           <Col span={12}>
-            <Select
-              suffixIcon={"countryProducer"}
-              showSearch
-              value={` ${valueState.countryProducer}`}
-              placeholder={` ${valueState.countryProducer}`}
-              style={{ width: "inherits", minWidth: "100%" }}
-              defaultActiveFirstOption={false}
-              showArrow={true}
-              filterOption={true}
-              onSearch={handleSearch}
-              onChange={(e: any) => handleChange(e, "countryProducer")}
-              notFoundContent={null}
-              onFocus={() => handleClick("countryProducer")}
-            >
-              {select.map((i: any, id: any) => (
-                <Option value={i} key={i}>
-                  {i}
-                </Option>
-              ))}
-            </Select>
+            <Row style={{ width: "100%" }}>
+              <Col span={12}>
+                <Button type="dashed" size="default">
+                  countryBrandOwner
+                </Button>
+              </Col>
+              <Col span={12}>
+                <Select
+                  mode="combobox"
+                  suffixIcon={"countryBrandOwner"}
+                  showSearch
+                  value={valueState.countryBrandOwner}
+                  placeholder={valueState.countryBrandOwner}
+                  style={{ width: "inherits", minWidth: "100%" }}
+                  defaultActiveFirstOption={false}
+                  showArrow={true}
+                  filterOption={true}
+                  onSearch={handleSearch}
+                  onChange={(e: any) => handleChange(e, "countryBrandOwner")}
+                  notFoundContent={null}
+                  onFocus={() => handleClick("countryBrandOwner")}
+                >
+                  {select.map((i: any, id: any) => (
+                    <Option value={i} key={i}>
+                      {i}
+                    </Option>
+                  ))}
+                </Select>
+              </Col>
+            </Row>
           </Col>
         </Row>
 
         <Row gutter={[16, 16]} style={{ width: "75%", marginTop: 16 }}>
           <Col span={12}>
-            <Select
-              suffixIcon={"producer"}
-              showSearch
-              value={`${valueState.producer}`}
-              placeholder={`${valueState.producer}`}
-              style={{ width: "inherits", minWidth: "100%" }}
-              defaultActiveFirstOption={false}
-              showArrow={true}
-              filterOption={true}
-              onSearch={handleSearch}
-              onChange={(e: any) => handleChange(e, "producer")}
-              notFoundContent={null}
-              onFocus={() => handleClick("producer")}
-            >
-              {select.map((i: any, id: any) => (
-                <Option value={i} key={i}>
-                  {i}
-                </Option>
-              ))}
-            </Select>
+            <Row style={{ width: "100%" }}>
+              <Col span={8}>
+                <Button type="dashed" size="default">
+                  brandOwner
+                </Button>
+              </Col>
+              <Col span={16}>
+                <Select
+                  mode="combobox"
+                  suffixIcon={"brandOwner"}
+                  showSearch
+                  value={valueState.brandOwner}
+                  placeholder={valueState.brandOwner}
+                  style={{ width: "inherits", minWidth: "100%" }}
+                  defaultActiveFirstOption={false}
+                  showArrow={true}
+                  filterOption={true}
+                  onSearch={handleSearch}
+                  onChange={(e: any) => handleChange(e, "brandOwner")}
+                  notFoundContent={null}
+                  onFocus={() => handleClick("brandOwner")}
+                >
+                  {select.map((i: any, id: any) => (
+                    <Option value={i} key={i}>
+                      {i}
+                    </Option>
+                  ))}
+                </Select>
+              </Col>
+            </Row>
           </Col>
           <Col span={12}>
-            <Select
-              suffixIcon={"conversationalName"}
-              showSearch
-              value={`${valueState.conversationalName}`}
-              placeholder={`${valueState.conversationalName}`}
-              style={{ width: "inherits", minWidth: "100%" }}
-              defaultActiveFirstOption={false}
-              showArrow={true}
-              filterOption={true}
-              onSearch={handleSearch}
-              onChange={(e: any) => handleChange(e, "conversationalName")}
-              notFoundContent={null}
-              onFocus={() => handleClick("conversationalName")}
-            >
-              {select.map((i: any, id: any) => (
-                <Option value={i} key={i}>
-                  {i}
-                </Option>
-              ))}
-            </Select>
+            <Row style={{ width: "100%" }}>
+              <Col span={12}>
+                <Button type="dashed" size="default">
+                  countryProducer
+                </Button>
+              </Col>
+              <Col span={12}>
+                <Select
+                  mode="combobox"
+                  suffixIcon={"countryProducer"}
+                  showSearch
+                  value={valueState.countryProducer}
+                  placeholder={valueState.countryProducer}
+                  style={{ width: "inherits", minWidth: "100%" }}
+                  defaultActiveFirstOption={false}
+                  showArrow={true}
+                  filterOption={true}
+                  onSearch={handleSearch}
+                  onChange={(e: any) => handleChange(e, "countryProducer")}
+                  notFoundContent={null}
+                  onFocus={() => handleClick("countryProducer")}
+                >
+                  {select.map((i: any, id: any) => (
+                    <Option value={i} key={i}>
+                      {i}
+                    </Option>
+                  ))}
+                </Select>
+              </Col>
+            </Row>
           </Col>
         </Row>
+
+        <Row gutter={[16, 16]} style={{ width: "75%", marginTop: 16 }}>
+          <Col span={12}>
+            <Row style={{ width: "100%" }}>
+              <Col span={8}>
+                <Button type="dashed" size="default">
+                  producer
+                </Button>
+              </Col>
+              <Col span={16}>
+                <Select
+                  mode="combobox"
+                  suffixIcon={"producer"}
+                  showSearch
+                  value={valueState.producer}
+                  placeholder={valueState.producer}
+                  style={{ width: "inherits", minWidth: "100%" }}
+                  defaultActiveFirstOption={false}
+                  showArrow={true}
+                  filterOption={true}
+                  onSearch={handleSearch}
+                  onChange={(e: any) => handleChange(e, "producer")}
+                  notFoundContent={null}
+                  onFocus={() => handleClick("producer")}
+                >
+                  {select.map((i: any, id: any) => (
+                    <Option value={i} key={i}>
+                      {i}
+                    </Option>
+                  ))}
+                </Select>
+              </Col>
+            </Row>
+          </Col>
+          <Col span={12}>
+            <Row style={{ width: "100%" }}>
+              <Col span={12}>
+                <Button type="dashed" size="default">
+                  conversationalName
+                </Button>
+              </Col>
+              <Col span={12}>
+                <Select
+                  mode="combobox"
+                  suffixIcon={"conversationalName"}
+                  showSearch
+                  value={valueState.conversationalName}
+                  placeholder={valueState.conversationalName}
+                  style={{ width: "inherits", minWidth: "100%" }}
+                  defaultActiveFirstOption={false}
+                  showArrow={true}
+                  filterOption={true}
+                  onSearch={handleSearch}
+                  onChange={(e: any) => handleChange(e, "conversationalName")}
+                  notFoundContent={null}
+                  onFocus={() => handleClick("conversationalName")}
+                >
+                  {select.map((i: any, id: any) => (
+                    <Option value={i} key={i}>
+                      {i}
+                    </Option>
+                  ))}
+                </Select>
+              </Col>
+            </Row>
+          </Col>
+        </Row>
+
+        <Row gutter={[16, 16]} style={{ width: "75%", marginTop: 16 }}>
+          <Col span={12}>
+            <Row style={{ width: "100%" }}>
+              <Col span={8}>
+                <Button type="dashed" size="default">
+                  strength
+                </Button>
+              </Col>
+              <Col span={16}>
+                <Select
+                  mode="combobox"
+                  suffixIcon={"strength"}
+                  showSearch
+                  value={valueState.strength}
+                  placeholder={valueState.strength}
+                  style={{ width: "inherits", minWidth: "100%" }}
+                  defaultActiveFirstOption={false}
+                  showArrow={true}
+                  filterOption={true}
+                  onSearch={handleSearch}
+                  onChange={(e: any) => handleChange(e, "strength")}
+                  notFoundContent={null}
+                  onFocus={() => handleClick("strength")}
+                >
+                  {select.map((i: any, id: any) => (
+                    <Option value={i} key={i}>
+                      {i}
+                    </Option>
+                  ))}
+                </Select>
+              </Col>
+            </Row>
+          </Col>
+
+          <Col span={12}>
+            <Row style={{ width: "100%" }}>
+              <Col span={8}>
+                <Button type="dashed" size="default">
+                  volume
+                </Button>
+              </Col>
+              <Col span={16}>
+                <Select
+                  //mode="combobox"
+                  suffixIcon={"volume"}
+                  showSearch
+                  value={valueState.volume}
+                  placeholder={valueState.volume}
+                  style={{ width: "inherits", minWidth: "100%" }}
+                  defaultActiveFirstOption={false}
+                  showArrow={true}
+                  filterOption={true}
+                  onSearch={handleSearch}
+                  onChange={(e: any) => handleChange(e, "volume")}
+                  notFoundContent={null}
+                  //onFocus={() => handleClick("volume")}
+                >
+                  {select.map((i: any, id: any) => (
+                    <Option value={i} key={i}>
+                      {i}
+                    </Option>
+                  ))}
+                </Select>
+              </Col>
+            </Row>
+          </Col>
+        </Row>
+
         <Row
           gutter={[16, 16]}
           style={{ width: "75%", position: "sticky", bottom: 8, marginTop: 16 }}
         >
           <Col span={12}>
-            <Button
-              type="primary"
-              icon="check"
-              onClick={HandleUpdate}
-              style={{ width: "100%" }}
-            >
-              Edit Item
-            </Button>
+            {action.isAddNew ? (
+              <Button
+                // type={"primary"}
+                icon="check"
+                onClick={HandleSendItem}
+                style={{ color: "black", background: "#F6D701", width: "100%" }}
+              >
+                {"Send Item"}
+              </Button>
+            ) : (
+              <Button
+                type={"primary"}
+                icon="check"
+                onClick={HandleUpdate}
+                style={{ color: "white", background: "blue", width: "100%" }}
+              >
+                {"Update Item"}
+              </Button>
+            )}
           </Col>
           <Col span={12}>
-            <Button icon="plus" type="danger" style={{ width: "100%" }}>
+            <Button
+              icon="plus"
+              type={"dashed"}
+              style={{
+                color: "black",
+                background: "#fafafa",
+                width: "100%",
+                borderColor: "#000"
+              }}
+              onClick={HandleAddNewItem}
+            >
               Add New Item
             </Button>
           </Col>

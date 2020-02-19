@@ -7,7 +7,7 @@ import { pagination } from "./StateManager/paginationState";
 import { Columns } from "./columns";
 import { CountState } from "./StateManager/countState";
 import { Selecto } from "./selection";
-import { ValueState } from "./StateManager/valueState";
+import { ValueState, State } from "./StateManager/valueState";
 import { DrawBody } from "./drawBody";
 
 export const MainTable = () => {
@@ -85,7 +85,8 @@ export const MainTable = () => {
     }
   };
   function onClose() {
-    setAction({ ...action, isDraw: false });
+    setAction({ ...action, isDraw: false, isAddNew:false, isDelete:true });
+    setValueState(State)
   }
   return (
     <>
@@ -94,7 +95,7 @@ export const MainTable = () => {
         closable={true}
         onClose={onClose}
         visible={action.isDraw}
-        width={"100vw"}
+        width={"90vw"}
         style={{
           textAlign: "center",
           alignItems: "center",

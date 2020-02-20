@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Table, Alert, Modal } from "antd";
+import { Table, Alert, Modal, message } from "antd";
 import axios from "axios";
 import { Columns } from "./columns";
 import { ModalState } from "./modalState";
@@ -8,7 +8,7 @@ import ModalBody from "./modalBody";
 export default function InteractionTable() {
   const [tableData, setTableData] = useState([]);
   const [upToDate, setUpToDate] = useState([{ name: "", id: "" }]);
-  const [medScape, setmedScape] = useState([{ name: "", id: 0 }])
+  const [medScape, setmedScape] = useState([{ name: "", id: 0 }]);
   const [pagi, setPagi] = useState({ pageSize: 10, pageCurrent: 1 });
   const [count, setCount] = useState({ total: 0 });
   const [loading, setLoading] = useState(true);
@@ -38,7 +38,6 @@ export default function InteractionTable() {
       .catch(() => console.log("Get upToDate Data Fail"));
   }, []);
 
-
   useEffect(() => {
     setLoading(true);
 
@@ -64,9 +63,41 @@ export default function InteractionTable() {
 
   function HandleOk(params: any) {
     setModal({ ...modal, isConfirm: true });
+    console.log("Data", modal);
+
+    axios({
+      method: "POST",
+      url: "http://45.92.95.69:5000/api/drugs/updateInteraction",
+      data: {
+        enName: `${modal.isRecord.enName}`,
+        enRoute: `${modal.isRecord.enRoute}`,
+        upToDateId: `${modal.isChangeUp}`
+          ? `${modal.upToDateValue}`
+          : `${modal.isRecord.upToDateId}`,
+        medScapeId: `${modal.isChangeMed}`
+          ? `${modal.medScapeValue}`
+          : `${modal.isRecord.medScapeId}`
+      }
+    })
+      .then((resp: any) => {
+        message.info("updated successfully ");
+      })
+      .catch(() => console.log("Get upToDate Data Fail"));
 
     setTimeout(() => {
-      setModal({ ...modal, isModal: false, isConfirm: false });
+      setModal({
+        ...modal,
+        isChangeUp: false,
+        isChangeMed: false,
+        isRecord: {
+          enName: undefined,
+          enRoute: undefined,
+          upToDateId: undefined,
+          medScapeId: undefined
+        },
+        isModal: false,
+        isConfirm: false
+      });
     }, 2000);
   }
 
@@ -84,7 +115,7 @@ export default function InteractionTable() {
           confirmLoading={modal.isConfirm}
           onCancel={HandleCancel}
         >
-          {ModalBody(upToDate)}
+          {ModalBody(upToDate, medScape)}
         </Modal>
 
         <Table
@@ -93,7 +124,7 @@ export default function InteractionTable() {
             return record.tableData;
           }}
           size="small"
-          columns={Columns(upToDate,medScape)}
+          columns={Columns(upToDate, medScape)}
           dataSource={tableData}
           pagination={{
             total: count.total,

@@ -1,26 +1,26 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Tag, Select, Icon, Button, Input } from "antd";
 import { ModalState } from "./modalState";
 
 export function Columns(upToDate: any, medScape: any) {
   const [value, setValue] = useState();
   const [option, setOption] = useState([]);
-  const { modal, setModal } = React.useContext(ModalState);
+  const { modal, setModal } = useContext(ModalState);
 
-  function ShowModal(name: any, record: any) {
+  function ShowModal(upName: any, medName: any, record: any) {
+    console.log("upName / medName / record", upName, medName, record);
+
     setModal({
+      ...modal,
       isRecord: record,
-      idRecord: name,
-      isModal: true,
-      isConfirm: false
+      upId: upName === undefined ? "" : upName,
+      medId: medName === undefined ? "" : medName,
+      upToDateValue: upName,
+      medScapeValue: medName,
+      isModal: true
     });
-    console.log("Index isRecord", name, record);
   }
 
-  const handleClick = () => {
-    setOption([]);
-    setValue(null);
-  };
   const columns = [
     {
       title: "enName",
@@ -62,28 +62,7 @@ export function Columns(upToDate: any, medScape: any) {
       }
       // ...getColumnSearchProps("PackageCount")
     },
-    {
-      title: "Action",
-      dataIndex: "Action",
-      key: "Action",
-      width: "10%",
 
-      // ...getColumnSearchProps("cPrice")
-      render: function(index: number, record: any) {
-        let name = { name: "", id: "" };
-        name = upToDate.find((item: any) => item.id === record.upToDateId);
-        return (
-          <div>
-            <Button
-              type="primary"
-              icon="edit"
-              size="default"
-              onClick={() => ShowModal(name, record)}
-            />
-          </div>
-        );
-      }
-    },
     {
       title: "medScapeId",
       dataIndex: "medScapeId",
@@ -105,6 +84,35 @@ export function Columns(upToDate: any, medScape: any) {
       }
 
       // ...getColumnSearchProps("cPrice")
+    },
+    {
+      title: "Action",
+      dataIndex: "Action",
+      key: "Action",
+      width: "10%",
+
+      // ...getColumnSearchProps("cPrice")
+      render: function(index: number, record: any) {
+        let upName = { name: "", id: "" };
+        let medName = { name: "", id: "" };
+
+        upName = upToDate.find((item: any) => item.id === record.upToDateId);
+        medName = medScape.find(
+          (item: any) => item.id.toString() === record.medScapeId
+        );
+
+        return (
+          <div>
+            <Button
+              // type="primary"
+              icon="edit"
+              size="default"
+              style={{ background: "#F6CC08" }}
+              onClick={() => ShowModal(upName, medName, record)}
+            />
+          </div>
+        );
+      }
     }
   ];
 

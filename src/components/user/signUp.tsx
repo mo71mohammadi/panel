@@ -28,7 +28,6 @@ export default function SignUp(params: any) {
 
   console.log("useEffect user", user);
 
-
   const HandleLogin = async (event: any) => {
     message.info("logging in with");
 
@@ -46,7 +45,7 @@ export default function SignUp(params: any) {
         //setErrorMessage(res.data.message);
         //setUserInfo(res.data)
         // message.info("res.data =>", res.data);
-        console.log("res.data", res.data)
+        console.log("res.data", res.data);
       })
       .catch(() => console.log("Get Data Fail"));
 

@@ -7,17 +7,17 @@ export function Columns(upToDate: any, medScape: any) {
   const [option, setOption] = useState([]);
   const { modal, setModal } = useContext(ModalState);
 
-  function ShowModal(upName: any, medName: any, record: any) {
-    console.log("upName / medName / record", upName, medName, record);
+  function ShowModal(record: any) {
+    console.log("upName / medName / record", record);
 
     setModal({
       ...modal,
-      isRecord: record,
-      upId: upName === undefined ? "" : upName,
-      medId: medName === undefined ? "" : medName,
-      upToDateValue: upName,
-      medScapeValue: medName,
-      isModal: true
+      record: record,
+      // upId: upName === undefined ? "" : upName,
+      // medId: medName === undefined ? "" : medName,
+      // upToDateValue: upName,
+      // medScapeValue: medName,
+      visible: true
     });
   }
 
@@ -93,14 +93,6 @@ export function Columns(upToDate: any, medScape: any) {
 
       // ...getColumnSearchProps("cPrice")
       render: function(index: number, record: any) {
-        let upName = { name: "", id: "" };
-        let medName = { name: "", id: "" };
-
-        upName = upToDate.find((item: any) => item.id === record.upToDateId);
-        medName = medScape.find(
-          (item: any) => item.id.toString() === record.medScapeId
-        );
-
         return (
           <div>
             <Button
@@ -108,7 +100,7 @@ export function Columns(upToDate: any, medScape: any) {
               icon="edit"
               size="default"
               style={{ background: "#F6CC08" }}
-              onClick={() => ShowModal(upName, medName, record)}
+              onClick={() => ShowModal(record)}
             />
           </div>
         );

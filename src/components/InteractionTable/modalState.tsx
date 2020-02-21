@@ -16,19 +16,14 @@ function createCtxUseState<A>(defaultValue: A) {
 }
 
 const State = {
-  isModal: false,
-  isConfirm: false,
-  isChangeUp: false,
-  isChangeMed: false,
-  isRecord: {
+  visible: false,
+  confirmLoading: false,
+  record: {
     enName: undefined,
     enRoute: undefined,
     upToDateId: undefined,
     medScapeId: undefined
   },
-  upId: { name: "", id: "" },
-  medId: { name: "", id: "" },
-  upToDateValue: "",
-  medScapeValue: ""
+  reset: 0
 };
 export const [ModalState, ModalProvider] = createCtxUseState(State);

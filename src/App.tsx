@@ -9,6 +9,7 @@ const { Header, Sider, Content, Footer } = Layout;
 
 const App = () => {
   const [state, setState] = useState(true);
+  
 
   function onCollapse() {
     setState(!state);

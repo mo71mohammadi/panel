@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Table, Alert, Button } from "antd";
+import { Table, Alert, Button, message } from "antd";
 import axios from "axios";
 import { Columns } from "./columns";
 
@@ -11,6 +11,8 @@ export default function PricesTable() {
   });
   const [count, setCount] = useState({ total: 0 });
   const [loading, setLoading] = useState(true);
+  const [reset, setReset] = useState(0);
+
 
   useEffect(() => {
     setLoading(true);
@@ -25,7 +27,7 @@ export default function PricesTable() {
         setLoading(false);
       })
       .catch(() => console.log("Get Data Fail"));
-  }, [pagi.pageCurrent]);
+  }, [pagi.pageCurrent, reset]);
 
   const handleTableChange = (pagination: any, filters: any, sorter: any) => {
     setPagi({
@@ -35,7 +37,29 @@ export default function PricesTable() {
   };
 
   function HandleClick(params: any) {
-    console.log("Prices Updated");
+    let url = {url: '', message: ''}
+    if (params === "Get") {
+      setPagi({...pagi})
+      url.url = "http://45.92.95.69:5000/api/drugs/getPrice";
+      url.message = 'Prices get successfully'
+    }
+    else if (params === "Update") {
+      url.url = "http://45.92.95.69:5000/api/drugs/updatePrice";
+      url.message = 'Prices update successfully'
+    }
+    setLoading(true);
+    axios({
+      method: "post",
+      url: url.url,
+    })
+      .then((res: { data: any }) => {
+        setLoading(false);
+        message.info(url.message)
+        if (params === "Get") setTimeout(()=> setReset(reset+1), 1000)
+
+      })
+      .catch(() => console.log("Get Data Fail"));
+
   }
 
   return (
@@ -60,20 +84,29 @@ export default function PricesTable() {
       <div style={{ width: "100%", display: "flex" }}>
         <Button
           style={{ width: "50%", marginRight: 4 }}
+          type="danger"
+          block
+          icon="sync"
+          size="large"
+          onClick={() => HandleClick('Get')}
+        >
+          {"Get TTAC Prices"}
+        </Button>
+        <Button
+          style={{ width: "50%", marginRight: 4 }}
           type="primary"
           block
           icon="sync"
           size="large"
-          onClick={HandleClick}
+          onClick={() => HandleClick("Update")}
         >
           {"Update Prices"}
         </Button>
-
-        <Alert
+        {/* <Alert
           style={{ width: "50%" }}
           message={`Total item in database is ${count.total} `}
           type="success"
-        />
+        /> */}
       </div>
     </div>
   );

@@ -20,7 +20,7 @@ export function Columns() {
     },
     {
       title: "PackageCount",
-      dataIndex: "PackageCount",
+      dataIndex: "packageCount",
       key: "PackageCount"
       // ...getColumnSearchProps("PackageCount")
     },

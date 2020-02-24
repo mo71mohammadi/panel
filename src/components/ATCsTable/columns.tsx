@@ -151,7 +151,7 @@ export function Columns() {
       }
       axios({
         method: "get",
-        url: `http://localhost:5000/api/atc/get?shortName=${params.code}`
+        url: `http://45.92.95.69:5000/api/atc/get?shortName=${params.code}`
       })
         .then((res: { data: any }) => {
           setValue({ ...value, ...res.data, ddd: { ...ddd } });

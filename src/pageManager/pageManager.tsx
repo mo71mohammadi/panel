@@ -9,7 +9,6 @@ import {
   InteractionPage,
   PricesPage,
   LoginPage,
-  LogoutPage,
   SignUpPage
 } from "./pages";
 

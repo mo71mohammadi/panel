@@ -5,7 +5,6 @@ export { default as InteractionPage } from "./interaction";
 export { default as PricesPage } from "./prices";
 
 export { default as LoginPage } from "./login";
-export { default as LogoutPage } from "./logout";
 
 export { default as SignUpPage } from "./signup";
 

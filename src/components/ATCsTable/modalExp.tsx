@@ -112,7 +112,7 @@ export function ModalExport(params: any) {
       // setSelect([]);
       axios({
         method: "get",
-        url: `http://localhost:5000/api/atc/get?${params}`
+        url: `http://45.92.95.69:5000/api/atc/get?${params}`
       })
         .then((res: { data: any }) => {
           setOption({ type: item, list: res.data.data });

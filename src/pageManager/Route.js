@@ -1,12 +1,15 @@
-import React from 'react'
+import React, { useState, useContext } from "react";
 import { Redirect, Route } from 'react-router-dom'
-// import propTypes from 'prop-types'
+// import propTimport { LoginState } from "./loginState";
+import { LoginState } from "../components/login/loginState";
 
 export default function RouteWrapper({
     component: Component,
     ...rest
 }) {
     const signed = false;
+    const { login, setLogin } = useContext(LoginState);
+
 
     // if (isPrivate && !signed) {
     //     return <Redirect to='/Interaction' />;
@@ -16,7 +19,8 @@ export default function RouteWrapper({
     // }
 
     return <Route {...rest} render={props => {
-        if (!signed) return <Redirect to='/Login'/>
+        console.log(props)
+        if (!login.isAuthenticated) return <Redirect to='/Login'/>
         else return <Component {...props} />
     }} />;
 }

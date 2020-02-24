@@ -20,9 +20,9 @@ function PageManager() {
   return (
     <Switch>
       <ProtectedRoute exact path="/" component={MainPage} />
-      <Route path="/ATCs" component={ATCsPage} />
-      <Route path="/Interaction" component={InteractionPage} />
-      <Route path="/Prices" component={PricesPage} />
+      <ProtectedRoute path="/ATCs" component={ATCsPage} />
+      <ProtectedRoute path="/Interaction" component={InteractionPage} />
+      <ProtectedRoute path="/Prices" component={PricesPage} />
       <Route path="/Login" component={LoginPage} />
       <Route path="/SignUp" component={SignUpPage} />
 

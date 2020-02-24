@@ -2,6 +2,8 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 import EditPage from "./pages/prices";
 import MainPage from "./pages/main";
+import ProtectedRoute from './Route'
+
 import {
   ATCsPage,
   InteractionPage,
@@ -17,7 +19,7 @@ function PageManager() {
 
   return (
     <Switch>
-      <Route exact path="/" component={MainPage} />
+      <ProtectedRoute exact path="/" component={MainPage} />
       <Route path="/ATCs" component={ATCsPage} />
       <Route path="/Interaction" component={InteractionPage} />
       <Route path="/Prices" component={PricesPage} />

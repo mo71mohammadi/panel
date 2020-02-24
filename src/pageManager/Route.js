@@ -21,6 +21,7 @@ export default function RouteWrapper({
     return <Route {...rest} render={props => {
         console.log(props)
         if (!login.isAuthenticated) return <Redirect to='/Login'/>
+        else if (props.location.pathname === '/Logout') setLogin({isAuthenticated: false, authorization: undefined})
         else return <Component {...props} />
     }} />;
 }

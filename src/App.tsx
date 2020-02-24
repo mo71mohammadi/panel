@@ -67,7 +67,7 @@ const App = () => {
                   <Menu.Item key="1">
                     <Icon type="pic-left" />
                     <span style={{ marginBottom: 8, marginRight: 8 }}>
-                      {"تمام آیتم ها"}
+                      {"محصولات"}
                     </span>
                     <Link to="/" />
                   </Menu.Item>
@@ -75,7 +75,7 @@ const App = () => {
                   <Menu.Item key="2">
                     <Icon type="barcode" />
                     <span style={{ marginBottom: 8, marginRight: 8 }}>
-                      {" ATCs "}
+                      {"دسته بندی"}
                     </span>
                     <Link to="/ATCs" />
                   </Menu.Item>
@@ -96,13 +96,13 @@ const App = () => {
                     <Link to="/Prices" />
                   </Menu.Item>
 
-                  {/* <Menu.Item key="5">
-                  <Icon type="login" />
+                  <Menu.Item key="5">
+                  <Icon type="logout" />
                   <span style={{ marginBottom: 8, marginRight: 8 }}>
-                    {"ورود"}
+                    {"خروج"}
                   </span>
-                  <Link to="/Login" />
-                </Menu.Item> */}
+                  <Link to="/Logout" />
+                </Menu.Item>
 
                   {/* <Menu.Item key="6">
                   <Icon type="user-add" />

@@ -9,6 +9,7 @@ import {
   InteractionPage,
   PricesPage,
   LoginPage,
+  LogoutPage,
   SignUpPage
 } from "./pages";
 
@@ -23,6 +24,8 @@ function PageManager() {
       <ProtectedRoute path="/ATCs" component={ATCsPage} />
       <ProtectedRoute path="/Interaction" component={InteractionPage} />
       <ProtectedRoute path="/Prices" component={PricesPage} />
+      <ProtectedRoute path="/Logout" component={LoginPage} />
+
       <Route path="/Login" component={LoginPage} />
       <Route path="/SignUp" component={SignUpPage} />
 

@@ -25,7 +25,7 @@ function PageManager() {
       <ProtectedRoute path="/ATCs" component={ATCsPage} />
       <ProtectedRoute path="/Interaction" component={InteractionPage} />
       <ProtectedRoute path="/Prices" component={PricesPage} />
-      <ProtectedRoute path="/SignUp" component={SignUpPage} />
+      <Route path="/SignUp" component={SignUpPage} />
       <ProtectedRoute path="/Edit" component={EditPage} />
       <ProtectedRoute path="/Logout" component={LoginPage} />
       <Route path="/Login" component={LoginPage} />

@@ -19,6 +19,7 @@ const State = {
   username: "",
   password: "",
   email: "",
-  userToken: ""
+  userToken: "",
+  role:""
 };
 export const [UserState, UserProvider] = createCtxUseState(State);

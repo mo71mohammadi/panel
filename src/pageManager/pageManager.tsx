@@ -2,7 +2,7 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 import EditPage from "./pages/prices";
 import MainPage from "./pages/main";
-import ProtectedRoute from './Route'
+import ProtectedRoute from "./Route";
 
 import {
   ATCsPage,
@@ -11,6 +11,8 @@ import {
   LoginPage,
   SignUpPage
 } from "./pages";
+import App from "../App";
+import LOGINO from "./pages/LOGINo";
 
 function PageManager() {
   //const locate = window.location.pathname;
@@ -19,16 +21,15 @@ function PageManager() {
 
   return (
     <Switch>
-      <ProtectedRoute exact path="/" component={MainPage} />
+      {/* <ProtectedRoute exact path="/" component={MainPage} />
       <ProtectedRoute path="/ATCs" component={ATCsPage} />
       <ProtectedRoute path="/Interaction" component={InteractionPage} />
       <ProtectedRoute path="/Prices" component={PricesPage} />
-      <ProtectedRoute path="/Logout" component={LoginPage} />
+      <ProtectedRoute path="/SignUp" component={SignUpPage} />
+      <ProtectedRoute path="/Edit" component={EditPage} />
 
-      <Route path="/Login" component={LoginPage} />
-      <Route path="/SignUp" component={SignUpPage} />
+      <Route path="/Login" component={LoginPage} /> */}
 
-      <Route path="/Edit" component={EditPage} />
     </Switch>
   );
 }

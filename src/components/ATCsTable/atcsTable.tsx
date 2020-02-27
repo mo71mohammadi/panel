@@ -3,7 +3,7 @@ import { Table, Alert } from "antd";
 import axios from "axios";
 import { Columns } from "./columns";
 import {ModalState} from "./modalState";
-import { LoginState } from "../login/loginState";
+import { LoginState } from "../profile/userState";
 
 export default function ATCsTable() {
   const [tableData, setTableData] = useState([

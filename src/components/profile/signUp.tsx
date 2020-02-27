@@ -1,27 +1,26 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Form, Input, Icon, Button, message } from "antd";
 import axios from "axios";
-import Services from "./services";
-import { UserState } from "./userState";
 import { Link } from "react-router-dom";
+import { LoginState } from "./userState";
 
 //const baseUrl = "http://45.92.95.69:5000/api//signup";
 
 export default function SignUp(params: any) {
-  const { userInfo, setUserInfo } = useContext(UserState);
+  const { login, setLogin } = useContext(LoginState);
 
   const [errorMessage, setErrorMessage] = useState(undefined || "");
 
   async function HandleSignUp(credentials: any) {
-    console.log("userInfo", userInfo);
+    console.log("login", login);
 
     await axios({
       method: "post",
       url: "http://45.92.95.69:5000/api//signup",
       data: {
-        username: userInfo.username,
-        password: userInfo.password,
-        email: userInfo.email
+        username: login.username,
+        password: login.password,
+        email: login.email
       }
     })
       .then((res: { data: any }) => {
@@ -60,9 +59,9 @@ export default function SignUp(params: any) {
               type="text"
               required={true}
               style={{ margin: 16, width: "50%" }}
-              value={userInfo.email}
+              value={login.email}
               onChange={({ target }) =>
-                setUserInfo({ ...userInfo, email: target.value })
+              setLogin({ ...login, email: target.value })
               }
             />
           </div>
@@ -74,9 +73,9 @@ export default function SignUp(params: any) {
               type="text"
               required={true}
               style={{ margin: 16, width: "50%" }}
-              value={userInfo.username}
+              value={login.username}
               onChange={({ target }) =>
-                setUserInfo({ ...userInfo, username: target.value })
+              setLogin({ ...login, username: target.value })
               }
             />
           </div>
@@ -87,9 +86,9 @@ export default function SignUp(params: any) {
               type="password"
               required={true}
               style={{ margin: 16, width: "50%" }}
-              value={userInfo.password}
+              value={login.password}
               onChange={({ target }) =>
-                setUserInfo({ ...userInfo, password: target.value })
+              setLogin({ ...login, password: target.value })
               }
             />
           </div>

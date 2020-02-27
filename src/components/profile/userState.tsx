@@ -4,22 +4,23 @@ function createCtxUseState<A>(defaultValue: A) {
   type UpdateType = React.Dispatch<React.SetStateAction<typeof defaultValue>>;
   const defaultUpdate: UpdateType = () => defaultValue;
   const ctx = React.createContext({
-    userInfo: defaultValue,
-    setUserInfo: defaultUpdate
+    login: defaultValue,
+    setLogin: defaultUpdate
   });
   function Provider(props: React.PropsWithChildren<{}>) {
-    const [userInfo, setUserInfo] = React.useState(defaultValue);
+    const [login, setLogin] = React.useState(defaultValue);
 
-    return <ctx.Provider value={{ userInfo, setUserInfo }} {...props} />;
+    return <ctx.Provider value={{ login, setLogin }} {...props} />;
   }
   return [ctx, Provider] as const;
 }
 
 const State = {
+  isAuthenticated: false,
+  authorization: undefined,
   username: "",
   password: "",
   email: "",
-  userToken: "",
   role:""
 };
-export const [UserState, UserProvider] = createCtxUseState(State);
+export const [LoginState, LoginProvider] = createCtxUseState(State);

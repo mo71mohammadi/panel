@@ -1,26 +1,40 @@
 import React, { useState, useContext } from "react";
-import { LoginState } from "../../components/login/loginState";
+import { LoginState } from "../../components/profile/userState";
 import { Layout, Icon, Menu, Row, Card, Col, Avatar, Input } from "antd";
-import { Link } from "react-router-dom";
+import { Link, Switch, Route } from "react-router-dom";
 import PageManager from "../pageManager";
-import { UserState } from "../../components/user/userState";
+import SubMenu from "antd/lib/menu/SubMenu";
+import ProtectedRoute from "../Route";
+import {
+  MainPage,
+  ATCsPage,
+  InteractionPage,
+  PricesPage,
+  SignUpPage,
+  EditPage,
+  LoginPage
+} from ".";
 const { Header, Sider, Content, Footer } = Layout;
 
 function Dashboard(params: any) {
   const [state, setState] = useState(false);
   const { login, setLogin } = useContext(LoginState);
-  const { userInfo, setUserInfo } = useContext(UserState);
 
   function onCollapse() {
     setState(!state);
   }
+
+  function HandleSignOut(params: any) {
+    window.sessionStorage.clear();
+  }
+
   return (
     <div className="App">
-      {login.isAuthenticated ?
+      {login.isAuthenticated ? (
         <Layout style={{ minHeight: "100vh", direction: "rtl" }}>
           <Layout>
             <Sider
-              width={160}
+              width={200}
               reverseArrow={true}
               collapsed={state}
               onCollapse={onCollapse}
@@ -48,7 +62,8 @@ function Dashboard(params: any) {
 
               <Menu
                 //theme="#50A3D2"
-                defaultSelectedKeys={["10"]}
+                //defaultSelectedKeys={["sub1"]}
+                defaultOpenKeys={["sub3"]}
                 mode="inline"
                 style={{
                   direction: "rtl",
@@ -58,45 +73,86 @@ function Dashboard(params: any) {
                   background: "#29BEB0"
                 }}
               >
-                <Menu.Item key="1">
-                  <Icon type="pic-left" />
-                  <span style={{ marginBottom: 8, marginRight: 8 }}>
-                    {"محصولات"}
-                  </span>
-                  <Link to="/" />
-                </Menu.Item>
+                <SubMenu
+                  key="sub1"
+                  title={
+                    <span>
+                      <span>دارویی و مکمل</span>
+                    </span>
+                  }
+                >
+                  <Menu.Item key="1">
+                    <Icon type="pic-left" />
+                    <span style={{ marginBottom: 8, marginRight: 8 }}>
+                      {"محصولات"}
+                    </span>
+                    <Link to="/" />
+                  </Menu.Item>
 
-                <Menu.Item key="2">
-                  <Icon type="barcode" />
-                  <span style={{ marginBottom: 8, marginRight: 8 }}>
-                    {"دسته بندی"}
-                  </span>
-                  <Link to="/ATCs" />
-                </Menu.Item>
+                  <Menu.Item key="2">
+                    <Icon type="barcode" />
+                    <span style={{ marginBottom: 8, marginRight: 8 }}>
+                      {"دسته بندی"}
+                    </span>
+                    <Link to="/ATCs" />
+                  </Menu.Item>
 
-                <Menu.Item key="3">
-                  <Icon type="vertical-align-middle" />
-                  <span style={{ marginBottom: 8, marginRight: 8 }}>
-                    {"تداخلات"}
-                  </span>
-                  <Link to="/Interaction" />
-                </Menu.Item>
+                  <Menu.Item key="3">
+                    <Icon type="vertical-align-middle" />
+                    <span style={{ marginBottom: 8, marginRight: 8 }}>
+                      {"تداخلات"}
+                    </span>
+                    <Link to="/Interaction" />
+                  </Menu.Item>
 
-                <Menu.Item key="4">
-                  <Icon type="strikethrough" />
-                  <span style={{ marginBottom: 8, marginRight: 8 }}>
-                    {"قیمت ها"}
-                  </span>
-                  <Link to="/Prices" />
-                </Menu.Item>
+                  <Menu.Item key="4">
+                    <Icon type="strikethrough" />
+                    <span style={{ marginBottom: 8, marginRight: 8 }}>
+                      {"قیمت ها"}
+                    </span>
+                    <Link to="/Prices" />
+                  </Menu.Item>
+                </SubMenu>
 
-                <Menu.Item key="5">
-                  <Icon type="logout" />
-                  <span style={{ marginBottom: 8, marginRight: 8 }}>
-                    {"خروج"}
-                  </span>
-                  <Link to="/Logout" />
-                </Menu.Item>
+                <SubMenu
+                  key="sub2"
+                  title={
+                    <span>
+                      <span>تجهیزات پزشکی</span>
+                    </span>
+                  }
+                >
+                  <Menu.Item key="devices">
+                    <Icon type="medicine-box" />
+                    <span style={{ marginBottom: 8, marginRight: 8 }}>
+                      {"اتاق عمل"}
+                    </span>
+                  </Menu.Item>
+                </SubMenu>
+                <SubMenu
+                  key="sub3"
+                  title={
+                    <span>
+                      <span>کاربران</span>
+                    </span>
+                  }
+                >
+                  <Menu.Item key="user" >
+                    <Icon type="user" />
+                    <span style={{ marginBottom: 8, marginRight: 8 }}>
+                      {"پروفایل"}
+                    </span>
+                    <Link to="/Login" />
+                  </Menu.Item>
+
+                  <Menu.Item key="logout" onClick={HandleSignOut}>
+                    <Icon type="logout" />
+                    <span style={{ marginBottom: 8, marginRight: 8 }}>
+                      {"خروج"}
+                    </span>
+                    <Link to="/Logout" />
+                  </Menu.Item>
+                </SubMenu>
               </Menu>
             </Sider>
 
@@ -140,91 +196,14 @@ function Dashboard(params: any) {
                 }}
               >
                 <PageManager />
-
-                {/* <div
-                  style={{
-                    textAlign: "center",
-                    alignItems: "center",
-                    alignContent: "center"
-                  }}
-                >
-                  <Row gutter={16}>
-                    <Col span={8}></Col>
-                    <Col span={8}>
-                      <Card
-                        size="small"
-                        title="User details"
-                        extra={<a href="#">Edit</a>}
-                        style={{ width: 300 }}
-                      >
-                        <p>
-                          {" "}
-                          <Input
-                            prefix={
-                              <Icon
-                                type="mail"
-                                style={{ color: "rgba(0,0,0,.25)" }}
-                              />
-                            }
-                            placeholder="Email"
-                            type="text"
-                            required={true}
-                            style={{ margin: 16, width: "50%" }}
-                            value={userInfo.email}
-                            onChange={({ target }) =>
-                              setUserInfo({ ...userInfo, email: target.value })
-                            }
-                          />{" "}
-                        </p>
-                        <p>
-                          <Input
-                            prefix={
-                              <Icon
-                                type="user"
-                                style={{ color: "rgba(0,0,0,.25)" }}
-                              />
-                            }
-                            placeholder="Username"
-                            type="text"
-                            required={true}
-                            style={{ margin: 16, width: "50%" }}
-                            value={userInfo.username}
-                            onChange={({ target }) =>
-                              setUserInfo({ ...userInfo, username: target.value })
-                            }
-                          />
-                        </p>
-                        <p>
-                          <Input
-                            prefix={
-                              <Icon
-                                type="lock"
-                                style={{ color: "rgba(0,0,0,.25)" }}
-                              />
-                            }
-                            placeholder="Password"
-                            disabled
-                            type="text"
-                            required={true}
-                            style={{ margin: 16, width: "50%" }}
-                            value={userInfo.password}
-                            onChange={({ target }) =>
-                              setUserInfo({ ...userInfo, username: target.value })
-                            }
-                          />
-                        </p>
-                      </Card>
-                    </Col>
-                    <Col span={8}></Col>
-                  </Row>
-                </div> */}
               </Content>
               <Footer style={{ textAlign: "center" }}>Drugo 2020</Footer>
             </Layout>
           </Layout>
-
-        </Layout> : <PageManager />}
-
+        </Layout>
+      ) : (
+        <PageManager />
+      )}
     </div>
   );
 }

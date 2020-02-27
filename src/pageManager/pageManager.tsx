@@ -21,15 +21,14 @@ function PageManager() {
 
   return (
     <Switch>
-      <ProtectedRoute exact path="/" component={MainPage} />  
+      <ProtectedRoute exact path="/" component={MainPage} />
       <ProtectedRoute path="/ATCs" component={ATCsPage} />
       <ProtectedRoute path="/Interaction" component={InteractionPage} />
       <ProtectedRoute path="/Prices" component={PricesPage} />
-      <Route path="/SignUp" component={SignUpPage} />
       <ProtectedRoute path="/Edit" component={EditPage} />
       <ProtectedRoute path="/Logout" component={LoginPage} />
       <Route path="/Login" component={LoginPage} />
-
+      <Route path="/SignUp" component={SignUpPage} />
     </Switch>
   );
 }

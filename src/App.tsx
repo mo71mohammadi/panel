@@ -1,11 +1,10 @@
 import React from "react";
 import "./App.css";
 import "antd/dist/antd.css";
-import { LoginProvider } from "./components/login/loginState";
+import { LoginProvider } from "./components/profile/userState";
 import Dashboard from "./pageManager/pages/dashboard";
 
 const App = () => {
-
   return (
     <LoginProvider>
       <Dashboard />

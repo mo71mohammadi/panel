@@ -1,36 +1,32 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { LoginState } from "../../components/profile/userState";
-import { Layout, Icon, Menu, Row, Card, Col, Avatar, Input } from "antd";
-import { Link, Switch, Route } from "react-router-dom";
+import { Layout, Icon, Menu } from "antd";
+import { Link } from "react-router-dom";
 import PageManager from "../pageManager";
 import SubMenu from "antd/lib/menu/SubMenu";
-import ProtectedRoute from "../Route";
-import {
-  MainPage,
-  ATCsPage,
-  InteractionPage,
-  PricesPage,
-  SignUpPage,
-  EditPage,
-  LoginPage
-} from ".";
+import Cookies from 'js-cookie'
+
 const { Header, Sider, Content, Footer } = Layout;
 
-function Dashboard(params: any) {
+function Dashboard() {
   const [state, setState] = useState(false);
   const { login, setLogin } = useContext(LoginState);
+  const Authorization = Cookies.get("Authorization")
 
+  useEffect(() => {
+    Authorization ? setLogin({ ...login, isAuthenticated: true }) : console.log(30)
+  }, []);
   function onCollapse() {
     setState(!state);
   }
-
-  function HandleSignOut(params: any) {
-    window.sessionStorage.clear();
+  function handleSignOut() {
+    setLogin({ ...login, isAuthenticated: false });
+    Cookies.remove("Authorization")
   }
 
   return (
     <div className="App">
-      {login.isAuthenticated ? (
+      {login.isAuthenticated || Authorization ? (
         <Layout style={{ minHeight: "100vh", direction: "rtl" }}>
           <Layout>
             <Sider
@@ -145,12 +141,11 @@ function Dashboard(params: any) {
                     <Link to="/Login" />
                   </Menu.Item>
 
-                  <Menu.Item key="logout" onClick={HandleSignOut}>
+                  <Menu.Item key="logout" onClick={handleSignOut}>
                     <Icon type="logout" />
                     <span style={{ marginBottom: 8, marginRight: 8 }}>
                       {"خروج"}
                     </span>
-                    <Link to="/Logout" />
                   </Menu.Item>
                 </SubMenu>
               </Menu>
@@ -202,8 +197,8 @@ function Dashboard(params: any) {
           </Layout>
         </Layout>
       ) : (
-        <PageManager />
-      )}
+          <PageManager />
+        )}
     </div>
   );
 }

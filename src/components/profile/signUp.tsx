@@ -2,25 +2,20 @@ import React, { useState, useEffect, useContext } from "react";
 import { Form, Input, Icon, Button, message } from "antd";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { LoginState } from "./userState";
 
-//const baseUrl = "http://45.92.95.69:5000/api//signup";
 
 export default function SignUp(params: any) {
-  const { login, setLogin } = useContext(LoginState);
 
   const [errorMessage, setErrorMessage] = useState(undefined || "");
 
   async function HandleSignUp(credentials: any) {
-    console.log("login", login);
-
     await axios({
       method: "post",
       url: "http://45.92.95.69:5000/api//signup",
       data: {
-        username: login.username,
-        password: login.password,
-        email: login.email
+        // username: username,
+        // password: login.password,
+        // email: login.email
       }
     })
       .then((res: { data: any }) => {
@@ -59,10 +54,10 @@ export default function SignUp(params: any) {
               type="text"
               required={true}
               style={{ margin: 16, width: "50%" }}
-              value={login.email}
-              onChange={({ target }) =>
-              setLogin({ ...login, email: target.value })
-              }
+              // value={login.email}
+              // onChange={({ target }) =>
+              // setLogin({ ...login, email: target.value })
+              // }
             />
           </div>
 
@@ -73,10 +68,10 @@ export default function SignUp(params: any) {
               type="text"
               required={true}
               style={{ margin: 16, width: "50%" }}
-              value={login.username}
-              onChange={({ target }) =>
-              setLogin({ ...login, username: target.value })
-              }
+              // value={login.username}
+              // onChange={({ target }) =>
+              // setLogin({ ...login, username: target.value })
+              // }
             />
           </div>
           <div>
@@ -86,10 +81,10 @@ export default function SignUp(params: any) {
               type="password"
               required={true}
               style={{ margin: 16, width: "50%" }}
-              value={login.password}
-              onChange={({ target }) =>
-              setLogin({ ...login, password: target.value })
-              }
+              // value={login.password}
+              // onChange={({ target }) =>
+              // setLogin({ ...login, password: target.value })
+              // }
             />
           </div>
 

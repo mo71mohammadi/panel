@@ -17,9 +17,6 @@ function createCtxUseState<A>(defaultValue: A) {
 
 const State = {
   isAuthenticated: false,
-  authorization: undefined,
-  username: "",
-  password: "",
   email: "",
   role:""
 };

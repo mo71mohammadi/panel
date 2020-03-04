@@ -3,22 +3,12 @@ import { Route, Switch } from "react-router-dom";
 import EditPage from "./pages/prices";
 import MainPage from "./pages/main";
 import ProtectedRoute from "./Route";
+import Login from './../components/profile/login'
+import { ATCsPage, InteractionPage, PricesPage, LoginPage, SignUpPage } from "./pages";
+import Cookies from 'js-cookie'
 
-import {
-  ATCsPage,
-  InteractionPage,
-  PricesPage,
-  LoginPage,
-  SignUpPage
-} from "./pages";
-import App from "../App";
-import LOGINO from "./pages/LOGINo";
 
 function PageManager() {
-  //const locate = window.location.pathname;
-  //const history = useHistory();
-  // const location = useLocation();
-
   return (
     <Switch>
       <ProtectedRoute exact path="/" component={MainPage} />
@@ -26,8 +16,7 @@ function PageManager() {
       <ProtectedRoute path="/Interaction" component={InteractionPage} />
       <ProtectedRoute path="/Prices" component={PricesPage} />
       <ProtectedRoute path="/Edit" component={EditPage} />
-      <ProtectedRoute path="/Logout" component={LoginPage} />
-      <Route path="/Login" component={LoginPage} />
+      <Route path="/Login" render={(props) => (<Login {...props} lastLocation={Cookies.get("currentUrl")} />)} />
       <Route path="/SignUp" component={SignUpPage} />
     </Switch>
   );

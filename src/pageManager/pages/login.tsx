@@ -5,7 +5,7 @@ import Login from '../../components/profile/login'
 export default function InteractionPage(params:any) {
     return(
         <div>
-            <Login/>
+            <Login props={params}/>
         </div>
     )
 }

@@ -4,7 +4,7 @@ import EditPage from "./pages/prices";
 import MainPage from "./pages/main";
 import ProtectedRoute from "./Route";
 import Login from './../components/profile/login'
-import { ATCsPage, InteractionPage, PricesPage, LoginPage, SignUpPage } from "./pages";
+import { ATCsPage, InteractionPage, PricesPage, SignUpPage } from "./pages";
 import Cookies from 'js-cookie'
 
 

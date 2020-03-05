@@ -13,13 +13,9 @@ function Dashboard() {
   const { login, setLogin } = useContext(LoginState);
   const Authorization = Cookies.get("Authorization")
 
-  useEffect(() => {
-    Authorization ? setLogin({ ...login, isAuthenticated: true }) : console.log(30)
-  }, []);
-  function onCollapse() {
-    setState(!state);
-  }
-  function handleSignOut() {
+  useEffect(() => { Authorization ? setLogin({ ...login, isAuthenticated: true }) : console.log(30) }, []);
+  const onCollapse = () => setState(!state)
+  const handleSignOut = () => {
     setLogin({ ...login, isAuthenticated: false });
     Cookies.remove("Authorization")
   }

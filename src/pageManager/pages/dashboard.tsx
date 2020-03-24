@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { LoginState } from "../../components/profile/userState";
+import { LoginState } from "../../components/Profile/userState";
 import { Layout, Icon, Menu } from "antd";
 import { Link } from "react-router-dom";
 import PageManager from "../pageManager";
@@ -137,13 +137,14 @@ function Dashboard() {
                     <Link to="/Login" />
                   </Menu.Item>
 
-                  <Menu.Item key="logout" onClick={handleSignOut}>
-                    <Icon type="logout" />
-                    <span style={{ marginBottom: 8, marginRight: 8 }}>
-                      {"خروج"}
-                    </span>
-                  </Menu.Item>
                 </SubMenu>
+                <Menu.Item key="logout" onClick={handleSignOut}>
+                  <Icon type="logout" />
+                  <span style={{ marginBottom: 8, marginRight: 8 }}>
+                    {"خروج"}
+                  </span>
+                </Menu.Item>
+
               </Menu>
             </Sider>
 

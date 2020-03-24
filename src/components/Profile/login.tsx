@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Form, Icon, Input, Button, Checkbox, Row, Col, Card } from "antd";
+import { Form, Icon, Input, Button, message, Checkbox, Row, Col, Card } from "antd";
 import axios from "axios";
 import { LoginState } from "./userState";
 import { useHistory, Link } from "react-router-dom";
@@ -22,13 +22,11 @@ export default function Login(props: any) {
         password: password,
         email: "test"
       }
-    })
-      .then((res: { data: any }) => {
-        setLogin({ ...login, isAuthenticated: true });
-        Cookies.set('Authorization', res.data.accessToken, { expires: 1 / 48 });
-        if (currentUrl != "/Logout" && currentUrl) history.push(`${currentUrl}`);
-      })
-      .catch(() => console.log("Get Data Fail"));
+    }).then((res: { data: any }) => {
+      setLogin({ ...login, isAuthenticated: true });
+      Cookies.set('Authorization', res.data.accessToken, { expires: 1 / 48 });
+      if (currentUrl != "/Logout" && currentUrl) history.push(`${currentUrl}`);
+    }).catch((error) => message.error(error.response.data.message));
   };
 
   return (

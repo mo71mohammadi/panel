@@ -28,46 +28,46 @@ export function Columns() {
       confirm,
       clearFilters
     }: any) => (
-      <div style={{ padding: 8 }}>
-        <Input
-          ref={node => {
-            const searchInput = node;
-          }}
-          placeholder={`Search ${dataIndex}`}
-          value={selectedKeys}
-          onChange={e => {
-            setSelectedKeys(e.target.value);
-            const filter: any = { page: 1 };
-            filter[dataIndex] = e.target.value;
-            setFilters({ ...filters, ...filter });
-          }}
-          onPressEnter={HandleSearch}
-          style={{ width: 188, marginBottom: 8, display: "block" }}
-        />
-        <Button
-          type="primary"
-          onClick={HandleSearch}
-          icon="search"
-          size="small"
-          style={{ width: 90, marginRight: 8 }}
-        >
-          Search
+        <div style={{ padding: 8 }}>
+          <Input
+            ref={node => {
+              const searchInput = node;
+            }}
+            placeholder={`Search ${dataIndex}`}
+            value={selectedKeys}
+            onChange={e => {
+              setSelectedKeys(e.target.value);
+              const filter: any = { page: 1 };
+              filter[dataIndex] = e.target.value;
+              setFilters({ ...filters, ...filter });
+            }}
+            onPressEnter={HandleSearch}
+            style={{ width: 188, marginBottom: 8, display: "block" }}
+          />
+          <Button
+            type="primary"
+            onClick={HandleSearch}
+            icon="search"
+            size="small"
+            style={{ width: 90, marginRight: 8 }}
+          >
+            Search
         </Button>
-        <Button
-          onClick={() => {
-            clearFilters();
-            const filter: any = filters;
-            delete filter[dataIndex];
-            setFilters({ ...filters, ...filter });
-            HandleReset();
-          }}
-          size="small"
-          style={{ width: 90 }}
-        >
-          Reset
+          <Button
+            onClick={() => {
+              clearFilters();
+              const filter: any = filters;
+              delete filter[dataIndex];
+              setFilters({ ...filters, ...filter });
+              HandleReset();
+            }}
+            size="small"
+            style={{ width: 90 }}
+          >
+            Reset
         </Button>
-      </div>
-    ),
+        </div>
+      ),
     filterIcon: (filtered: any) => <Icon type="search" />
   });
   const columns = [
@@ -113,7 +113,7 @@ export function Columns() {
     {
       title: "Action",
       key: "action",
-      render: function(index: number, record: any) {
+      render: function (index: number, record: any) {
         return (
           <>
             <Button

@@ -2,11 +2,10 @@ import React, { useState, useContext, useEffect } from "react";
 import { Button, Select, message, Input, Icon, Alert, Form, Tag } from "antd";
 import axios from "axios";
 import { Row, Col } from "antd";
-
 import { ValueState, State, NewState } from "./StateManager/valueState";
 import { SearchState } from "./StateManager/searchState";
+import Cookies from "js-cookie";
 const { Option } = Select;
-let id = 0;
 
 export function DrawBody() {
   const { valueState, setValueState } = useContext(ValueState);
@@ -30,7 +29,8 @@ export function DrawBody() {
       setSelect([]);
       axios({
         method: "get",
-        url: `http://45.92.95.69:5000/api/drugs/distinct?item=${value}`
+        url: `http://45.92.95.69:5000/api/drugs/distinct?item=${value}`,
+        headers: {Authorization: Cookies.get("Authorization")},
       })
         .then((res: { data: any }) => {
           setOption({
@@ -66,7 +66,8 @@ export function DrawBody() {
     axios({
       method: "post",
       url: "http://45.92.95.69:5000/api/drugs/update",
-      data: valueState
+      data: valueState,
+      headers: {Authorization: Cookies.get("Authorization")},
     })
       .then((res: { data: any }) => {
         message.success(`Item ${valueState._id} Successfully`);
@@ -145,7 +146,8 @@ export function DrawBody() {
     axios({
       method: "POST",
       url: `http://45.92.95.69:5000/api/drugs/create`,
-      data: Data
+      data: Data,
+      headers: {Authorization: Cookies.get("Authorization")},
     })
       .then((res: { data: any }) => {
         message.success(`Item Created Successfully`);

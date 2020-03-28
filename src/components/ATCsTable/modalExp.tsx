@@ -3,6 +3,7 @@ import { Modal, Button, Select } from "antd";
 import { ValueState } from "./valueState";
 import { ModalState } from "./modalState";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 const { Option } = Select;
 
@@ -36,7 +37,8 @@ export function ModalExport(params: any) {
           enName: modal.data.name,
           enRoute: modal.data.route,
           atc: { code: modal.data.code, ddd: modal.data.ddd }
-        }
+        },
+        headers: {Authorization: Cookies.get("Authorization")},
       })
         .then((res: { data: any }) => {})
         .catch(() => console.log("Get Data Fail"));
@@ -66,7 +68,8 @@ export function ModalExport(params: any) {
             enName: modal.data.name,
             enRoute: modal.data.route,
             atc: { code: modal.data.code, ddd: modal.data.ddd }
-          }
+          },
+          headers: {Authorization: Cookies.get("Authorization")},
         })
           .then((res: { data: any }) => {})
           .catch(() => console.log("Get Data Fail"));
@@ -79,7 +82,8 @@ export function ModalExport(params: any) {
           enName: modal.data.name,
           enRoute: modal.data.route,
           atc: { code: code, ddd: ddd }
-        }
+        },
+        headers: {Authorization: Cookies.get("Authorization")},
       }).then(res => {
         console.log(res.data);
       });

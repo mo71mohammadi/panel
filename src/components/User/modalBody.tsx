@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { ModalState } from "./modalState";
 import { Select, Button, Row, Col, message, Alert, Modal, Input } from "antd";
 import axios from "axios";
+import Cookies from "js-cookie";
 const { Option } = Select;
 
 export default function ModalBody() {
@@ -20,12 +21,13 @@ export default function ModalBody() {
           email: record.email,
           role: record.role,
           password: modal.title == "Update User" ? undefined : 'Zxcv4194'
-        }
+        },
+        headers: {Authorization: Cookies.get("Authorization")}
       }).then((res: any) => {
         modal.title == "Update User" ? message.info("Update successfully ") : message.info("User add successfully ");
         setModal({ ...modal, confirmLoading: false, visible: false, reset: modal.reset + 1 });
       }).catch((error) => {
-        message.error(error.response.data.message);
+        message.error(error.response.data.error);
       });
     }
     setModal({ ...modal, visible: false });

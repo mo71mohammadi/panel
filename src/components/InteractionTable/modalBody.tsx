@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { ModalState } from "./modalState";
 import { Select, Button, Row, Col, message, Alert, Modal } from "antd";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 const { Option } = Select;
 
@@ -45,7 +46,8 @@ export default function ModalBody(upToDate: any, medScape: any) {
           enRoute: `${modal.record.enRoute}`,
           upToDateId: `${modal.record.upToDateId}`,
           medScapeId: `${modal.record.medScapeId}`,
-        }
+        },
+        headers: {Authorization: Cookies.get("Authorization")},
       })
         .then((res: any) => {
           message.info("updated successfully ");
@@ -88,7 +90,7 @@ export default function ModalBody(upToDate: any, medScape: any) {
             showArrow={true}
             filterOption={true}
             notFoundContent={null}
-          ></Select>
+          />
         </Col>
 
         <Col span={24}>
@@ -108,7 +110,7 @@ export default function ModalBody(upToDate: any, medScape: any) {
             filterOption={true}
             onChange={(val: any, e: any) => HandleChange(val, e)}
             notFoundContent={null}
-          ></Select>
+          />
         </Col>
 
         <Col span={24} onClick={() => setOption([])}>

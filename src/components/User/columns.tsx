@@ -3,10 +3,11 @@ import { Tag, Switch, Select, Icon, Button, Input, Divider, Popconfirm } from "a
 import axios from "axios";
 import { ModalState } from "./modalState";
 import { Row, Col, message, Alert, Modal } from "antd";
+import Cookies from "js-cookie";
 
 export function Columns() {
-  const updateUrl = 'http://45.92.95.69:5000/api/user/'
-  const { modal, setModal } = useContext(ModalState)
+  const updateUrl = 'http://45.92.95.69:5000/api/user/';
+  const { modal, setModal } = useContext(ModalState);
 
   function ShowModal(record: any) {
     setModal({
@@ -22,6 +23,7 @@ export function Columns() {
     axios({
       method: "delete",
       url: updateUrl + record._id,
+      headers: {Authorization: Cookies.get("Authorization")}
     }).then((res: any) => {
       message.info("delete successfully ");
       setTimeout(() => {
@@ -30,18 +32,19 @@ export function Columns() {
     }).catch((error) => {
       message.error(error.response.data.error);
     });
-  }
+  };
   const onChangeActive = (value: any, record: any) => {
     axios({
       method: "put",
       url: updateUrl + record._id,
-      data: { active: value }
+      data: { active: value },
+      headers: {Authorization: Cookies.get("Authorization")}
     }).then((res: any) => {
       message.info("Update successfully ");
     }).catch((error) => {
       message.error(error.response.data.error);
     });
-  }
+  };
   const columns = [
     {
       title: "Username",

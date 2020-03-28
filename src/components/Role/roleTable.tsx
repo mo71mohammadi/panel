@@ -2,25 +2,25 @@ import React, { useEffect, useState, useContext } from "react";
 import { Table, Alert, message, Button, Divider } from "antd";
 import axios from "axios";
 import { Columns } from "./columns";
-import ModalBody from "./modalBody";
-import PassModal from "./passModal";
-import { ModalState } from "./modalState";
+import { ModalState } from "./editState";
+import EditPage from "./editPage";
 import Cookies from "js-cookie";
 
-export default function UserTable() {
+export default function RoleTable() {
   const [tableData, setTableData] = useState([]);
   const [pagi, setPagi] = useState({ pageSize: 10, pageCurrent: 1 });
   const [count, setCount] = useState({ total: 0 });
   const [loading, setLoading] = useState(true);
-  const { modal, setModal } = useContext(ModalState)
+  const { modal, setModal } = useContext(ModalState);
+  const permissions = ["Drug", "ATC", "Interaction", "Price", "User", "Role", "Profile", "MedScape", "UpToDate", "Drug.api", "MedScape.api", "UpToDate.api", "Insurance.api"];
 
   useEffect(() => {
     setLoading(true);
     axios({
       method: "post",
-      url: "http://45.92.95.69:5000/api/users",
+      url: "http://45.92.95.69:5000/api/roles",
       data: { size: pagi.pageSize, page: pagi.pageCurrent },
-      headers: {Authorization: Cookies.get("Authorization")},
+      headers: {Authorization: Cookies.get("Authorization")}
     })
       .then((res: { data: any }) => {
         setTableData(res.data.data);
@@ -38,17 +38,23 @@ export default function UserTable() {
   };
 
   const handleClickAdd = () => {
+    const permList = [];
+    for (const item in permissions) {
+      const obj = {permission: permissions[item], create: false, read: false, update: false, delete: false};
+      permList.push(obj)
+    }
+    // @ts-ignore
     setModal({
-      ...modal, title: 'Add New User', visible: true
+      ...modal, title: 'Add New Role', visible: true, record: {_id: '', permissions: permList}
     })
 
   };
 
   return (
-    <div style={{ background: "#fafafa" }}>
+    modal.visible ? <EditPage/> : <div style={{ background: "#fafafa" }}>
       <div>
-        {ModalBody()}
-        {PassModal()}
+        {/*{ModalBody()}*/}
+        {/*{PassModal()}*/}
 
         <Table
           loading={loading}
@@ -84,7 +90,7 @@ export default function UserTable() {
           size="large"
           onClick={() => handleClickAdd()}
         >
-          {"Add New User"}
+          {"Add New Role"}
         </Button>
 
       </div>

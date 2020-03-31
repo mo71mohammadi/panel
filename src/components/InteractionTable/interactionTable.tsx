@@ -19,7 +19,8 @@ export default function InteractionTable() {
 		axios({
 			method: "GET",
 			url: "http://45.92.95.69:5000/api/upToDate/name",
-			data: {}
+			data: {},
+			headers: {Authorization: Cookies.get("Authorization")}
 		})
 			.then((res: any) => {
 				setUpToDate(res.data);
@@ -31,7 +32,8 @@ export default function InteractionTable() {
 		axios({
 			method: "GET",
 			url: "http://45.92.95.69:5000/api/medScape/name",
-			data: {}
+			data: {},
+			headers: {Authorization: Cookies.get("Authorization")}
 		})
 			.then((res: any) => {
 				setmedScape(res.data);

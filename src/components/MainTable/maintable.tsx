@@ -17,8 +17,8 @@ export const MainTable = () => {
 	const {pagi, setPagi} = useContext(pagination);
 	const {count, setCount} = useContext(CountState);
 	const [loading, setLoading] = useState(true);
-	const [draw, setdraw] = useState(false);
 	const {valueState, setValueState} = useContext(ValueState);
+	const [reset, setReset] = useState(0);
 
 	useEffect(() => {
 		setLoading(true);
@@ -38,7 +38,7 @@ export const MainTable = () => {
 		}).catch((error) => {
 			message.error(error.response.data.error);
 		});
-	}, [action.isDelete, action.filters]);
+	}, [action.isDelete, action.filters, reset]);
 
 	const handleTableChange = (pagination: any, filters: any, sorter: any) => {
 		setPagi({
@@ -70,18 +70,31 @@ export const MainTable = () => {
 				setLoading(false);
 			});
 	};
+	const handelDeleteAll = () => {
+		axios({
+			method: "post",
+			url: "http://45.92.95.69:5000/api/drugs/deleteAll",
+			headers: {Authorization: Cookies.get("Authorization")},
+		}).then((res: any) => {
+			message.info(res.data.message)
+			setReset(reset + 1)
+		}).catch(error => {
+			message.error("error.response.data.error")
+		})
+	};
+
 	const props = {
-		name: "file",
+		name: "drugs",
 		action: "http://45.92.95.69:5000/api/drugs/import",
-		headers: {
-			"content-type": "multipart/form-data",
-		},
+		Authorization: Cookies.get("Authorization"),
+
 		onChange(info: any) {
 			if (info.file.status !== "uploading") {
 				console.log(info.file, info.fileList);
 			}
 			if (info.file.status === "done") {
 				message.success(`${info.file.name} file uploaded successfully`);
+				setReset(reset + 1)
 			} else if (info.file.status === "error") {
 				message.error(`${info.file.name} file upload failed.`);
 			}
@@ -148,6 +161,10 @@ export const MainTable = () => {
 						Import
 					</Button>
 				</Upload>
+				<Button style={{width: "25%", marginLeft: 0}} onClick={handelDeleteAll}>
+					Delete All Items
+				</Button>
+
 			</div>
 			<div>
 				<Alert

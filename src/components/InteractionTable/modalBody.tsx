@@ -40,7 +40,7 @@ export default function ModalBody(upToDate: any, medScape: any) {
     if (modal.record.upToDateId || modal.record.medScapeId) {
       axios({
         method: "POST",
-        url: "http://45.92.95.69:5000/api/drugs/updateInteraction",
+        url: "http://ehrs.ir/api/drugs/updateInteraction",
         data: {
           enName: `${modal.record.enName}`,
           enRoute: `${modal.record.enRoute}`,

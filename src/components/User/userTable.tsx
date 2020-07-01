@@ -18,7 +18,7 @@ export default function UserTable() {
     setLoading(true);
     axios({
       method: "post",
-      url: "http://45.92.95.69:5000/api/users",
+      url: "http://ehrs.ir/api/users",
       data: { size: pagi.pageSize, page: pagi.pageCurrent },
       headers: {Authorization: Cookies.get("Authorization")},
     })

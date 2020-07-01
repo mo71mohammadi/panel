@@ -15,7 +15,7 @@ export default function ModalBody() {
     if (record.username) {
       axios({
         method: modal.title == "Update User" ? 'put' : 'post',
-        url: modal.title == "Update User" ? "http://45.92.95.69:5000/api/user/" + modal.record._id : "http://45.92.95.69:5000/api/signup/",
+        url: modal.title == "Update User" ? "http://ehrs.ir/api/user/" + modal.record._id : "http://ehrs.ir/api/signup/",
         data: {
           username: record.username,
           email: record.email,

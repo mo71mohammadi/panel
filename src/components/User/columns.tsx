@@ -6,7 +6,7 @@ import { Row, Col, message, Alert, Modal } from "antd";
 import Cookies from "js-cookie";
 
 export function Columns() {
-  const updateUrl = 'http://45.92.95.69:5000/api/user/';
+  const updateUrl = 'http://ehrs.ir/api/user/';
   const { modal, setModal } = useContext(ModalState);
 
   function ShowModal(record: any) {

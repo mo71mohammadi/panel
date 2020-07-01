@@ -18,7 +18,7 @@ export default function RoleTable() {
     setLoading(true);
     axios({
       method: "post",
-      url: "http://45.92.95.69:5000/api/roles",
+      url: "http://ehrs.ir/api/roles",
       data: { size: pagi.pageSize, page: pagi.pageCurrent },
       headers: {Authorization: Cookies.get("Authorization")}
     })

@@ -18,7 +18,7 @@ export default function InteractionTable() {
 	useEffect(() => {
 		axios({
 			method: "GET",
-			url: "http://45.92.95.69:5000/api/upToDate/name",
+			url: "http://ehrs.ir/api/upToDate/name",
 			data: {},
 			headers: {Authorization: Cookies.get("Authorization")}
 		})
@@ -31,7 +31,7 @@ export default function InteractionTable() {
 	useEffect(() => {
 		axios({
 			method: "GET",
-			url: "http://45.92.95.69:5000/api/medScape/name",
+			url: "http://ehrs.ir/api/medScape/name",
 			data: {},
 			headers: {Authorization: Cookies.get("Authorization")}
 		})
@@ -46,7 +46,7 @@ export default function InteractionTable() {
 
 		axios({
 			method: "post",
-			url: "http://45.92.95.69:5000/api/drugs/interaction",
+			url: "http://ehrs.ir/api/drugs/interaction",
 			data: {size: pagi.pageSize, page: pagi.pageCurrent},
 			headers: {Authorization: Cookies.get("Authorization")},
 		}).then((res: { data: any }) => {

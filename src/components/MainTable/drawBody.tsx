@@ -29,7 +29,7 @@ export function DrawBody() {
       setSelect([]);
       axios({
         method: "get",
-        url: `http://45.92.95.69:5000/api/drugs/distinct?item=${value}`,
+        url: `http://ehrs.ir/api/drugs/distinct?item=${value}`,
         headers: {Authorization: Cookies.get("Authorization")},
       })
         .then((res: { data: any }) => {
@@ -65,7 +65,7 @@ export function DrawBody() {
 
     axios({
       method: "post",
-      url: "http://45.92.95.69:5000/api/drugs/update",
+      url: "http://ehrs.ir/api/drugs/update",
       data: valueState,
       headers: {Authorization: Cookies.get("Authorization")},
     })
@@ -145,7 +145,7 @@ export function DrawBody() {
     console.log("HandleSendItem", Data);
     axios({
       method: "POST",
-      url: `http://45.92.95.69:5000/api/drugs/create`,
+      url: `http://ehrs.ir/api/drugs/create`,
       data: Data,
       headers: {Authorization: Cookies.get("Authorization")},
     })

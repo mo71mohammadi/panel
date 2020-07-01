@@ -140,7 +140,7 @@ export function Columns() {
 			}
 			axios({
 				method: "get",
-				url: `http://45.92.95.69:5000/api/atc/get?shortName=${params.code}`,
+				url: `http://ehrs.ir/api/atc/get?shortName=${params.code}`,
 				headers: {Authorization: Cookies.get("Authorization")},
 			})
 				.then((res: { data: any }) => {

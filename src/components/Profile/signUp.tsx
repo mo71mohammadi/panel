@@ -11,7 +11,7 @@ export default function SignUp(params: any) {
   async function HandleSignUp(credentials: any) {
     await axios({
       method: "post",
-      url: "http://45.92.95.69:5000/api//signup",
+      url: "http://ehrs.ir/api//signup",
       data: {
         // username: username,
         // password: login.password,

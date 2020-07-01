@@ -16,7 +16,7 @@ export default function Login(props: any) {
     console.log(currentUrl)
     axios({
       method: "post",
-      url: "http://45.92.95.69:5000/api/login",
+      url: "http://ehrs.ir/api/login",
       data: {
         username: username,
         password: password,

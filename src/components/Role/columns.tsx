@@ -5,7 +5,7 @@ import {ModalState} from "./editState";
 import Cookies from "js-cookie";
 
 export function Columns() {
-	const updateUrl = 'http://45.92.95.69:5000/api/role/';
+	const updateUrl = 'http://ehrs.ir/api/role/';
 	const {modal, setModal} = useContext(ModalState);
 	const permissions = ["Drug", "ATC", "Interaction", "Price", "User", "Role", "Profile", "MedScape", "UpToDate", "Drug.api", "MedScape.api", "UpToDate.api", "Insurance.api"];
 

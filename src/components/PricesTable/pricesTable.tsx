@@ -19,7 +19,7 @@ export default function PricesTable() {
 		setLoading(true);
 		axios({
 			method: "post",
-			url: "http://45.92.95.69:5000/api/drugs/price",
+			url: "http://ehrs.ir/api/drugs/price",
 			data: {size: pagi.pageSize, page: pagi.pageCurrent},
 			headers: {Authorization: Cookies.get("Authorization")}
 		}).then((res: { data: any }) => {
@@ -42,10 +42,10 @@ export default function PricesTable() {
 		let url = {url: '', message: ''};
 		if (params === "Get") {
 			setPagi({...pagi});
-			url.url = "http://45.92.95.69:5000/api/drugs/getPrice";
+			url.url = "http://ehrs.ir/api/drugs/getPrice";
 			url.message = 'Prices get successfully'
 		} else if (params === "Update") {
-			url.url = "http://45.92.95.69:5000/api/drugs/updatePrice";
+			url.url = "http://ehrs.ir/api/drugs/updatePrice";
 			url.message = 'Prices update successfully'
 		}
 		setLoading(true);

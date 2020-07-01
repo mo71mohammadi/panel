@@ -148,7 +148,7 @@ export function Columns() {
 	function HandleDelete(params: any) {
 		axios({
 			method: "post",
-			url: "http://45.92.95.69:5000/api/drugs/delete",
+			url: "http://ehrs.ir/api/drugs/delete",
 			data: {_id: params._id},
 			headers: {Authorization: Cookies.get("Authorization")},
 		}).then((res: { data: any }) => {

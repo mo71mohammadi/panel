@@ -16,7 +16,7 @@ export default function PassModal() {
 		if (password) {
 			axios({
 				method: "put",
-				url: "http://45.92.95.69:5000/api/user/" + modal.record._id,
+				url: "http://ehrs.ir/api/user/" + modal.record._id,
 				data: {password: password},
 				headers: {Authorization: Cookies.get("Authorization")},
 			}).then((res: any) => {

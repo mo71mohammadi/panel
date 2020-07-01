@@ -31,7 +31,7 @@ export function ModalExport(params: any) {
     if (modal.data.code) {
       axios({
         method: "post",
-        url: "http://45.92.95.69:5000/api/drugs/updateATC",
+        url: "http://ehrs.ir/api/drugs/updateATC",
         data: {
           action: "delete",
           enName: modal.data.name,
@@ -62,7 +62,7 @@ export function ModalExport(params: any) {
       if (modal.data.code) {
         axios({
           method: "post",
-          url: "http://45.92.95.69:5000/api/drugs/updateATC",
+          url: "http://ehrs.ir/api/drugs/updateATC",
           data: {
             action: "delete",
             enName: modal.data.name,
@@ -76,7 +76,7 @@ export function ModalExport(params: any) {
       }
       axios({
         method: "post",
-        url: "http://45.92.95.69:5000/api/drugs/updateATC",
+        url: "http://ehrs.ir/api/drugs/updateATC",
         data: {
           action: "add",
           enName: modal.data.name,
@@ -116,7 +116,7 @@ export function ModalExport(params: any) {
       // setSelect([]);
       axios({
         method: "get",
-        url: `http://45.92.95.69:5000/api/atc/get?${params}`,
+        url: `http://ehrs.ir/api/atc/get?${params}`,
         headers: {Authorization: Cookies.get("Authorization")}
       })
         .then((res: { data: any }) => {

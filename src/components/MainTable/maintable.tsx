@@ -24,7 +24,7 @@ export const MainTable = () => {
 		setLoading(true);
 		axios({
 			method: "post",
-			url: "http://45.92.95.69:5000/api/drugs/getAll",
+			url: "http://ehrs.ir/api/drugs/getAll",
 			data: action.isExport
 				? tableData
 				: {size: pagi.pageSize, page: pagi.pageCurrent, ...action.filters},
@@ -53,7 +53,7 @@ export const MainTable = () => {
 	const handelExport = () => {
 		setLoading(true);
 		axios
-			.post("http://45.92.95.69:5000/api/drugs/export", action.filters, {
+			.post("http://ehrs.ir/api/drugs/export", action.filters, {
 				responseType: "blob",
 				headers: {Authorization: Cookies.get("Authorization")},
 			})
@@ -73,7 +73,7 @@ export const MainTable = () => {
 	const handelDeleteAll = () => {
 		axios({
 			method: "post",
-			url: "http://45.92.95.69:5000/api/drugs/deleteAll",
+			url: "http://ehrs.ir/api/drugs/deleteAll",
 			headers: {Authorization: Cookies.get("Authorization")},
 		}).then((res: any) => {
 			message.info(res.data.message)
@@ -85,7 +85,7 @@ export const MainTable = () => {
 
 	const props = {
 		name: "drugs",
-		action: "http://45.92.95.69:5000/api/drugs/import",
+		action: "http://ehrs.ir/api/drugs/import",
 		Authorization: Cookies.get("Authorization"),
 
 		onChange(info: any) {
